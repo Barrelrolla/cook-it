@@ -1,26 +1,102 @@
 @import "tailwindcss";
+@plugin "../plugin.ts";
+@source "../node_modules/@barrelrolla/react-components-library/";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-main: #faf7f2;
+  --color-main-content: #1c1c1c;
+  --color-primary: #ffffff;
+  --color-primary-content: #ff6b00;
+  --color-secondary: #f3ede3;
+  --color-secondary-content: #f3ede3;
+  --color-accent: #ffe8d6;
+  --color-accent-content: #d95d00;
+  --color-info: #3b82f6;
+  --color-info-content: #ffffff;
+  --color-success: #22c55e;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #ffffff;
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+  --radius-inputs: 0.5rem;
+  --default-font-weight: 500;
+  --radius-navigation: 0;
+  --border-navigation: 1px;
+  --mod-highlight-primary: -0.05;
+  --hero-height: 600px;
+  scrollbar-gutter: stable;
+}
+
+.dark {
+  --color-main: #090b10;
+  --color-main-content: #f8f9fa;
+  --color-primary: #ffffff;
+  --color-primary-content: #ff6b00;
+  --color-secondary: #1b2230;
+  --color-secondary-content: #f8f9fa;
+  --color-accent: #2a1a0d;
+  --color-accent-content: #ffb37a;
+  --color-info: #60a5fa;
+  --color-info-content: #ffffff;
+  --color-success: #22c55e;
+  --color-success-content: #ffffff;
+  --color-warning: #fbbf24;
+  --color-warning-content: #000000;
+  --color-error: #f87171;
+  --color-error-content: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope);
+  --font-heading: var(--font-fraunces);
+  --font-logo: var(--font-lobster);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility bg-fade-left {
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1000px;
+  background-image:
+    linear-gradient(
+      to left,
+      rgba(250, 247, 242, 0) 40vw,
+      rgba(250, 247, 242, 1) 70vw
+    ),
+    url("/hero-light.png");
+}
+@utility bg-fade-left-dark {
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1000px;
+  background-image:
+    linear-gradient(to left, rgba(9, 11, 16, 0) 60vw, rgba(9, 11, 16, 1) 70vw),
+    url("/hero-dark.png");
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility bg-fade-down {
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 600px;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(250, 247, 242, 0) 20vh,
+      rgba(250, 247, 242, 1) 35vh
+    ),
+    url("/hero-light.png");
+}
+@utility bg-fade-down-dark {
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 600px;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(9, 11, 16, 0) 20vh,
+      rgba(9, 11, 16, 1) 35vh
+    ),
+    url("/hero-dark.png");
 }
