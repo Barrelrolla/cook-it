@@ -10,7 +10,7 @@ export default function MainPageHero() {
     <Hero
       textAlign="left"
       className="h-130 md:h-150"
-      wrapperClasses="not-md:not-dark:bg-fade-down dark:bg-fade-down-dark not-dark:md:bg-fade-left md:dark:bg-fade-left-dark"
+      wrapperClasses="not-md:not-dark:bg-fade-down not-md:dark:bg-fade-down-dark not-dark:md:bg-fade-left md:dark:bg-fade-left-dark"
     >
       <HeroSection className="md:ml-20 justify-end md:justify-center mb-2">
         <HeroTitle className="font-heading font-bold text-6xl md:text-7xl">

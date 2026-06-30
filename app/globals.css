@@ -100,3 +100,7 @@
     ),
     url("/hero-dark.png");
 }
+
+body {
+  background-color: var(--color-primary);
+}

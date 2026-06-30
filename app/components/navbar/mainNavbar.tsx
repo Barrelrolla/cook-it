@@ -2,34 +2,22 @@ import {
   Button,
   DarkModeToggle,
   Navbar,
-  NavbarBrand,
   NavbarCollapse,
   NavbarLink,
   NavbarToggle,
 } from "@barrelrolla/react-components-library";
-import LoginButton from "../components/loginButton";
-import LogoImage from "../../public/logo.svg";
-import Image from "next/image";
+import LoginButton from "./loginButton";
+import Brand from "./brand";
 
 export default function MainNavbar() {
   return (
     <Navbar
-      // glass={false}
+      glass={false}
       hasShadow={false}
       className="min-h-22 items-center pt-4 border-stone-200 dark:border-stone-700"
     >
       <div className="flex flex-row gap-4">
-        <NavbarBrand className="font-logo flex items-center gap-2">
-          <span className="text-primary-content">
-            <Image
-              src={LogoImage}
-              alt="logo depicting a chef's hat"
-              className="h-10 w-10"
-              priority
-            />
-          </span>
-          CookIt
-        </NavbarBrand>
+        <Brand />
       </div>
       <NavbarCollapse className="font-bold pt-4 md:pt-0">
         <NavbarLink
