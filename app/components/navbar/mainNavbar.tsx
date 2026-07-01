@@ -12,6 +12,7 @@ import Brand from "./brand";
 export default function MainNavbar() {
   return (
     <Navbar
+      collapseAt="md"
       glass={false}
       hasShadow={false}
       className="min-h-22 items-center pt-4 border-stone-200 dark:border-stone-700"

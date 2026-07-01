@@ -48,7 +48,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
         </CardImageContainer>
         <CardSection>
           <CardTitle>{recipe.title}</CardTitle>
-          <div className="flex justify-between py-2 px-4">
+          <div className="flex justify-between px-4 pb-2 text-sm">
             <p className="flex items-center">
               <span className="flex items-center text-primary-content">
                 <PiStarFill /> {recipe.rating}
