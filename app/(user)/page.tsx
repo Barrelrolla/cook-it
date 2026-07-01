@@ -1,11 +1,13 @@
 import MainPageHero from "../components/mainHero/mainPageHero";
-import TempFiller from "../components/tempFiller";
+import RecipeList from "../components/recipes/recipeList";
 
 export default function Home() {
   return (
     <>
       <MainPageHero />
-      <TempFiller />
+      <main className="max-w-(--max-content-width) mx-auto">
+        <RecipeList />
+      </main>
     </>
   );
 }

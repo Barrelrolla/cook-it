@@ -9,10 +9,10 @@ export default function MainPageHero() {
   return (
     <Hero
       textAlign="left"
-      className="h-130 md:h-150"
-      wrapperClasses="not-md:not-dark:bg-fade-down not-md:dark:bg-fade-down-dark not-dark:md:bg-fade-left md:dark:bg-fade-left-dark"
+      className="h-130 md:h-150 max-w-(--max-content-width)"
+      wrapperClasses="max-md:not-dark:bg-fade-down max-md:dark:bg-fade-down-dark not-dark:md:bg-fade-left md:dark:bg-fade-left-dark max-w-[2000px] mx-auto"
     >
-      <HeroSection className="md:ml-20 justify-end md:justify-center mb-2">
+      <HeroSection className="justify-end md:justify-center mb-2">
         <HeroTitle className="font-heading font-bold text-6xl md:text-7xl">
           Discover. Cook.
           <br />
