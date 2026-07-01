@@ -31,9 +31,9 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
   }
 
   return (
-    <li>
+    <li className="justify-items-center">
       <Card
-        size="sm"
+        size="xl"
         className="h-60"
         containerClasses="border-main-content/30 shadow-sm min-w-70"
       >
