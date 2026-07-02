@@ -1,13 +1,14 @@
+"use server";
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { eq } from "drizzle-orm";
-import { recipeTable } from "./schemas";
-import slug from "slug";
+import { recipeTable } from "./schemas/recipeSchema";
 import { nanoid } from "nanoid";
+import slug from "slug";
 
 const db = drizzle(process.env.DATABASE_URL!);
 
-async function getUniqueRecipeSlug(baseSlug: string) {
+function getUniqueRecipeSlug(baseSlug: string) {
   return `${slug(baseSlug)}-${nanoid(6)}`;
 }
 
@@ -17,10 +18,16 @@ export async function getAllRecipes() {
 
 export async function getRecipeById(id: string) {
   try {
-    return (
-      (await db.select().from(recipeTable).where(eq(recipeTable.id, id)))[0] ??
-      null
-    );
+    const res = await db
+      .select()
+      .from(recipeTable)
+      .where(eq(recipeTable.id, id))
+      .limit(1);
+    if (res.length > 0) {
+      return res[0];
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
     return null;
@@ -29,20 +36,26 @@ export async function getRecipeById(id: string) {
 
 export async function getRecipeBySlug(slug: string) {
   try {
-    return (
-      (
-        await db.select().from(recipeTable).where(eq(recipeTable.slug, slug))
-      )[0] ?? null
-    );
+    const res = await db
+      .select()
+      .from(recipeTable)
+      .where(eq(recipeTable.slug, slug))
+      .limit(1);
+    if (res.length > 0) {
+      return res[0];
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
     return null;
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function main() {
   await db.insert(recipeTable).values({
-    slug: await getUniqueRecipeSlug("Creamy Mushroom Pasta"),
+    slug: getUniqueRecipeSlug("Creamy Mushroom Pasta"),
     title: "Creamy Mushroom Pasta",
     author: "Julian",
     imageUrl: "/creamy-mushroom-pasta.png",
@@ -53,7 +66,7 @@ async function main() {
     ratingsCount: 324,
   });
   await db.insert(recipeTable).values({
-    slug: await getUniqueRecipeSlug("Rainbow Buddha Bowl"),
+    slug: getUniqueRecipeSlug("Rainbow Buddha Bowl"),
     title: "Rainbow Buddha Bowl",
     author: "Julian",
     imageUrl: "/rainbow-buddha-bowl.png",
@@ -64,7 +77,7 @@ async function main() {
     ratingsCount: 256,
   });
   await db.insert(recipeTable).values({
-    slug: await getUniqueRecipeSlug("Honey Gralic Salmon"),
+    slug: getUniqueRecipeSlug("Honey Gralic Salmon"),
     title: "Honey Gralic Salmon",
     author: "Julian",
     imageUrl: "/honey-garlic-salmon.png",
@@ -75,7 +88,7 @@ async function main() {
     ratingsCount: 189,
   });
   await db.insert(recipeTable).values({
-    slug: await getUniqueRecipeSlug("Chocolate Lava Cake"),
+    slug: getUniqueRecipeSlug("Chocolate Lava Cake"),
     title: "Chocolate Lava Cake",
     author: "Julian",
     imageUrl: "/chocolate-lava-cake.png",

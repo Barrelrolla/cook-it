@@ -5,9 +5,7 @@ export default function UserLayout({ children }: PropsWithChildren) {
   return (
     <>
       <MainNavbar />
-      <main className="min-h-full flex flex-col">
-        <div className="mt-22">{children}</div>
-      </main>
+      <main className="min-h-full mt-22">{children}</main>
     </>
   );
 }

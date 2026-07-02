@@ -9,7 +9,7 @@ import {
 import { PiStarFill } from "react-icons/pi";
 import Image from "next/image";
 import RecipeInteract from "./recipeInteract";
-import { recipeTable } from "@/db/schemas";
+import { recipeTable } from "@/db/schemas/recipeSchema";
 
 export type RecipeItemType = typeof recipeTable.$inferSelect;
 
