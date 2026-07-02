@@ -5,13 +5,13 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export default function RecipeInteract({
-  recipeId,
+  recipeSlug,
   children,
-}: { recipeId: number } & PropsWithChildren) {
+}: { recipeSlug: string } & PropsWithChildren) {
   return (
     <CardInteract
       as={Link}
-      href={`/recipes/${recipeId}`}
+      href={`/recipes/${recipeSlug}`}
       className="flex flex-col"
     >
       {children}

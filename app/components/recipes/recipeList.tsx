@@ -1,24 +1,13 @@
 import RecipeItem from "./recipeItem";
-import image from "../../../public/hero-dark.png";
+import { getAllRecipes } from "@/db";
 
-export default function RecipeList() {
-  const arr = Array(10).fill({
-    id: 0,
-    title: "Creamy Mushroom Pasta",
-    userName: "Emma",
-    imageUrl: image.src,
-    timeToPreapare: 30,
-    difficulty: "easy",
-    isLiked: false,
-    rating: 4.8,
-    ratingsCount: 324,
-  });
-  let index = 0;
+export default async function RecipeList() {
+  const recipes = await getAllRecipes();
   return (
     <div className="m-4">
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {arr.map((recipe) => {
-          return <RecipeItem key={index++} recipe={recipe} />;
+        {recipes.map((recipe) => {
+          return <RecipeItem key={recipe.id} recipe={recipe} />;
         })}
       </ul>
     </div>

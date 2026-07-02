@@ -9,18 +9,9 @@ import {
 import { PiStarFill } from "react-icons/pi";
 import Image from "next/image";
 import RecipeInteract from "./recipeInteract";
+import { recipeTable } from "@/db/schemas";
 
-export type RecipeItemType = {
-  id: number;
-  title: string;
-  imageUrl: string;
-  userName: string;
-  timeToPreapare: number;
-  difficulty: "easy" | "medium" | "hard";
-  isLiked: boolean;
-  rating: number;
-  ratingsCount: number;
-};
+export type RecipeItemType = typeof recipeTable.$inferSelect;
 
 export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
   const { difficulty } = recipe;
@@ -38,7 +29,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
         className="h-60"
         containerClasses="border-main-content/30 shadow-sm min-w-70"
       >
-        <RecipeInteract recipeId={recipe.id}>
+        <RecipeInteract recipeSlug={recipe.slug}>
           <CardImageContainer className="relative">
             <Image
               sizes="320px"
@@ -55,7 +46,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
                 <span className="flex items-center text-primary-content">
                   <PiStarFill /> {recipe.rating}
                 </span>{" "}
-                ({recipe.ratingsCount}) • by {recipe.userName}
+                ({recipe.ratingsCount}) • by {recipe.author}
               </p>
               <Badge color={color}>{recipe.difficulty}</Badge>
             </div>
