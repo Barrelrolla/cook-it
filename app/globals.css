@@ -74,5 +74,5 @@ main {
 @utility hero-fade-mobile {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, var(--color-main) 25%, transparent 55%);
+  background: linear-gradient(to top, var(--color-main) 15%, transparent 55%);
 }

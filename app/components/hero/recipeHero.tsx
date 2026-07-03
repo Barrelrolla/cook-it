@@ -19,7 +19,7 @@ export default function RecipeHero({
       textAlign="left"
       className="h-130 md:h-150 overflow-y-hidden relative max-w-[2000px] justify-center"
     >
-      <div className="absolute w-full md:w-[70%] justify-self-end inset-0">
+      <div className="absolute h-[80%] md:h-full w-full md:w-[70%] justify-self-end inset-0">
         <Image
           src={imageUrl}
           alt={imageAlt}
