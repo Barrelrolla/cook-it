@@ -56,53 +56,23 @@
   --font-logo: var(--font-lobster);
 }
 
-@utility bg-fade-left {
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-  background-image:
-    linear-gradient(
-      to left,
-      rgba(250, 247, 242, 0) 40vw,
-      rgba(250, 247, 242, 1) 70vw
-    ),
-    url("/hero-light.png");
-}
-@utility bg-fade-left-dark {
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-  background-image:
-    linear-gradient(to left, rgba(9, 11, 16, 0) 60vw, rgba(9, 11, 16, 1) 70vw),
-    url("/hero-dark.png");
-}
-
-@utility bg-fade-down {
-  background-repeat: no-repeat;
-  background-position: right top;
-  background-size: 600px;
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgba(250, 247, 242, 0) 20vh,
-      rgba(250, 247, 242, 1) 35vh
-    ),
-    url("/hero-light.png");
-}
-@utility bg-fade-down-dark {
-  background-repeat: no-repeat;
-  background-position: right top;
-  background-size: 600px;
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgba(9, 11, 16, 0) 20vh,
-      rgba(9, 11, 16, 1) 35vh
-    ),
-    url("/hero-dark.png");
-}
-
 body {
   background-color: var(--color-main);
   color: var(--color-main-content);
+}
+
+main {
+  @apply min-h-screen max-w-(--max-content-width) mx-auto;
+}
+
+@utility hero-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--color-main) 0%, transparent 50%);
+}
+
+@utility hero-fade-mobile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--color-main) 25%, transparent 55%);
 }

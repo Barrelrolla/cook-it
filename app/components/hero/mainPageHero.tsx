@@ -1,29 +1,31 @@
 import {
-  Hero,
   HeroSection,
   HeroText,
   HeroTitle,
 } from "@barrelrolla/react-components-library";
+import RecipeHero from "./recipeHero";
+import heroLight from "../../../public/hero-light.png";
+import heroDark from "../../../public/hero-dark.png";
 
 export default function MainPageHero() {
   return (
-    <Hero
-      textAlign="left"
-      className="h-130 md:h-150 max-w-(--max-content-width)"
-      wrapperClasses="max-md:not-dark:bg-fade-down max-md:dark:bg-fade-down-dark not-dark:md:bg-fade-left md:dark:bg-fade-left-dark max-w-[2000px] mx-auto"
+    <RecipeHero
+      imageUrl={heroLight.src}
+      darkImageUrl={heroDark.src}
+      imageAlt="A bowl of pasta"
     >
       <HeroSection className="justify-end md:justify-center mb-2">
-        <HeroTitle className="font-heading font-bold text-6xl md:text-7xl">
+        <HeroTitle className="font-heading text-6xl md:text-7xl">
           Discover. Cook.
           <br />
           <span className="text-primary-content">Share.</span>
         </HeroTitle>
         <HeroText className="max-w-2/3">
-          Join a community of food lovers. Share your recipes, discover new
-          favourites, and let AI help you cook something amazing.
+          Join a community of food lovers. Share your recipes, new favourites,
+          and let AI help you cook something amazing.
         </HeroText>
       </HeroSection>
       <HeroSection className="hidden md:block" />
-    </Hero>
+    </RecipeHero>
   );
 }

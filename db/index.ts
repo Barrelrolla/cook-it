@@ -13,10 +13,17 @@ function getUniqueRecipeSlug(baseSlug: string) {
 }
 
 export async function getAllRecipes() {
-  return await db.select().from(recipeTable);
+  console.log("getting all recipes");
+  try {
+    return await db.select().from(recipeTable);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 export async function getRecipeById(id: string) {
+  console.log("getting by id");
   try {
     const res = await db
       .select()
@@ -35,6 +42,7 @@ export async function getRecipeById(id: string) {
 }
 
 export async function getRecipeBySlug(slug: string) {
+  console.log("getting by slug");
   try {
     const res = await db
       .select()

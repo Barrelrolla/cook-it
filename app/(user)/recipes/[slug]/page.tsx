@@ -1,9 +1,5 @@
+import RecipePageHero from "@/app/components/hero/recipePageHero";
 import { getRecipeBySlug } from "@/db";
-import {
-  Hero,
-  HeroSection,
-  HeroTitle,
-} from "@barrelrolla/react-components-library";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -28,18 +24,12 @@ export default async function RecipeItemPage({ params }: Props) {
     notFound();
   }
   return (
-    <div className="max-w-[2000px] mx-auto">
-      <Hero
-        style={{
-          backgroundImage: `url(${recipe.imageUrl})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
-        }}
-      >
-        <HeroSection className="max-w-(--max-content-width) mx-auto">
-          <HeroTitle className="font-heading">{recipe.title}</HeroTitle>
-        </HeroSection>
-      </Hero>
-    </div>
+    <>
+      <RecipePageHero
+        recipeName={recipe.title}
+        imageAlt={"The cooked meal"}
+        imageUrl={recipe.imageUrl}
+      />
+    </>
   );
 }
