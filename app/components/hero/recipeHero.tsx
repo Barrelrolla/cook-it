@@ -24,6 +24,7 @@ export default function RecipeHero({
           src={imageUrl}
           alt={imageAlt}
           fill
+          sizes="70vw"
           priority
           className={imgClasses}
         />
@@ -32,6 +33,7 @@ export default function RecipeHero({
             src={darkImageUrl}
             alt={imageAlt}
             fill
+            sizes="70vw"
             priority
             className="object-cover hidden dark:block"
           />
