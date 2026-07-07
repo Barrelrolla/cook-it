@@ -1,19 +1,37 @@
 "use client";
-import { Button } from "@barrelrolla/react-components-library";
+import {
+  Button,
+  ButtonVariant,
+  ColorType,
+} from "@barrelrolla/react-components-library";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginButton() {
-  // const theme = useTheme();
-  // const buttonColor: ColorType = theme?.isDark ? "dark" : "light";
+export default function LoginButton({ signup }: { signup?: boolean }) {
+  const path = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const params = new URLSearchParams(searchParams.toString());
+  if (signup) {
+    params.append("signup", "");
+  } else {
+    params.append("login", "");
+  }
+  const query = params.toString();
+  const color: ColorType = signup ? "primary" : "main";
+  const variant: ButtonVariant = signup ? "solid" : "ghost";
   return (
     <Button
-      color="main"
-      variant="ghost"
-      ghostHover="outline"
       onClick={() => {
-        console.log("login");
+        router.replace(`${path}/?${query}`, {
+          scroll: false,
+        });
       }}
+      color={color}
+      variant={variant}
+      ghostHover="outline"
     >
-      Login
+      {signup ? "Sign Up" : "Login"}
     </Button>
   );
 }

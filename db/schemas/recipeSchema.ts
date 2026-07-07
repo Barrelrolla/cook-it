@@ -24,11 +24,11 @@ export const recipeTable = pgTable("recipes", {
   instructions: varchar().notNull(),
   preparationTime: integer("preparation_time").notNull(),
   difficulty: recipeDifficultyEnum().notNull(),
-  isLiked: boolean("is_liked").default(false),
-  rating: decimal({ mode: "number" }).default(0.0),
-  ratingsCount: integer("ratings_count").default(0),
-  createdAt: time("created_at").defaultNow(),
-  updatedAt: time("updated_at").defaultNow(),
+  isLiked: boolean("is_liked").notNull().default(false),
+  rating: decimal({ mode: "number" }).notNull().default(0.0),
+  ratingsCount: integer("ratings_count").notNull().default(0),
+  createdAt: time("created_at").notNull().defaultNow(),
+  updatedAt: time("updated_at").notNull().defaultNow(),
 });
 
 export type RecipeType = typeof recipeTable.$inferSelect;

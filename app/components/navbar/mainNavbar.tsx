@@ -16,7 +16,8 @@ export default function MainNavbar() {
       collapseAt="md"
       glass={false}
       hasShadow={false}
-      className="min-h-22 items-center pt-4 border-stone-200 dark:border-stone-700 z-40"
+      className="min-h-22 items-center border-stone-200 dark:border-stone-700 z-40"
+      style={{ width: "calc(100% - var(--floating-ui-scrollbar-width))" }}
     >
       <div className="flex flex-row gap-4">
         <Brand />
@@ -33,7 +34,7 @@ export default function MainNavbar() {
       <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
         <DarkModeToggle color="main" variant="ghost" />
         <LoginButton />
-        <Button color="primary">Signup</Button>
+        <LoginButton signup />
       </div>
       <NavbarToggle />
     </Navbar>

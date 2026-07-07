@@ -8,10 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:migrate": "npx drizzle-kit migrate",
+    "docker": "docker compose up"
   },
   "dependencies": {
-    "@barrelrolla/react-components-library": "^0.2.35",
+    "@barrelrolla/react-components-library": "^0.2.43",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^1.0.0-rc.4",
     "nanoid": "^5.1.16",

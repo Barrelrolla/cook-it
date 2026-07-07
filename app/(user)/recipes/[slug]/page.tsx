@@ -25,11 +25,7 @@ export default async function RecipeItemPage({ params }: Props) {
   }
   return (
     <>
-      <RecipePageHero
-        recipeName={recipe.title}
-        imageAlt={"The cooked meal"}
-        imageUrl={recipe.imageUrl}
-      />
+      <RecipePageHero recipe={recipe} />
     </>
   );
 }
