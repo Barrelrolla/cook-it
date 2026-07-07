@@ -27,18 +27,10 @@ export default function LoginModal() {
 
   return (
     <>
-      <Dialog
-        className="bg-transparent"
-        isOpen={showLogin}
-        setIsOpen={() => close()}
-      >
+      <Dialog isOpen={showLogin} setIsOpen={() => close()}>
         <Form close={close} />
       </Dialog>
-      <Dialog
-        className="bg-transparent"
-        isOpen={showSignup}
-        setIsOpen={() => close()}
-      >
+      <Dialog isOpen={showSignup} setIsOpen={() => close()}>
         <Form signup close={close} />
       </Dialog>
     </>
@@ -55,7 +47,7 @@ function Form({
   return (
     <Card containerClasses="@container-normal min-w-75">
       <CardTitle>{signup ? "Sign Up" : "Login"}</CardTitle>
-      <form className="flex flex-col p-4">
+      <form className="flex flex-col px-4 mt-2 gap-2">
         <Input
           label="Username"
           type="text"
@@ -74,8 +66,14 @@ function Form({
         ></Input>
         {signup && (
           <>
-            <label htmlFor="password">Repeat password:</label>
-            <Input type="password" placeholder="password" id="password"></Input>
+            <Input
+              label="Repeat Password"
+              type="password"
+              placeholder="password"
+              id="repeat-password"
+              autoComplete="password"
+              className="text-sm"
+            ></Input>
           </>
         )}
         <CardActions className="flex w-full px-0 gap-2 justify-end">

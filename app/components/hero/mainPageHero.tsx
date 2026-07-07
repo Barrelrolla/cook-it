@@ -26,7 +26,7 @@ export default function MainPageHero() {
           Join a community of food lovers. Share your recipes, new favourites,
           and let AI help you cook something amazing.
         </HeroText>
-        <HeroActions className="justify-start">
+        <HeroActions className="justify-start gap-2">
           <ShareButton />
           <ExploreButton />
         </HeroActions>

@@ -28,7 +28,7 @@ export default function MainNavbar() {
         <li className="flex md:hidden flex-row justify-center items-center gap-4">
           <DarkModeToggle color="main" variant="ghost" />
           <LoginButton />
-          <Button color="primary">Signup</Button>
+          <LoginButton signup />
         </li>
       </NavbarCollapse>
       <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
