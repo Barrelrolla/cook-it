@@ -80,6 +80,7 @@ function Form({
         )}
         <CardActions className="flex w-full px-0 gap-2 justify-end">
           <Button
+            size="sm"
             type="button"
             variant="ghost"
             color="main"
@@ -88,7 +89,9 @@ function Form({
           >
             Cancel
           </Button>
-          <Button type="button">{signup ? "Sign up" : "Login"}</Button>
+          <Button size="sm" type="button">
+            {signup ? "Sign up" : "Login"}
+          </Button>
         </CardActions>
       </form>
     </Card>
