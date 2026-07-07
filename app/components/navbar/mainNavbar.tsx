@@ -16,7 +16,7 @@ export default function MainNavbar() {
       collapseAt="md"
       glass={false}
       hasShadow={false}
-      className="min-h-22 items-center border-stone-200 dark:border-stone-700 z-40"
+      className="min-h-22 items-center p-4 md:p-0"
       style={{ width: "calc(100% - var(--floating-ui-scrollbar-width))" }}
     >
       <div className="flex flex-row gap-4">

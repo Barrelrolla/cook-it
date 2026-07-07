@@ -56,10 +56,22 @@ function Form({
     <Card containerClasses="@container-normal min-w-75">
       <CardTitle>{signup ? "Sign Up" : "Login"}</CardTitle>
       <form className="flex flex-col p-4">
-        <label htmlFor="username">Username:</label>
-        <Input type="text" placeholder="username" id="username"></Input>
-        <label htmlFor="password">Password:</label>
-        <Input type="password" placeholder="password" id="password"></Input>
+        <Input
+          label="Username"
+          type="text"
+          placeholder="username"
+          id="username"
+          autoComplete="username"
+          className="text-sm"
+        ></Input>
+        <Input
+          label="Password"
+          type="password"
+          placeholder="password"
+          id="password"
+          autoComplete="password"
+          className="text-sm"
+        ></Input>
         {signup && (
           <>
             <label htmlFor="password">Repeat password:</label>

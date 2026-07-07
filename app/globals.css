@@ -28,8 +28,9 @@
   --mod-highlight-primary: -0.05;
   --hero-height: 600px;
   --max-content-width: 1280px;
-  scrollbar-gutter: auto;
+  --border-transparency: 30%;
   --floating-ui-scrollbar-width: 0px;
+  scrollbar-gutter: auto;
 }
 
 .dark {
