@@ -52,8 +52,7 @@ export default async function MainNavbar() {
         )}
         {session && (
           <>
-            <p>Hi, {session.user.name}</p>
-            <LogoutButton />
+            <LogoutButton user={session.user} />
           </>
         )}
       </div>

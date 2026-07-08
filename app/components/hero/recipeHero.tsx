@@ -25,6 +25,7 @@ export default function RecipeHero({
           alt={imageAlt}
           fill
           sizes="70vw"
+          priority
           className={imgClasses}
         />
         {darkImageUrl && (
@@ -33,6 +34,7 @@ export default function RecipeHero({
             alt={imageAlt}
             fill
             sizes="70vw"
+            priority
             className="object-cover hidden dark:block"
           />
         )}

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RecipeNotFound() {
   return (
-    <div>
+    <main>
       We couldn&apos;t find that recipe. Please visit the{" "}
       <Anchor href="/recipes" as={Link}>
         recipe list
@@ -13,6 +13,6 @@ export default function RecipeNotFound() {
       <Anchor as={Link} href="/">
         Home page
       </Anchor>
-    </div>
+    </main>
   );
 }

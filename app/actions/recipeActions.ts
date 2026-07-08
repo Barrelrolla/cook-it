@@ -7,8 +7,9 @@ export async function getAllRecipes() {
   try {
     return await db.select().from(recipeTable);
   } catch (error) {
-    console.log(error);
-    return null;
+    throw new Error(
+      `Failed to retrieve recipes. ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 
@@ -25,8 +26,9 @@ export async function getRecipeById(id: string) {
       return null;
     }
   } catch (error) {
-    console.log(error);
-    return null;
+    throw new Error(
+      `Failed to get recipe with id: ${id}. ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 
@@ -43,7 +45,8 @@ export async function getRecipeBySlug(slug: string) {
       return null;
     }
   } catch (error) {
-    console.log(error);
-    return null;
+    throw new Error(
+      `Failed to get recipe with slug ${slug}. ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }

@@ -11,7 +11,12 @@ import {
 } from "@barrelrolla/react-components-library";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Ref, useRef, useState } from "react";
-import { PiGoogleLogoBold } from "react-icons/pi";
+import {
+  PiEnvelopeBold,
+  PiGoogleLogoBold,
+  PiKeyBold,
+  PiUserBold,
+} from "react-icons/pi";
 
 export default function LoginModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,6 +87,8 @@ export default function LoginModal() {
   }
 
   function close() {
+    setIsLoading(false);
+    setError("");
     loginFormRef.current?.reset();
     signupFormRef.current?.reset();
     const params = new URLSearchParams(searchParams.toString());
@@ -110,6 +117,7 @@ export default function LoginModal() {
           close={close}
           action={signUp}
         />
+        {error && <p>{error}</p>}
       </Dialog>
     </>
   );
@@ -119,52 +127,64 @@ function Form({
   formRef,
   signup = false,
   loading = false,
+  error,
   close,
   action,
 }: {
   formRef?: Ref<HTMLFormElement>;
   signup?: boolean;
   loading?: boolean;
+  error?: string;
   close: () => void;
   action?: (payload: FormData) => void;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState("");
   return (
     <Card containerClasses="@container-normal min-w-75">
-      <CardTitle>{signup ? "Sign Up" : "Login"}</CardTitle>
+      <CardTitle className="font-heading">
+        {signup ? "Sign Up" : "Login"}
+      </CardTitle>
       <form
         action={action}
         ref={formRef}
         className="flex flex-col px-4 mt-2 gap-2"
       >
         <Input
-          label="Email"
+          // label="Email"
+          aria-label="email"
+          startIcon={<PiEnvelopeBold />}
           type="email"
           placeholder="email"
           id="email"
           autoComplete="email"
           name="email"
-          className="text-sm"
-        ></Input>
+          className="text-sm w-full"
+        />
         <Input
-          label="Password"
+          startIcon={<PiKeyBold />}
+          // label="Password"
+          aria-label="password"
           type="password"
           placeholder="password"
           id="password"
           name="password"
           autoComplete={signup ? "new-password" : "current-password"}
-          className="text-sm"
-        ></Input>
+          className="text-sm w-full"
+        />
         {signup && (
           <>
             <Input
-              label="Display name"
+              startIcon={<PiUserBold />}
+              // label="Display name"
+              aria-label="username"
               type="text"
               placeholder="username"
               id="username"
               autoComplete="username"
               name="username"
-              className="text-sm"
-            ></Input>
+              className="text-sm w-full"
+            />
           </>
         )}
         <CardActions className="flex w-full px-0 gap-2 justify-end">
@@ -187,15 +207,34 @@ function Form({
             wrapperClasses="w-full"
             className="w-full"
             size="sm"
-            type="submit"
+            type="button"
+            loading={isLoading}
             onClick={() => {
-              authClient.signIn.social({ provider: "google" });
+              authClient.signIn.social(
+                { provider: "google" },
+                {
+                  onRequest: () => {
+                    setIsLoading(true);
+                    setHasError("");
+                  },
+                  onSuccess: () => {
+                    setIsLoading(false);
+                    close();
+                  },
+                  onError: (ctx) => {
+                    setIsLoading(false);
+                    setHasError(ctx.error.message);
+                  },
+                },
+              );
             }}
           >
             Login with Google {<PiGoogleLogoBold />}
           </Button>
         </div>
       </form>
+      {error && <p>{error}</p>}
+      {hasError && <p>{hasError}</p>}
     </Card>
   );
 }
