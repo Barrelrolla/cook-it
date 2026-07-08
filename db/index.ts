@@ -1,63 +1,13 @@
-"use server";
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { eq } from "drizzle-orm";
-import { recipeTable } from "./schemas/recipeSchema";
-import { nanoid } from "nanoid";
 import slug from "slug";
+import { nanoid } from "nanoid";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { recipeTable } from "./schemas/recipeSchema";
 
-const db = drizzle(process.env.DATABASE_URL!);
+export const db = drizzle(process.env.DATABASE_URL!);
 
 function getUniqueRecipeSlug(baseSlug: string) {
   return `${slug(baseSlug)}-${nanoid(6)}`;
-}
-
-export async function getAllRecipes() {
-  console.log("getting all recipes");
-  try {
-    return await db.select().from(recipeTable);
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
-export async function getRecipeById(id: string) {
-  console.log("getting by id");
-  try {
-    const res = await db
-      .select()
-      .from(recipeTable)
-      .where(eq(recipeTable.id, id))
-      .limit(1);
-    if (res.length > 0) {
-      return res[0];
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
-export async function getRecipeBySlug(slug: string) {
-  console.log("getting by slug");
-  try {
-    const res = await db
-      .select()
-      .from(recipeTable)
-      .where(eq(recipeTable.slug, slug))
-      .limit(1);
-    if (res.length > 0) {
-      return res[0];
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,5 +1,5 @@
+import { getAllRecipes } from "@/app/actions/recipeActions";
 import RecipeItem from "./recipeItem";
-import { getAllRecipes } from "@/db";
 
 export default async function RecipeList() {
   const recipes = await getAllRecipes();

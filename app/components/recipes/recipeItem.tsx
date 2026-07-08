@@ -36,7 +36,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
               className="card-image relative"
               fill
               src={recipe.imageUrl}
-              alt="recipe image"
+              alt="the end result of the recipe"
             />
           </CardImageContainer>
           <CardSection>

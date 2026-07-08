@@ -1,5 +1,4 @@
 import {
-  Button,
   DarkModeToggle,
   Navbar,
   NavbarCollapse,
@@ -8,8 +7,12 @@ import {
 import LoginButton from "./loginButton";
 import Brand from "./brand";
 import Navlink from "./navlink";
+import { Suspense } from "react";
+import { getSession } from "@/app/actions/authActions";
+import { LogoutButton } from "./logoutButton";
 
-export default function MainNavbar() {
+export default async function MainNavbar() {
+  const session = await getSession();
   return (
     <Navbar
       backdropClasses="bg-stone-800/30"
@@ -19,22 +22,40 @@ export default function MainNavbar() {
       className="items-center"
       style={{ width: "calc(100% - var(--floating-ui-scrollbar-width))" }}
     >
-      <div className="flex flex-row min-h-22 gap-4">
+      <div className="flex flex-row min-h-18 gap-4">
         <Brand />
       </div>
-      <NavbarCollapse className="font-bold pt-4 md:pt-0">
+      <NavbarCollapse className="font-bold">
         <Navlink href="/recipes">Recipes</Navlink>
         <Navlink href="/categories">Categories</Navlink>
         <li className="flex md:hidden flex-row justify-center items-center gap-4">
           <DarkModeToggle color="main" variant="ghost" />
-          <LoginButton />
-          <LoginButton signup />
+          <Suspense>
+            <LoginButton />
+          </Suspense>
+          <Suspense>
+            <LoginButton signup />
+          </Suspense>
         </li>
       </NavbarCollapse>
       <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
         <DarkModeToggle color="main" variant="ghost" />
-        <LoginButton />
-        <LoginButton signup />
+        {!session && (
+          <>
+            <Suspense>
+              <LoginButton />
+            </Suspense>
+            <Suspense>
+              <LoginButton signup />
+            </Suspense>
+          </>
+        )}
+        {session && (
+          <>
+            <p>Hi, {session.user.name}</p>
+            <LogoutButton />
+          </>
+        )}
       </div>
       <NavbarToggle />
     </Navbar>
