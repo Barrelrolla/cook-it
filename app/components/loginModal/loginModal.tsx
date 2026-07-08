@@ -11,7 +11,7 @@ import {
 } from "@barrelrolla/react-components-library";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Ref, useRef, useState } from "react";
-import { PiGoogleLogo, PiGoogleLogoBold } from "react-icons/pi";
+import { PiGoogleLogoBold } from "react-icons/pi";
 
 export default function LoginModal() {
   const [isLoading, setIsLoading] = useState(false);
