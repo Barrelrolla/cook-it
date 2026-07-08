@@ -1,5 +1,5 @@
+import { getRecipeBySlug } from "@/app/actions/recipeActions";
 import RecipePageHero from "@/app/components/hero/recipePageHero";
-import { getRecipeBySlug } from "@/db";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const recipe = await getRecipeBySlug(slug);
 
   return {
+    metadataBase: new URL(process.env.BASE_URL!),
     title: `${recipe?.title} | Cook-it`,
     openGraph: { images: recipe?.imageUrl },
   };
