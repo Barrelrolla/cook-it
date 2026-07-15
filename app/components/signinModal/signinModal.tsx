@@ -21,10 +21,12 @@ import {
 import GoogleLogo from "../googleLogo";
 import AppleLogo from "../appleLogo";
 import z from "zod";
+import { ZodIssue } from "zod/v3";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [issue, setIssue] = useState<ZodIssue | undefined>(undefined);
   const loginFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -61,6 +63,7 @@ export default function SigninModal() {
       {
         onRequest: () => {
           setError("");
+          setIssue(undefined);
           setIsLoading(true);
         },
         onSuccess: () => {
@@ -84,12 +87,15 @@ export default function SigninModal() {
 
     const User = z
       .object({
-        name: z.string(),
         email: z.email(),
         password: passwordSchema,
         repeatPassword: z.string(),
+        name: z
+          .string()
+          .min(3, "Username should be at least 3 characters long!"),
       })
       .refine((data) => data.password === data.repeatPassword, {
+        path: ["repeat-password"],
         message: "Passwords do not match.",
       });
 
@@ -97,6 +103,7 @@ export default function SigninModal() {
     if (!user.data) {
       if (user.error.issues.length > 0) {
         setError(user.error.issues[0].message);
+        setIssue(user.error.issues[0] as ZodIssue);
       } else {
         setError(SOMETHING_WENT_WRONG);
       }
@@ -112,6 +119,7 @@ export default function SigninModal() {
       {
         onRequest: () => {
           setError("");
+          setIssue(undefined);
           setIsLoading(true);
         },
         onSuccess: () => {
@@ -130,6 +138,7 @@ export default function SigninModal() {
   function reset() {
     setIsLoading(false);
     setError("");
+    setIssue(undefined);
     loginFormRef.current?.reset();
     signupFormRef.current?.reset();
   }
@@ -190,6 +199,7 @@ export default function SigninModal() {
           close={close}
           action={signUp}
           error={error}
+          issue={issue || undefined}
         />
       </Dialog>
     </>
@@ -201,6 +211,7 @@ function Form({
   signup = false,
   loading = false,
   error,
+  issue,
   toggleSingin,
   close,
   action,
@@ -209,6 +220,7 @@ function Form({
   signup?: boolean;
   loading?: boolean;
   error?: string;
+  issue?: ZodIssue;
   toggleSingin: (signup?: boolean) => void;
   close: () => void;
   action: (payload: FormData) => void;
@@ -224,7 +236,8 @@ function Form({
   const passwordRef = useRef<HTMLInputElement>(null);
   const repeatpasswordRef = useRef<HTMLInputElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
-
+  console.log(error);
+  console.log(issue);
   return (
     <Card containerClasses="@container-normal min-w-70 w-70 md:min-w-80 md:w-80">
       <CardTitle className="font-heading">
@@ -251,6 +264,11 @@ function Form({
           autoComplete="email"
           name="email"
           defaultValue={email}
+          error={
+            issue && issue.path.length > 0 && issue.path[0] === "email"
+              ? issue.message
+              : undefined
+          }
         />
         <Input
           startIcon={<PiKeyBold />}
@@ -262,6 +280,11 @@ function Form({
           name="password"
           autoComplete={signup ? "new-password" : "current-password"}
           defaultValue={password}
+          error={
+            issue && issue.path.length > 0 && issue.path[0] === "password"
+              ? issue.message
+              : undefined
+          }
         />
         {signup && (
           <>
@@ -275,6 +298,13 @@ function Form({
               name="repeat-password"
               autoComplete={signup ? "new-password" : "current-password"}
               defaultValue={repeatPassword}
+              error={
+                issue &&
+                issue.path.length > 0 &&
+                issue.path[0] === "repeat-password"
+                  ? issue.message
+                  : undefined
+              }
             />
             <Input
               startIcon={<PiUserBold />}
@@ -286,6 +316,11 @@ function Form({
               autoComplete="username"
               name="username"
               defaultValue={userName}
+              error={
+                issue && issue.path.length > 0 && issue.path[0] === "name"
+                  ? issue.message
+                  : undefined
+              }
             />
           </>
         )}
@@ -299,7 +334,7 @@ function Form({
           >
             {signup ? "Sign up" : "Sign in"}
           </Button>
-          {error && (
+          {error && !issue && (
             <p className="mt-1 text-center text-error-content">{error}</p>
           )}
           {!signup && error && (
