@@ -1,4 +1,5 @@
-import { Hero } from "@barrelrolla/react-components-library";
+"use client";
+import { Hero, useTheme } from "@barrelrolla/react-components-library";
 import Image from "next/image";
 import { PropsWithChildren } from "react";
 
@@ -14,21 +15,25 @@ export default function RecipeHero({
 } & PropsWithChildren) {
   const imgClasses =
     "object-cover" + (darkImageUrl ? " block dark:hidden" : "");
+  const theme = useTheme();
+  const isDark = theme?.isDark;
   return (
     <Hero
       textAlign="left"
       className="h-130 md:h-150 overflow-y-hidden relative max-w-[2000px] justify-center"
     >
       <div className="absolute h-[80%] md:h-full w-full md:w-[70%] justify-self-end inset-0">
-        <Image
-          src={imageUrl}
-          alt={imageAlt}
-          fill
-          sizes="70vw"
-          priority
-          className={imgClasses}
-        />
-        {darkImageUrl && (
+        {(!darkImageUrl || !isDark) && (
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            sizes="70vw"
+            priority
+            className={imgClasses}
+          />
+        )}
+        {darkImageUrl && isDark && (
           <Image
             src={darkImageUrl}
             alt={imageAlt}
@@ -38,8 +43,6 @@ export default function RecipeHero({
             className="object-cover hidden dark:block"
           />
         )}
-
-        {/* Light mode fade */}
         <div className="max-md:hero-fade-mobile md:hero-fade" />
       </div>
       <div className="flex justify-end pb-2 h-full md:w-(--max-content-width) relative">

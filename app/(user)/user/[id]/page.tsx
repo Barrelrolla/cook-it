@@ -1,3 +1,4 @@
+import { getSession } from "@/app/actions/authActions";
 import { getUserById } from "@/app/actions/userActions";
 import { notFound } from "next/navigation";
 
@@ -11,9 +12,13 @@ export default async function UserPage({
   if (!user) {
     notFound();
   }
+  const session = await getSession();
+  const me = session?.user.id === id;
   return (
     <main className="pt-4">
-      <h1 className="text-6xl font-heading">{`Hello, ${user.name}!`}</h1>
+      <h1 className="text-6xl font-heading">
+        {me ? `Hello, ${user.name}!` : `${user.name}'s profile`}
+      </h1>
     </main>
   );
 }

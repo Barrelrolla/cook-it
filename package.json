@@ -12,17 +12,19 @@
     "docker": "docker compose up"
   },
   "dependencies": {
-    "@barrelrolla/react-components-library": "^0.2.44",
+    "@barrelrolla/react-components-library": "^0.2.53",
     "better-auth": "^1.6.23",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
+    "drizzle-zod": "^0.8.3",
     "nanoid": "^5.1.16",
     "next": "^16.2.9",
     "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-icons": "^5.7.0",
-    "slug": "^11.0.1"
+    "slug": "^11.0.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

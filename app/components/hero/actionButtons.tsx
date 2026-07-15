@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@barrelrolla/react-components-library";
+import { PiArrowRightBold, PiPlusBold } from "react-icons/pi";
 
 export function ShareButton() {
   return (
     <Button as={Link} href={"/share"}>
-      Share recipe
+      Share recipe <PiPlusBold />
     </Button>
   );
 }
@@ -19,7 +20,7 @@ export function ExploreButton() {
       variant="ghost"
       ghostHover="outline"
     >
-      Explore recipes
+      Explore recipes <PiArrowRightBold />
     </Button>
   );
 }

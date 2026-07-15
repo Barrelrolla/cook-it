@@ -81,7 +81,12 @@ export async function signOut() {
 }
 
 export async function getSession() {
-  return await auth.api.getSession({
-    headers: await headers(), // you need to pass the headers object.
-  });
+  try {
+    return await auth.api.getSession({
+      headers: await headers(),
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }

@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Manrope, Fraunces, Lobster } from "next/font/google";
+import { Manrope, Fraunces, Lobster, Roboto } from "next/font/google";
 import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 
 export const manrope = Manrope({
@@ -22,6 +22,12 @@ export const lobster = Lobster({
   preload: false,
 });
 
+export const roboto = Roboto({
+  weight: "500",
+  variable: "--font-roboto",
+  preload: false,
+});
+
 export const metadata: Metadata = {
   title: "Cookit",
   description: "The next-gen cooking app",
@@ -36,7 +42,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${manrope.variable} ${fraunces.variable} ${lobster.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} ${lobster.variable} ${roboto.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -48,6 +54,10 @@ export default function RootLayout({
               if (!savedDarkMode) localStorage.setItem("darkMode", "system");
               const { classList, dataset } = document.documentElement;
               if (savedTheme) dataset.theme = savedTheme;
+              if (!savedTheme) {
+                dataset.theme = "green";
+                localStorage.setItem("theme", "green");
+              }
               if (savedDarkMode === "system" || !savedDarkMode) {
                 const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
                 if (isDark) classList.add("dark");

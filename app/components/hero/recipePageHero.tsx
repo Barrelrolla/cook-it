@@ -36,7 +36,7 @@ export default function RecipePageHero({ recipe }: Props) {
           aliquid deserunt. Placeat doloribus excepturi est officia laborum.
         </HeroText>
         <p className="px-4 flex items-center">
-          <span className="flex items-center text-primary-content">
+          <span className="flex items-center text-accent-content">
             <PiStarFill />
             {rating}{" "}
           </span>

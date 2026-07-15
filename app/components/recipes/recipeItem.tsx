@@ -43,7 +43,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
             <CardTitle>{recipe.title}</CardTitle>
             <div className="flex justify-between px-4 pb-2 text-sm">
               <p className="flex items-center">
-                <span className="flex items-center text-primary-content">
+                <span className="flex items-center text-accent-content">
                   <PiStarFill /> {recipe.rating}
                 </span>{" "}
                 ({recipe.ratingsCount}) • by {recipe.author}

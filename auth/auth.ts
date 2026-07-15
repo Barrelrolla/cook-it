@@ -5,6 +5,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
+  trustedOrigins: ["http://192.168.100.72:3000"],
   emailAndPassword: { enabled: true },
   socialProviders: {
     google: {

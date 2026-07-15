@@ -1,11 +1,11 @@
 "use client";
-import { authClient } from "@/auth/authClient";
-import { Anchor, Button } from "@barrelrolla/react-components-library";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { authClient } from "@/auth/authClient";
+import { Anchor, Button } from "@barrelrolla/react-components-library";
 
-export function LogoutButton({
+export function SignoutButton({
   user,
 }: {
   user: {
@@ -49,7 +49,7 @@ export function LogoutButton({
         }}
       >
         <Button type="submit" loading={isLoading}>
-          Logout
+          Sign out
         </Button>
         {error && <p>{error}</p>}
       </form>

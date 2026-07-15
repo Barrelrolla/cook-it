@@ -1,4 +1,5 @@
 "use client";
+import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/utils/constants";
 import {
   Button,
   ButtonVariant,
@@ -6,20 +7,20 @@ import {
 } from "@barrelrolla/react-components-library";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginButton({ signup }: { signup?: boolean }) {
+export default function SigninButton({ signup }: { signup?: boolean }) {
   const path = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const params = new URLSearchParams(searchParams.toString());
   if (signup) {
-    params.append("signup", "");
+    params.append(SIGNUP_PARAM, "");
   } else {
-    params.append("login", "");
+    params.append(SIGNIN_PARAM, "");
   }
   const query = params.toString();
-  const color: ColorType = signup ? "primary" : "main";
-  const variant: ButtonVariant = signup ? "solid" : "ghost";
+  const color: ColorType = signup ? "main" : "primary";
+  const variant: ButtonVariant = signup ? "ghost" : "solid";
   return (
     <Button
       onClick={() => {
@@ -31,7 +32,7 @@ export default function LoginButton({ signup }: { signup?: boolean }) {
       variant={variant}
       ghostHover="outline"
     >
-      {signup ? "Sign Up" : "Login"}
+      {signup ? "Sign Up" : "Sign in"}
     </Button>
   );
 }

@@ -4,12 +4,12 @@ import {
   NavbarCollapse,
   NavbarToggle,
 } from "@barrelrolla/react-components-library";
-import LoginButton from "./loginButton";
+import SigninButton from "./signinButton";
 import Brand from "./brand";
 import Navlink from "./navlink";
 import { Suspense } from "react";
 import { getSession } from "@/app/actions/authActions";
-import { LogoutButton } from "./logoutButton";
+import { SignoutButton } from "./signoutButton";
 
 export default async function MainNavbar() {
   const session = await getSession();
@@ -28,17 +28,22 @@ export default async function MainNavbar() {
       <NavbarCollapse className="font-bold">
         <Navlink href="/recipes">Recipes</Navlink>
         <Navlink href="/categories">Categories</Navlink>
-        <li className="flex md:hidden flex-row justify-center items-center gap-4">
+        <li className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
           <DarkModeToggle color="main" variant="ghost" />
-          <Suspense>
-            <LoginButton />
-          </Suspense>
-          <Suspense>
-            <LoginButton signup />
-          </Suspense>
+          {!session && (
+            <>
+              <Suspense>
+                <SigninButton />
+              </Suspense>
+              {/* <Suspense>
+                <LoginButton signup />
+              </Suspense> */}
+            </>
+          )}
+          {session && <SignoutButton user={session.user} />}
         </li>
       </NavbarCollapse>
-      <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
+      {/* <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
         <DarkModeToggle color="main" variant="ghost" />
         {!session && (
           <>
@@ -55,7 +60,7 @@ export default async function MainNavbar() {
             <LogoutButton user={session.user} />
           </>
         )}
-      </div>
+      </div> */}
       <NavbarToggle />
     </Navbar>
   );

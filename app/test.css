@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@plugin "../plugin.ts";
+@source "../node_modules/@barrelrolla/react-components-library/";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-main: #faf7f2;
+  --color-main-content: #1c1c1c;
+  --color-primary: #ffffff;
+  --color-primary-content: #ff6b00;
+  --color-secondary: #f3ede3;
+  --color-secondary-content: #f3ede3;
+  --color-accent: #ffe8d6;
+  --color-accent-content: #d95d00;
+  --radius-inputs: 0.5rem;
+  --default-font-weight: 500;
+  --radius-navigation: 0;
+  --border-navigation: 1px;
+  --hero-height: 600px;
+  --max-content-width: 1280px;
+  --border-transparency: 20%;
+  --floating-ui-scrollbar-width: 0px;
+  scrollbar-gutter: auto;
+}
+
+.dark {
+  --color-main: #090b10;
+  --color-main-content: #f8f9fa;
+  --color-primary: #000000;
+  --color-primary-content: #ff6b00;
+  --color-secondary: #1b2230;
+  --color-secondary-content: #f8f9fa;
+  --color-accent: #2a1a0d;
+  --color-accent-content: #ffb37a;
+}
+
+[data-theme="green"] {
+  --color-primary-content: #2e7d32;
+}
+[data-theme="green"].dark {
+  --color-primary: black;
+  --color-primary-content: #3f8f44;
+  --mod-highlight-primary: 0.05;
+}
+[data-theme="green2"] {
+  --radius-inputs: 0rem;
+  --radius-containers: 0rem;
+  --color-main: #f5e9db;
+  --color-primary-content: #2e7d32;
+}
+[data-theme="green2"].dark {
+  --color-main: #0f0f00;
+  --color-primary: black;
+  --color-primary-content: #3f8f44;
+  --mod-highlight-primary: 0.05;
+}
+[data-theme="red"] {
+  --color-primary-content: #c23b22;
+}
+[data-theme="red"].dark {
+  --color-primary-content: #d95c4a;
+}
+[data-theme="orange"] {
+  --radius-inputs: 2rem;
+  --radius-containers: 2rem;
+  --color-primary-content: #d14900;
+}
+[data-theme="orange"].dark {
+  --color-primary-content: #ff6b00;
+}
+[data-theme="adobe-red"] {
+  --radius-inputs: 0rem;
+  --radius-containers: 0rem;
+  --color-main: #f2dfce;
+  --color-primary-content: #a61103;
+}
+[data-theme="adobe-red"].dark {
+  --color-main: #0b0b0d;
+  --color-primary: #f2dfce;
+  --color-primary-content: #d92b04;
+  --mod-highlight-primary: 0.05;
+}
+[data-theme="adobe-green"] {
+  --radius-inputs: 0.5rem;
+  --radius-containers: 0.5rem;
+  --color-main: #f2dfce;
+  --color-primary-content: #5a7302;
+}
+[data-theme="adobe-green"].dark {
+  --color-main: #0a1100;
+  --color-primary: #0a1100;
+  --color-primary-content: #5a7302;
+  --mod-highlight-primary: 0.05;
+}
+[data-theme="final"] {
+  --color-main: #f7ebdd;
+  --color-main-content: #2e241d;
+  --color-primary: #ffffff;
+  --color-primary-content: #5a7302;
+  --color-secondary: #ffffff;
+  --color-secondary-content: #c23b22;
+  --color-accent: #ffffff;
+  --color-accent-content: #b33e00;
+  --color-info: #ffffff;
+  --color-info-content: #0f5f8a;
+  --color-success: #ffffff;
+  --color-success-content: #3f6b1e;
+  --color-warning: #ffffff;
+  --color-warning-content: #9a5b00;
+  --color-error: #ffffff;
+  --color-error-content: #a52828;
+}
+[data-theme="final"].dark {
+  --color-main: #221f19;
+  --color-main-content: #f4eee8;
+  --color-primary: #1b1b16;
+  --color-primary-content: #739120;
+  --color-secondary: #1b1b16;
+  --color-secondary-content: #de7463;
+  --color-accent: #1b1b16;
+  --color-accent-content: #ff6b00;
+  --color-info: #161616;
+  --color-info-content: #6ea8d8;
+  --color-success: #161616;
+  --color-success-content: #78a84a;
+  --color-warning: #161616;
+  --color-warning-content: #d79a1a;
+  --color-error: #161616;
+  --color-error-content: #e46a62;
+}
+
+.ukuku {
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope);
+  --font-heading: var(--font-fraunces);
+  --font-logo: var(--font-lobster);
+}
+
+body {
+  background-color: var(--color-main);
+  color: var(--color-main-content);
+}
+
+main {
+  @apply min-h-screen max-w-(--max-content-width) mx-auto;
+}
+
+@utility hero-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--color-main) 0%, transparent 50%);
+}
+
+@utility hero-fade-mobile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--color-main) 15%, transparent 55%);
+}
