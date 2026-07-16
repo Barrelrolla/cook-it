@@ -1,6 +1,20 @@
 import { getSession } from "@/app/actions/authActions";
 import { getUserByName } from "@/app/actions/userActions";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+type Props = { params: Promise<{ name: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { name } = await params;
+  const user = await getUserByName(name);
+
+  return {
+    metadataBase: new URL(process.env.BASE_URL!),
+    title: `${user?.name}'s profile | Garndish`,
+    openGraph: { images: user?.image || undefined },
+  };
+}
 
 export default async function UserPage({
   params,

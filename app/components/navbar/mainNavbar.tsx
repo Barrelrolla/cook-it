@@ -10,6 +10,7 @@ import Navlink from "./navlink";
 import { Suspense } from "react";
 import { getSession } from "@/app/actions/authActions";
 import { SignoutButton } from "./signoutButton";
+import { LINKS } from "@/utils/constants";
 
 export default async function MainNavbar() {
   const session = await getSession();
@@ -26,8 +27,11 @@ export default async function MainNavbar() {
         <Brand />
       </div>
       <NavbarCollapse className="font-bold">
-        <Navlink href="/recipes">Recipes</Navlink>
-        <Navlink href="/categories">Categories</Navlink>
+        {LINKS.map((link) => (
+          <Navlink key={link.name} href={link.url}>
+            {link.name}
+          </Navlink>
+        ))}
         <li className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
           <DarkModeToggle color="main" variant="ghost" />
           {!session && (
@@ -35,32 +39,11 @@ export default async function MainNavbar() {
               <Suspense>
                 <SigninButton />
               </Suspense>
-              {/* <Suspense>
-                <LoginButton signup />
-              </Suspense> */}
             </>
           )}
           {session && <SignoutButton user={session.user} />}
         </li>
       </NavbarCollapse>
-      {/* <div className="hidden md:flex flex-row items-center gap-1 md:gap-2">
-        <DarkModeToggle color="main" variant="ghost" />
-        {!session && (
-          <>
-            <Suspense>
-              <LoginButton />
-            </Suspense>
-            <Suspense>
-              <LoginButton signup />
-            </Suspense>
-          </>
-        )}
-        {session && (
-          <>
-            <LogoutButton user={session.user} />
-          </>
-        )}
-      </div> */}
       <NavbarToggle />
     </Navbar>
   );

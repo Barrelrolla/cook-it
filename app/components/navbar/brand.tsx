@@ -2,6 +2,7 @@
 import { NavbarBrand } from "@barrelrolla/react-components-library";
 import Link from "next/link";
 import Logo from "../logo";
+import { BRAND_NAME } from "@/utils/constants";
 
 export default function Brand() {
   return (
@@ -13,7 +14,7 @@ export default function Brand() {
       <span className="text-primary-content">
         <Logo />
       </span>
-      Garndish
+      {BRAND_NAME}
     </NavbarBrand>
   );
 }

@@ -1,9 +1,12 @@
-import PasswordReset from "@/app/components/email/passwordReset";
-import VerificationEmail from "@/app/components/email/verificationEmail";
+import { getUserByName } from "@/app/actions/userActions";
+import PasswordReset from "@/emails/passwordReset";
+import VerificationEmail from "@/emails/verificationEmail";
 import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
+import { SignUpSchema } from "@/utils/validationSchemas";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -11,13 +14,31 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
   trustedOrigins: ["http://192.168.100.72:3000"],
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      switch (ctx.path) {
+        case "/sign-up/email":
+          const res = SignUpSchema.safeParse(ctx.body);
+          if (!res.success) {
+            console.dir(res.error.issues, { depth: null });
+            throw new APIError("BAD_REQUEST", {
+              message: res.error.issues[0].message,
+            });
+          }
+          const existing = await getUserByName(res.data.name);
+          if (existing) {
+            throw new APIError("BAD_REQUEST", {
+              message: "That username is already in use.",
+            });
+          }
+      }
+    }),
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
     sendResetPassword: async ({ url }) => {
-      console.log("requesting password reset");
       try {
-        console.log("sending reset pass");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
@@ -25,26 +46,22 @@ export const auth = betterAuth({
           react: PasswordReset({ url }),
         });
       } catch (error) {
-        console.log(error, "pass reset error");
+        console.log(error);
       }
-      console.log("sent pass reset");
     },
   },
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
-      console.log("reqesting verification");
       try {
-        console.log("sending verificiation");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
           subject: "Verify your Garndish account",
-          react: VerificationEmail({ user, url }),
+          react: VerificationEmail({ name: user.name, url }),
         });
       } catch (error) {
-        console.log(error, "verification error");
+        console.log(error);
       }
-      console.log("sent verification");
     },
     autoSignInAfterVerification: true,
   },

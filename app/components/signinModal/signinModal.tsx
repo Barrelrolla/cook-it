@@ -20,6 +20,7 @@ import {
   PiUserBold,
 } from "react-icons/pi";
 import {
+  RESET_PASSWORD_PARAM,
   SIGNIN_PARAM,
   SIGNUP_PARAM,
   SOMETHING_WENT_WRONG,
@@ -28,6 +29,7 @@ import GoogleLogo from "../googleLogo";
 import AppleLogo from "../appleLogo";
 import z from "zod";
 import { ZodIssue } from "zod/v3";
+import { passwordSchema, SignUpSchema } from "@/utils/validationSchemas";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,22 +43,7 @@ export default function SigninModal() {
   const searchParams = useSearchParams();
   const showSignin = searchParams.has(SIGNIN_PARAM);
   const showSignup = searchParams.has(SIGNUP_PARAM);
-  const passwordSchema = z
-    .string()
-    .min(8, { message: "Password should be at least 8 symbols." })
-    .max(20, { message: "Password should be maximum 20 symbols." })
-    .refine((password) => /[A-Z]/.test(password), {
-      message: "Password should include at least one uppercase letter.",
-    })
-    .refine((password) => /[a-z]/.test(password), {
-      message: "Password should include at least one lowercase letter.",
-    })
-    .refine((password) => /[0-9]/.test(password), {
-      message: "Password should inlude at least one number.",
-    })
-    .refine((password) => /[!@#$%^&*]/.test(password), {
-      message: "Password should include at least one special character.",
-    });
+  const resettingPass = searchParams.has(RESET_PASSWORD_PARAM);
 
   async function signin(formData: FormData) {
     const email = formData.get("email")?.toString() || "";
@@ -92,19 +79,13 @@ export default function SigninModal() {
     const password = formData.get("password")?.toString() || "";
     const repeatPassword = formData.get("repeat-password")?.toString() || "";
 
-    const User = z
-      .object({
-        name: z
-          .string()
-          .min(3, "Username should be at least 3 characters long!"),
-        email: z.email(),
-        password: passwordSchema,
-        repeatPassword: z.string(),
-      })
-      .refine((data) => data.password === data.repeatPassword, {
+    const User = SignUpSchema.extend({ repeatPassword: z.string() }).refine(
+      (data) => data.password === data.repeatPassword,
+      {
         path: ["repeat-password"],
         message: "Passwords do not match.",
-      });
+      },
+    );
 
     const user = User.safeParse({ name, email, password, repeatPassword });
     if (!user.data) {
@@ -130,11 +111,13 @@ export default function SigninModal() {
           setIssue(undefined);
           setIsLoading(true);
         },
-        onSuccess: () => {
+        onSuccess: (ctx) => {
+          console.log(ctx);
           setIsLoading(false);
           setAccountCreated(true);
         },
         onError: (ctx) => {
+          console.log(ctx);
           setIsLoading(false);
           setError(ctx.error.message || SOMETHING_WENT_WRONG);
         },
@@ -174,6 +157,98 @@ export default function SigninModal() {
       params.append(SIGNIN_PARAM, "");
     }
     replaceParams(params.toString());
+  }
+
+  if (resettingPass) {
+    return (
+      <Dialog
+        backdropClasses="items-start md:items-center"
+        className="mt-22 md:mt-0"
+        isOpen
+        setIsOpen={() => close()}
+      >
+        <form
+          action={(formData: FormData) => {
+            const password = formData.get("password")?.toString() || "";
+            const repeatPassword =
+              formData.get("repeat-password")?.toString() || "";
+
+            const Pass = z
+              .object({ password: passwordSchema, repeatPassword: z.string() })
+              .refine((data) => data.password === data.repeatPassword, {
+                path: ["repeat-password"],
+                message: "Passwords do not match.",
+              });
+
+            const pass = Pass.safeParse({
+              password,
+              repeatPassword,
+            });
+            if (!pass.data) {
+              if (pass.error.issues.length > 0) {
+                setError(pass.error.issues[0].message);
+                setIssue(pass.error.issues[0] as ZodIssue);
+              } else {
+                setError(SOMETHING_WENT_WRONG);
+              }
+              return;
+            }
+
+            authClient.resetPassword(
+              {
+                newPassword: pass.data.password,
+                token: searchParams.get("token") || undefined,
+              },
+              { onRequest: () => {}, onSuccess: () => {}, onError: () => {} },
+            );
+          }}
+        >
+          <Card containerClasses="min-w-70 w-70 md:min-w-80 md:w-80">
+            <CardTitle className="font-heading">
+              Create a new password
+            </CardTitle>
+            <Input
+              required
+              startIcon={<PiKeyBold />}
+              aria-label="password"
+              type="password"
+              placeholder="password"
+              id="password"
+              name="password"
+              autoComplete={"new-password"}
+              error={
+                issue && issue.path.length > 0 && issue.path[0] === "password"
+                  ? issue.message
+                  : undefined
+              }
+            />
+            <Input
+              required
+              startIcon={<PiKeyBold />}
+              aria-label="repeat password"
+              type="password"
+              placeholder="repeat password"
+              id="repeat-password"
+              name="repeat-password"
+              autoComplete={"new-password"}
+              error={
+                issue &&
+                issue.path.length > 0 &&
+                issue.path[0] === "repeat-password"
+                  ? issue.message
+                  : undefined
+              }
+            />
+            {error && (
+              <p className="mt-1 text-center text-error-content">{error}</p>
+            )}
+            <CardActions>
+              <Button>Update password</Button>
+            </CardActions>
+          </Card>
+        </form>
+      </Dialog>
+    );
   }
   return (
     <>
@@ -266,7 +341,7 @@ function Form({
 
   function resetPass() {
     authClient.requestPasswordReset(
-      { email },
+      { email, redirectTo: `/?${RESET_PASSWORD_PARAM}=` },
       {
         onRequest: () => {
           setResetError("");
@@ -302,6 +377,7 @@ function Form({
       >
         {signup && (
           <Input
+            required
             startIcon={<PiUserBold />}
             ref={userNameRef}
             aria-label="username"
@@ -319,6 +395,7 @@ function Form({
           />
         )}
         <Input
+          required
           startIcon={<PiEnvelopeBold />}
           ref={emailRef}
           aria-label="email"
@@ -335,6 +412,7 @@ function Form({
           }
         />
         <Input
+          required
           startIcon={<PiKeyBold />}
           ref={passwordRef}
           aria-label="password"
@@ -352,6 +430,7 @@ function Form({
         />
         {signup && (
           <Input
+            required
             startIcon={<PiKeyBold />}
             ref={repeatpasswordRef}
             aria-label="repeat password"
@@ -388,7 +467,7 @@ function Form({
               Forgotten password?{" "}
               {!resetLoading && (
                 <Anchor
-                  className="cursor-pointer"
+                  className="cursor-pointer ml-1"
                   as="button"
                   type="button"
                   onClick={resetPass}
@@ -396,7 +475,7 @@ function Form({
                   Send reset email.
                 </Anchor>
               )}
-              {resetLoading && <Spinner className="ml-2" />}
+              {resetLoading && <Spinner className="ml-1" />}
             </p>
           )}
           {!signup && error && resetReqested && (

@@ -1,5 +1,6 @@
 "use client";
-import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/utils/constants";
+
+import { SIGNIN, SIGNIN_PARAM, SIGNUP, SIGNUP_PARAM } from "@/utils/constants";
 import {
   Button,
   ButtonVariant,
@@ -32,7 +33,7 @@ export default function SigninButton({ signup }: { signup?: boolean }) {
       variant={variant}
       ghostHover="outline"
     >
-      {signup ? "Sign Up" : "Sign in"}
+      {signup ? SIGNUP : SIGNIN}
     </Button>
   );
 }

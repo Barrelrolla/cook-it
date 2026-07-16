@@ -29,7 +29,7 @@ export const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Cookit",
+  title: "Garndish",
   description: "The next-gen cooking app",
 };
 

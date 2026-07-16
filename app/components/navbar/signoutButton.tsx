@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import { Anchor, Button } from "@barrelrolla/react-components-library";
+import { SIGNOUT } from "@/utils/constants";
 
 export function SignoutButton({
   user,
@@ -49,7 +50,7 @@ export function SignoutButton({
         }}
       >
         <Button type="submit" loading={isLoading}>
-          Sign out
+          {SIGNOUT}
         </Button>
         {error && <p>{error}</p>}
       </form>

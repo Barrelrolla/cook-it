@@ -9,7 +9,8 @@
     "lint": "eslint",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "docker": "docker compose up"
+    "docker": "docker compose up",
+    "email:dev": "email dev"
   },
   "dependencies": {
     "@barrelrolla/react-components-library": "^0.2.53",
@@ -29,6 +30,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@react-email/ui": "^6.9.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",

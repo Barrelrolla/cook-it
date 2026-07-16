@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     metadataBase: new URL(process.env.BASE_URL!),
-    title: `${recipe?.title} | Cook-it`,
+    title: `${recipe?.title} | Garndish`,
     openGraph: { images: recipe?.imageUrl },
   };
 }
