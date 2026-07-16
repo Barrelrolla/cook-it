@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Manrope, Fraunces, Lobster, Roboto } from "next/font/google";
+import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 
 export const manrope = Manrope({
@@ -15,10 +15,10 @@ export const fraunces = Fraunces({
   preload: false,
 });
 
-export const lobster = Lobster({
+export const hurricane = Hurricane({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-lobster",
+  variable: "--font-hurricane",
   preload: false,
 });
 
@@ -42,7 +42,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${manrope.variable} ${fraunces.variable} ${lobster.variable} ${roboto.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} ${hurricane.variable} ${roboto.variable} h-full antialiased`}
     >
       <head>
         <script

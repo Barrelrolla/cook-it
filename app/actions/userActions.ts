@@ -10,3 +10,12 @@ export async function getUserById(id: string) {
     return null;
   }
 }
+
+export async function getUserByName(name: string) {
+  const res = await db.select().from(user).where(eq(user.name, name)).limit(1);
+  if (res.length > 0) {
+    return res[0];
+  } else {
+    return null;
+  }
+}

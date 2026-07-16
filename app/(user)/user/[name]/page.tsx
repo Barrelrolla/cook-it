@@ -1,23 +1,23 @@
 import { getSession } from "@/app/actions/authActions";
-import { getUserById } from "@/app/actions/userActions";
+import { getUserByName } from "@/app/actions/userActions";
 import { notFound } from "next/navigation";
 
 export default async function UserPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ name: string }>;
 }) {
-  const { id } = await params;
-  const user = await getUserById(id);
+  const { name } = await params;
+  const user = await getUserByName(name);
   if (!user) {
     notFound();
   }
   const session = await getSession();
-  const me = session?.user.id === id;
+  const current = session?.user.name === name;
   return (
     <main className="pt-4">
       <h1 className="text-6xl font-heading">
-        {me ? `Hello, ${user.name}!` : `${user.name}'s profile`}
+        {current ? `Hello, ${user.name}!` : `${user.name}'s profile`}
       </h1>
     </main>
   );

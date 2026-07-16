@@ -24,7 +24,7 @@ export function SignoutButton({
   return (
     <>
       <p>
-        <Anchor as={Link} href={`/user/${user.id}`}>
+        <Anchor as={Link} href={`/user/${user.name}`}>
           {user.name}
         </Anchor>
       </p>

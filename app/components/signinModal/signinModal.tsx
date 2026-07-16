@@ -11,8 +11,14 @@ import {
   CardTitle,
   Dialog,
   Input,
+  Spinner,
 } from "@barrelrolla/react-components-library";
-import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
+import {
+  PiCheckBold,
+  PiEnvelopeBold,
+  PiKeyBold,
+  PiUserBold,
+} from "react-icons/pi";
 import {
   SIGNIN_PARAM,
   SIGNUP_PARAM,
@@ -27,6 +33,7 @@ export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [issue, setIssue] = useState<ZodIssue | undefined>(undefined);
+  const [accountCreated, setAccountCreated] = useState(true);
   const loginFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -115,6 +122,7 @@ export default function SigninModal() {
         name: user.data.name,
         email: user.data.email,
         password: user.data.password,
+        callbackURL: `/user/${user.data.name}`,
       },
       {
         onRequest: () => {
@@ -124,8 +132,7 @@ export default function SigninModal() {
         },
         onSuccess: () => {
           setIsLoading(false);
-          close();
-          router.refresh();
+          setAccountCreated(true);
         },
         onError: (ctx) => {
           setIsLoading(false);
@@ -139,6 +146,7 @@ export default function SigninModal() {
     setIsLoading(false);
     setError("");
     setIssue(undefined);
+    setAccountCreated(false);
     loginFormRef.current?.reset();
     signupFormRef.current?.reset();
   }
@@ -167,7 +175,6 @@ export default function SigninModal() {
     }
     replaceParams(params.toString());
   }
-
   return (
     <>
       <Dialog
@@ -191,16 +198,32 @@ export default function SigninModal() {
         isOpen={showSignup}
         setIsOpen={() => close()}
       >
-        <Form
-          formRef={signupFormRef}
-          signup
-          loading={isLoading}
-          toggleSingin={toggleSignin}
-          close={close}
-          action={signUp}
-          error={error}
-          issue={issue || undefined}
-        />
+        {accountCreated && (
+          <Card containerClasses="flex items-center text-center justify-center p-4 min-w-70 w-70 md:min-w-80 md:w-80 h-90">
+            <p className="flex self-center">
+              Account created.{" "}
+              <span className="text-success-content ml-2 text-2xl">
+                <PiCheckBold />
+              </span>
+            </p>
+            <p>We&apos;ve sent you an email with a verification link.</p>
+            <Button className="w-full mt-4" role="button" onClick={close}>
+              Close
+            </Button>
+          </Card>
+        )}
+        {!accountCreated && (
+          <Form
+            formRef={signupFormRef}
+            signup
+            loading={isLoading}
+            toggleSingin={toggleSignin}
+            close={close}
+            action={signUp}
+            error={error}
+            issue={issue || undefined}
+          />
+        )}
       </Dialog>
     </>
   );
@@ -210,7 +233,7 @@ function Form({
   formRef,
   signup = false,
   loading = false,
-  error,
+  error = "bla",
   issue,
   toggleSingin,
   close,
@@ -233,14 +256,36 @@ function Form({
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetReqested, setResetRequested] = useState(false);
+  const [resetError, setResetError] = useState("");
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const repeatpasswordRef = useRef<HTMLInputElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
-  console.log(error);
-  console.log(issue);
+
+  function resetPass() {
+    authClient.requestPasswordReset(
+      { email },
+      {
+        onRequest: () => {
+          setResetError("");
+          setResetLoading(true);
+        },
+        onSuccess: () => {
+          setResetLoading(false);
+          setResetRequested(true);
+        },
+        onError: (ctx) => {
+          setResetLoading(false);
+          setResetError(ctx.error.message || SOMETHING_WENT_WRONG);
+        },
+      },
+    );
+  }
+
   return (
-    <Card containerClasses="@container-normal min-w-70 w-70 md:min-w-80 md:w-80">
+    <Card containerClasses="min-w-70 w-70 md:min-w-80 md:w-80">
       <CardTitle className="font-heading">
         {signup ? "Sign Up" : "Sign in"}
       </CardTitle>
@@ -338,9 +383,28 @@ function Form({
           {error && !issue && (
             <p className="mt-1 text-center text-error-content">{error}</p>
           )}
-          {!signup && error && (
-            <p className="text-xs text-center">
-              Forgotten password? <Anchor href="#">Not implemented</Anchor>
+          {!signup && error && !resetReqested && (
+            <p className="text-xs text-center flex items-center justify-center">
+              Forgotten password?{" "}
+              {!resetLoading && (
+                <Anchor
+                  className="cursor-pointer"
+                  as="button"
+                  type="button"
+                  onClick={resetPass}
+                >
+                  Send reset email.
+                </Anchor>
+              )}
+              {resetLoading && <Spinner className="ml-2" />}
+            </p>
+          )}
+          {!signup && error && resetReqested && (
+            <p className="text-xs text-center">Email sent.</p>
+          )}
+          {resetError && (
+            <p className="text-xs text-error-content text-center">
+              {resetError}
             </p>
           )}
           <Button
@@ -418,6 +482,7 @@ function Form({
           <p className="text-center">
             Don&apos;t have an account?{" "}
             <Anchor
+              className="cursor-pointer"
               type="button"
               as={"button"}
               onClick={() => toggleSingin(true)}
@@ -429,7 +494,12 @@ function Form({
         {signup && (
           <p className="text-center">
             Already have an account?{" "}
-            <Anchor type="button" as={"button"} onClick={() => toggleSingin()}>
+            <Anchor
+              className="cursor-pointer"
+              type="button"
+              as={"button"}
+              onClick={() => toggleSingin()}
+            >
               Sign in
             </Anchor>
           </p>
