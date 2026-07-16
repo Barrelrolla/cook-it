@@ -87,12 +87,12 @@ export default function SigninModal() {
 
     const User = z
       .object({
-        email: z.email(),
-        password: passwordSchema,
-        repeatPassword: z.string(),
         name: z
           .string()
           .min(3, "Username should be at least 3 characters long!"),
+        email: z.email(),
+        password: passwordSchema,
+        repeatPassword: z.string(),
       })
       .refine((data) => data.password === data.repeatPassword, {
         path: ["repeat-password"],
@@ -225,7 +225,8 @@ function Form({
   close: () => void;
   action: (payload: FormData) => void;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [appleLoading, setAppleLoading] = useState(false);
   const [googleError, setGoogleError] = useState("");
   const [appleError, setAppleError] = useState("");
   const [email, setEmail] = useState("");
@@ -254,6 +255,24 @@ function Form({
         ref={formRef}
         className="flex flex-col p-4 pt-0 gap-2 text-sm"
       >
+        {signup && (
+          <Input
+            startIcon={<PiUserBold />}
+            ref={userNameRef}
+            aria-label="username"
+            type="text"
+            placeholder="username"
+            id="username"
+            autoComplete="username"
+            name="username"
+            defaultValue={userName}
+            error={
+              issue && issue.path.length > 0 && issue.path[0] === "name"
+                ? issue.message
+                : undefined
+            }
+          />
+        )}
         <Input
           startIcon={<PiEnvelopeBold />}
           ref={emailRef}
@@ -287,42 +306,24 @@ function Form({
           }
         />
         {signup && (
-          <>
-            <Input
-              startIcon={<PiKeyBold />}
-              ref={repeatpasswordRef}
-              aria-label="repeat password"
-              type="password"
-              placeholder="repeat password"
-              id="repeat-password"
-              name="repeat-password"
-              autoComplete={signup ? "new-password" : "current-password"}
-              defaultValue={repeatPassword}
-              error={
-                issue &&
-                issue.path.length > 0 &&
-                issue.path[0] === "repeat-password"
-                  ? issue.message
-                  : undefined
-              }
-            />
-            <Input
-              startIcon={<PiUserBold />}
-              ref={userNameRef}
-              aria-label="username"
-              type="text"
-              placeholder="username"
-              id="username"
-              autoComplete="username"
-              name="username"
-              defaultValue={userName}
-              error={
-                issue && issue.path.length > 0 && issue.path[0] === "name"
-                  ? issue.message
-                  : undefined
-              }
-            />
-          </>
+          <Input
+            startIcon={<PiKeyBold />}
+            ref={repeatpasswordRef}
+            aria-label="repeat password"
+            type="password"
+            placeholder="repeat password"
+            id="repeat-password"
+            name="repeat-password"
+            autoComplete={signup ? "new-password" : "current-password"}
+            defaultValue={repeatPassword}
+            error={
+              issue &&
+              issue.path.length > 0 &&
+              issue.path[0] === "repeat-password"
+                ? issue.message
+                : undefined
+            }
+          />
         )}
         <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
           <Button
@@ -353,21 +354,21 @@ function Form({
                 <GoogleLogo />
               </div>
             }
-            loading={isLoading}
+            loading={googleLoading}
             onClick={() => {
               authClient.signIn.social(
                 { provider: "google" },
                 {
                   onRequest: () => {
-                    setIsLoading(true);
+                    setGoogleLoading(true);
                     setGoogleError("");
                   },
                   onSuccess: () => {
-                    setIsLoading(false);
+                    setGoogleLoading(false);
                     close();
                   },
                   onError: (ctx) => {
-                    setIsLoading(false);
+                    setGoogleLoading(false);
                     setGoogleError(ctx.error.message ?? SOMETHING_WENT_WRONG);
                   },
                 },
@@ -386,21 +387,21 @@ function Form({
             size="sm"
             type="button"
             startIcon={<AppleLogo />}
-            loading={isLoading}
+            loading={appleLoading}
             onClick={() => {
               authClient.signIn.social(
                 { provider: "apple" },
                 {
                   onRequest: () => {
-                    setIsLoading(true);
+                    setAppleLoading(true);
                     setAppleError("");
                   },
                   onSuccess: () => {
-                    setIsLoading(false);
+                    setAppleLoading(false);
                     close();
                   },
                   onError: (ctx) => {
-                    setIsLoading(false);
+                    setAppleLoading(false);
                     setAppleError(ctx.error.message ?? SOMETHING_WENT_WRONG);
                   },
                 },
