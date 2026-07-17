@@ -14,6 +14,7 @@ import { ZodIssue } from "zod/v3";
 import z from "zod";
 
 export default function SigninFormContent({
+  emailNotVerified,
   displayName,
   email,
   password,
@@ -24,6 +25,7 @@ export default function SigninFormContent({
   issue,
   toggleSingin,
 }: {
+  emailNotVerified: boolean;
   displayName?: string;
   email: string;
   password: string;
@@ -37,6 +39,9 @@ export default function SigninFormContent({
   const [resetLoading, setResetLoading] = useState(false);
   const [resetReqested, setResetRequested] = useState(false);
   const [resetError, setResetError] = useState("");
+  const [verificationLoading, setVerificationLoading] = useState(false);
+  const [verificationReqested, setVerificationRequested] = useState(false);
+  const [verificationError, setVerificationError] = useState("");
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   function resetPass() {
@@ -74,6 +79,40 @@ export default function SigninFormContent({
     );
   }
 
+  function requestVerification() {
+    const currentEmail = emailRef.current?.value || "";
+    const Email = z.object({ email: z.email() });
+    const parsedEmail = Email.safeParse({ email: currentEmail });
+    if (!parsedEmail.data) {
+      if (parsedEmail.error.issues.length > 0) {
+        setVerificationError(parsedEmail.error.issues[0].message);
+      } else {
+        setVerificationError(SOMETHING_WENT_WRONG);
+      }
+      return;
+    }
+
+    authClient.sendVerificationEmail(
+      {
+        email: parsedEmail.data.email,
+      },
+      {
+        onRequest: () => {
+          setVerificationError("");
+          setVerificationLoading(true);
+        },
+        onSuccess: () => {
+          setVerificationLoading(false);
+          setVerificationRequested(true);
+        },
+        onError: (ctx) => {
+          setVerificationLoading(false);
+          setVerificationError(ctx.error.message || SOMETHING_WENT_WRONG);
+        },
+      },
+    );
+  }
+
   return (
     <>
       {signup && (
@@ -88,7 +127,7 @@ export default function SigninFormContent({
           name="display-name"
           defaultValue={displayName}
           error={
-            issue && issue.path.length > 0 && issue.path[0] === "displayName"
+            issue && issue.path.length > 0 && issue.path[0] === "display-name"
               ? issue.message
               : undefined
           }
@@ -160,7 +199,7 @@ export default function SigninFormContent({
         {error && !issue && (
           <p className="mt-1 text-center text-error-content">{error}</p>
         )}
-        {!signup && error && !resetReqested && (
+        {!emailNotVerified && !signup && error && !resetReqested && (
           <p className="text-xs text-center flex items-center justify-center">
             Forgotten password?{" "}
             {!resetLoading && (
@@ -176,11 +215,35 @@ export default function SigninFormContent({
             {resetLoading && <Spinner className="ml-1" />}
           </p>
         )}
+        {emailNotVerified && !verificationReqested && (
+          <p className="text-xs text-center flex items-center justify-center">
+            Verification expired?
+            {!verificationLoading && (
+              <Anchor
+                className="cursor-pointer ml-1"
+                as="button"
+                type="button"
+                onClick={requestVerification}
+              >
+                Send new verification.
+              </Anchor>
+            )}
+            {verificationLoading && <Spinner className="ml-1" />}
+          </p>
+        )}
         {!signup && error && resetReqested && (
+          <p className="text-xs text-center">Email sent.</p>
+        )}
+        {emailNotVerified && verificationReqested && (
           <p className="text-xs text-center">Email sent.</p>
         )}
         {resetError && (
           <p className="text-xs text-error-content text-center">{resetError}</p>
+        )}
+        {verificationError && (
+          <p className="text-xs text-error-content text-center">
+            {verificationError}
+          </p>
         )}
         <SocialSigninButton social="google" />
         <SocialSigninButton social="apple" />

@@ -1,3 +1,4 @@
+import { checkDisplayNameAvailability } from "@/app/actions/userActions";
 import z from "zod";
 
 export const passwordSchema = z
@@ -27,8 +28,15 @@ export const displayNameSchema = z
   )
   .regex(/^[a-zA-Z]/, "Display name must start with a letter");
 
-export const SignUpSchema = z.object({
-  displayName: displayNameSchema,
-  email: z.email(),
-  password: passwordSchema,
-});
+export const SignUpSchema = z
+  .object({
+    displayName: displayNameSchema,
+    email: z.email(),
+    password: passwordSchema,
+  })
+  .refine(
+    async (data) => {
+      return await checkDisplayNameAvailability(data.displayName);
+    },
+    { path: ["display-name"], message: "Display name is already in use" },
+  );

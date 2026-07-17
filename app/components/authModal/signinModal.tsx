@@ -27,6 +27,7 @@ export default function SigninModal() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [emailNotVerified, setEmailNotVerified] = useState(false);
   const signinFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -49,6 +50,7 @@ export default function SigninModal() {
       {
         onRequest: () => {
           setError("");
+          setEmailNotVerified(false);
           setIssue(undefined);
           setIsLoading(true);
         },
@@ -58,6 +60,9 @@ export default function SigninModal() {
           router.refresh();
         },
         onError: (ctx) => {
+          if (ctx.error.status === 403) {
+            setEmailNotVerified(true);
+          }
           setIsLoading(false);
           setError(ctx.error.message || SOMETHING_WENT_WRONG);
         },
@@ -83,7 +88,7 @@ export default function SigninModal() {
       },
     );
 
-    const user = User.safeParse({
+    const user = await User.safeParseAsync({
       displayName: enteredDisplayName,
       email: enteredEmail,
       password: enteredPass,
@@ -110,6 +115,7 @@ export default function SigninModal() {
       {
         onRequest: () => {
           setError("");
+          setEmailNotVerified(false);
           setIssue(undefined);
           setIsLoading(true);
         },
@@ -134,6 +140,7 @@ export default function SigninModal() {
     setEmail("");
     setPassword("");
     setRepeatPassword("");
+    setEmailNotVerified(false);
     signinFormRef.current?.reset();
     signupFormRef.current?.reset();
   }
@@ -173,6 +180,7 @@ export default function SigninModal() {
         setIsOpen={close}
       >
         <SigninFormContent
+          emailNotVerified={emailNotVerified}
           email={email}
           password={password}
           loading={isLoading}
@@ -209,6 +217,7 @@ export default function SigninModal() {
         )}
         {!accountCreated && (
           <SigninFormContent
+            emailNotVerified={emailNotVerified}
             displayName={displayName}
             email={email}
             password={password}

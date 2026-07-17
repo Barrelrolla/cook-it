@@ -12,7 +12,10 @@ import { useState } from "react";
 import z from "zod";
 import { displayNameSchema } from "@/utils/validationSchemas";
 import { PiUserBold } from "react-icons/pi";
-import { setUserDisplayName } from "@/app/actions/userActions";
+import {
+  checkDisplayNameAvailability,
+  setUserDisplayName,
+} from "@/app/actions/userActions";
 
 type Props = { user: typeof user.$inferSelect };
 
@@ -31,24 +34,35 @@ export default function DisplayNameModal({ user }: Props) {
     router.replace(params ? `${path}?${params}` : path, { scroll: false });
   }
 
-  function action(formData: FormData) {
-    console.log(formData);
+  async function action(formData: FormData) {
     const enteredName = formData.get("display-name")?.toString() || "";
     setName(enteredName);
+    setLoading(true);
 
-    const Name = z.object({ displayName: displayNameSchema });
-    const parsedName = Name.safeParse({ displayName: enteredName });
+    const Name = z.object({ displayName: displayNameSchema }).refine(
+      async (data) => {
+        return await checkDisplayNameAvailability(data.displayName);
+      },
+      { path: ["display-name"], message: "Display name is already in use" },
+    );
+    const parsedName = await Name.safeParseAsync({ displayName: enteredName });
     if (!parsedName.data) {
       if (parsedName.error.issues.length > 0) {
         setError(parsedName.error.issues[0].message);
       } else {
         setError(SOMETHING_WENT_WRONG);
       }
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-    setUserDisplayName(parsedName.data.displayName, user.id);
+    try {
+      await setUserDisplayName(parsedName.data.displayName, user.id);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(SOMETHING_WENT_WRONG);
+    }
     router.refresh();
   }
 
@@ -69,14 +83,12 @@ export default function DisplayNameModal({ user }: Props) {
         id="display-name"
         name="display-name"
         autoComplete="username"
+        error={error}
         defaultValue={name}
       />
       <Button type="submit" disabled={loading} className="w-full" size="sm">
         Confirm display name
       </Button>
-      {error && (
-        <p className="text-xs text-error-content text-center">{error}</p>
-      )}
     </BaseModal>
   );
 }

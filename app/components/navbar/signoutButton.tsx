@@ -19,7 +19,7 @@ export function SignoutButton({
     <>
       <p>
         <Anchor as={Link} href={`/user/${user.displayName?.toLowerCase()}`}>
-          {user.name}
+          {user.displayName}
         </Anchor>
       </p>
       <form

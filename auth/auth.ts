@@ -1,4 +1,3 @@
-import { checkDisplayNameAvailability } from "@/app/actions/userActions";
 import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
 import { db } from "@/db";
@@ -21,18 +20,10 @@ export const auth = betterAuth({
     before: createAuthMiddleware(async (ctx) => {
       switch (ctx.path) {
         case "/sign-up/email":
-          const res = SignUpSchema.safeParse(ctx.body);
+          const res = await SignUpSchema.safeParseAsync(ctx.body);
           if (!res.success) {
             throw new APIError("BAD_REQUEST", {
               message: res.error.issues[0].message,
-            });
-          }
-          const available = await checkDisplayNameAvailability(
-            res.data.displayName,
-          );
-          if (!available) {
-            throw new APIError("BAD_REQUEST", {
-              message: "That display name is already in use.",
             });
           }
           break;
