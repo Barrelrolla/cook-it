@@ -9,4 +9,5 @@ export const SIGNOUT = "Sign Out";
 export const SIGNIN_PARAM = "signin";
 export const SIGNUP_PARAM = "signup";
 export const RESET_PASSWORD_PARAM = "reset-password";
+export const CHOOSE_DISPLAY_NAME_PARAM = "choose-display-name";
 export const SOMETHING_WENT_WRONG = "Something went wrong!";

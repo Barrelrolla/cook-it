@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
 import SocialSigninButton from "./socialSigninButton";
 import { ZodIssue } from "zod/v3";
+import z from "zod";
 
 export default function SigninFormContent({
   displayName,
@@ -40,11 +41,22 @@ export default function SigninFormContent({
 
   function resetPass() {
     const currentEmail = emailRef.current?.value || "";
-    if (!currentEmail) {
-      setResetError("Please enter your email!");
+    const Email = z.object({ email: z.email() });
+    const parsedEmail = Email.safeParse({ email: currentEmail });
+    if (!parsedEmail.data) {
+      if (parsedEmail.error.issues.length > 0) {
+        setResetError(parsedEmail.error.issues[0].message);
+      } else {
+        setResetError(SOMETHING_WENT_WRONG);
+      }
+      return;
     }
+
     authClient.requestPasswordReset(
-      { email, redirectTo: `/?${RESET_PASSWORD_PARAM}=` },
+      {
+        email: parsedEmail.data.email,
+        redirectTo: `/?${RESET_PASSWORD_PARAM}=`,
+      },
       {
         onRequest: () => {
           setResetError("");
