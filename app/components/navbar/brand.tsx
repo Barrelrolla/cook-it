@@ -1,7 +1,7 @@
 "use client";
 import { NavbarBrand } from "@barrelrolla/react-components-library";
 import Link from "next/link";
-import Logo from "../logo";
+import Logo from "../logos/appLogo";
 import { BRAND_NAME } from "@/utils/constants";
 
 export default function Brand() {

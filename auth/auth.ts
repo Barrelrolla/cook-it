@@ -20,7 +20,6 @@ export const auth = betterAuth({
         case "/sign-up/email":
           const res = SignUpSchema.safeParse(ctx.body);
           if (!res.success) {
-            console.dir(res.error.issues, { depth: null });
             throw new APIError("BAD_REQUEST", {
               message: res.error.issues[0].message,
             });
@@ -31,6 +30,7 @@ export const auth = betterAuth({
               message: "That username is already in use.",
             });
           }
+          break;
       }
     }),
   },
