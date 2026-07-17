@@ -13,7 +13,7 @@ import SocialSigninButton from "./socialSigninButton";
 import { ZodIssue } from "zod/v3";
 
 export default function SigninFormContent({
-  userName,
+  displayName,
   email,
   password,
   repeatPassword,
@@ -23,7 +23,7 @@ export default function SigninFormContent({
   issue,
   toggleSingin,
 }: {
-  userName?: string;
+  displayName?: string;
   email: string;
   password: string;
   repeatPassword?: string;
@@ -68,15 +68,15 @@ export default function SigninFormContent({
         <Input
           required
           startIcon={<PiUserBold />}
-          aria-label="username"
+          aria-label="display name"
           type="text"
-          placeholder="username"
-          id="username"
+          placeholder="display name"
+          id="display-name"
           autoComplete="username"
-          name="username"
-          defaultValue={userName}
+          name="display-name"
+          defaultValue={displayName}
           error={
-            issue && issue.path.length > 0 && issue.path[0] === "name"
+            issue && issue.path.length > 0 && issue.path[0] === "displayName"
               ? issue.message
               : undefined
           }

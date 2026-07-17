@@ -10,10 +10,11 @@ import Navlink from "./navlink";
 import { Suspense } from "react";
 import { SignoutButton } from "./signoutButton";
 import { LINKS } from "@/utils/constants";
-import { authClient } from "@/auth/authClient";
+import { getSession } from "@/app/actions/authActions";
+import { user } from "@/db/schemas/auth-schema";
 
 export default async function MainNavbar() {
-  const { data } = await authClient.getSession();
+  const session = await getSession();
   return (
     <Navbar
       backdropClasses="bg-stone-800/30"
@@ -34,14 +35,16 @@ export default async function MainNavbar() {
         ))}
         <li className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
           <DarkModeToggle color="main" variant="ghost" />
-          {!data && (
+          {!session && (
             <>
               <Suspense>
                 <SigninButton />
               </Suspense>
             </>
           )}
-          {data && <SignoutButton user={data.user} />}
+          {session && (
+            <SignoutButton user={session.user as typeof user.$inferSelect} />
+          )}
         </li>
       </NavbarCollapse>
       <NavbarToggle />

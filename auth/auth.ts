@@ -1,4 +1,4 @@
-import { getUserByName } from "@/app/actions/userActions";
+import { checkDisplayNameAvailability } from "@/app/actions/userActions";
 import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
 import { db } from "@/db";
@@ -12,6 +12,9 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export const auth = betterAuth({
+  user: {
+    additionalFields: { displayName: { type: "string", required: false } },
+  },
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
   trustedOrigins: ["http://192.168.100.72:3000"],
   hooks: {
@@ -24,10 +27,12 @@ export const auth = betterAuth({
               message: res.error.issues[0].message,
             });
           }
-          const existing = await getUserByName(res.data.name);
-          if (existing) {
+          const available = await checkDisplayNameAvailability(
+            res.data.displayName,
+          );
+          if (!available) {
             throw new APIError("BAD_REQUEST", {
-              message: "That username is already in use.",
+              message: "That display name is already in use.",
             });
           }
           break;

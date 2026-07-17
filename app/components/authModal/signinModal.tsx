@@ -26,7 +26,7 @@ export default function SigninModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const signinFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -66,8 +66,8 @@ export default function SigninModal() {
   }
 
   async function signUp(formData: FormData) {
-    const enteredUserName = formData.get("username")?.toString() || "";
-    setUserName(enteredUserName);
+    const enteredDisplayName = formData.get("display-name")?.toString() || "";
+    setDisplayName(enteredDisplayName);
     const enteredEmail = formData.get("email")?.toString() || "";
     setEmail(enteredEmail);
     const enteredPass = formData.get("password")?.toString() || "";
@@ -84,7 +84,7 @@ export default function SigninModal() {
     );
 
     const user = User.safeParse({
-      name: enteredUserName,
+      displayName: enteredDisplayName,
       email: enteredEmail,
       password: enteredPass,
       repeatPassword: enteredRepeatPass,
@@ -101,10 +101,11 @@ export default function SigninModal() {
 
     await authClient.signUp.email(
       {
-        name: user.data.name,
+        name: user.data.displayName,
+        displayName: user.data.displayName,
         email: user.data.email,
         password: user.data.password,
-        callbackURL: `/user/${user.data.name}`,
+        callbackURL: `/user/${user.data.displayName}`,
       },
       {
         onRequest: () => {
@@ -129,7 +130,7 @@ export default function SigninModal() {
     setError("");
     setIssue(undefined);
     setAccountCreated(false);
-    setUserName("");
+    setDisplayName("");
     setEmail("");
     setPassword("");
     setRepeatPassword("");
@@ -208,7 +209,7 @@ export default function SigninModal() {
         )}
         {!accountCreated && (
           <SigninFormContent
-            userName={userName}
+            displayName={displayName}
             email={email}
             password={password}
             repeatPassword={repeatPassword}

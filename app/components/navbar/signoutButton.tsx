@@ -5,19 +5,12 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import { Anchor, Button } from "@barrelrolla/react-components-library";
 import { SIGNOUT } from "@/utils/constants";
+import { user as userSchema } from "@/db/schemas/auth-schema";
 
 export function SignoutButton({
   user,
 }: {
-  user: {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-    email: string;
-    emailVerified: boolean;
-    name: string;
-    image?: string | null | undefined;
-  };
+  user: typeof userSchema.$inferSelect;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +18,7 @@ export function SignoutButton({
   return (
     <>
       <p>
-        <Anchor as={Link} href={`/user/${user.name}`}>
+        <Anchor as={Link} href={`/user/${user.displayName?.toLowerCase()}`}>
           {user.name}
         </Anchor>
       </p>
