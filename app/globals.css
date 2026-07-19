@@ -7,6 +7,7 @@
 :root {
   --color-main: #f7ebdd;
   --color-main-content: #2e241d;
+  --color-muted: #f0e4d6;
   --color-primary: #f7ebdd;
   --color-primary-content: #5a7302;
   --color-secondary: #f7ebdd;
@@ -35,6 +36,7 @@
 .dark {
   --color-main: #221f19;
   --color-main-content: #f4eee8;
+  --color-muted: #27241e;
   --color-primary: #1b1b16;
   --color-primary-content: #739120;
   --color-secondary: #1b1b16;
@@ -94,6 +96,10 @@ body {
 
 main {
   @apply min-h-screen max-w-(--max-content-width) mx-auto;
+}
+
+@theme {
+  --color-muted: var(--color-muted);
 }
 
 @utility hero-fade {

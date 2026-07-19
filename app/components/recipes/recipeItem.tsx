@@ -10,6 +10,7 @@ import { PiStarFill } from "react-icons/pi";
 import Image from "next/image";
 import RecipeInteract from "./recipeInteract";
 import { recipeTable } from "@/db/schemas/recipeSchema";
+import { CSSProperties } from "react";
 
 export type RecipeItemType = typeof recipeTable.$inferSelect;
 
@@ -27,7 +28,8 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
       <Card
         size="xl"
         className="h-60"
-        containerClasses="border-main-content/30 shadow-sm min-w-70"
+        containerClasses="border-main-content/30 shadow-sm shadow-main-content/20 min-w-70"
+        containerStyle={{ "--bg-color": "var(--color-muted)" } as CSSProperties}
       >
         <RecipeInteract recipeSlug={recipe.slug}>
           <CardImageContainer className="relative">

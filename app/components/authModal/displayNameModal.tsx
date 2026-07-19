@@ -62,8 +62,7 @@ export default function DisplayNameModal() {
 
     try {
       await setUserDisplayName(parsedName.data.displayName, user.id);
-    } catch (error) {
-      console.log(error);
+    } catch {
       setLoading(false);
       setError(SOMETHING_WENT_WRONG);
       return;

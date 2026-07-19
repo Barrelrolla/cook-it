@@ -18,11 +18,12 @@ export default async function MainNavbar() {
   const session = await getSession();
   return (
     <Navbar
+      suppressHydrationWarning
       backdropClasses="bg-stone-800/30"
       collapseAt="md"
       glass={false}
       hasShadow={false}
-      className="items-center"
+      className="items-center bg-muted"
     >
       <div className="flex flex-row min-h-18 gap-4">
         <Brand />
@@ -39,8 +40,8 @@ export default async function MainNavbar() {
           </li>
         )}
       </NavbarCollapse>
-      <div className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
-        <DarkModeToggle color="main" variant="ghost" />
+      <div className="flex flex-row justify-center items-center gap-4">
+        <DarkModeToggle suppressHydrationWarning color="main" variant="ghost" />
         {!session && (
           <>
             <Suspense>
@@ -51,8 +52,8 @@ export default async function MainNavbar() {
         {session && (
           <UserButton user={session.user as typeof user.$inferSelect} />
         )}
+        <NavbarToggle />
       </div>
-      <NavbarToggle />
     </Navbar>
   );
 }

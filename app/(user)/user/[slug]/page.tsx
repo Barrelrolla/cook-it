@@ -34,13 +34,7 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <main className="pt-4">
-      <section
-        style={{
-          backgroundColor:
-            "color-mix(in oklab, var(--color-primary-content) %, var(--color-main))",
-        }}
-        className="flex m-4 mt-0 flex-col md:flex-row rounded-containers border border-main-content/(--border-transparency)"
-      >
+      <section className="flex m-4 mt-0 flex-col md:flex-row bg-muted rounded-containers border border-main-content/(--border-transparency)">
         <div className="w-1/3 p-4 lg:p-8 mx-auto justify-items-center">
           {user.image && (
             <UserAvatar

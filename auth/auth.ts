@@ -41,9 +41,7 @@ export const auth = betterAuth({
           subject: "Reset your Garndish password",
           react: PasswordReset({ url }),
         });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch {}
     },
   },
   emailVerification: {
@@ -55,9 +53,7 @@ export const auth = betterAuth({
           subject: "Verify your Garndish account",
           react: VerificationEmail({ name: user.name, url }),
         });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch {}
     },
     autoSignInAfterVerification: true,
   },
