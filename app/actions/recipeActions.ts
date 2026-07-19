@@ -3,11 +3,12 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { recipeTable } from "@/db/schemas/recipeSchema";
+import { cacheTag } from "next/cache";
 
 export async function getAllRecipes() {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 2000);
-  });
+  "use cache";
+  cacheTag("recipes");
+
   try {
     return await db.select().from(recipeTable);
   } catch (error) {
@@ -17,6 +18,9 @@ export async function getAllRecipes() {
 }
 
 export async function getRecipeById(id: string) {
+  "use cache";
+  cacheTag(`recipe-${id}`);
+
   try {
     const res = await db
       .select()
@@ -35,6 +39,9 @@ export async function getRecipeById(id: string) {
 }
 
 export async function getRecipeBySlug(slug: string) {
+  "use cache";
+  cacheTag(`recipe-${slug}`);
+
   try {
     const res = await db
       .select()

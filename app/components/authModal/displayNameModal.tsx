@@ -6,7 +6,6 @@ import {
   CHOOSE_DISPLAY_NAME_PARAM,
   SOMETHING_WENT_WRONG,
 } from "@/utils/constants";
-import { user } from "@/db/schemas/auth-schema";
 import { Button, Input } from "@barrelrolla/react-components-library";
 import { useState } from "react";
 import z from "zod";
@@ -16,16 +15,21 @@ import {
   checkDisplayNameAvailability,
   setUserDisplayName,
 } from "@/app/actions/userActions";
+import { authClient } from "@/auth/authClient";
 
-type Props = { user: typeof user.$inferSelect };
-
-export default function DisplayNameModal({ user }: Props) {
+export default function DisplayNameModal() {
+  const session = authClient.useSession();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const path = usePathname();
+  if (!session.data) {
+    return null;
+  }
+  const user = session.data.user;
+
   const isOpen: boolean = !user.displayName;
 
   function close() {
@@ -62,7 +66,11 @@ export default function DisplayNameModal({ user }: Props) {
       console.log(error);
       setLoading(false);
       setError(SOMETHING_WENT_WRONG);
+      return;
     }
+
+    setError("");
+    setLoading(false);
     router.refresh();
   }
 

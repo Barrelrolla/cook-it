@@ -20,6 +20,7 @@ export default function Brand() {
           alt={`${BRAND_NAME} logo`}
           height={72}
           width={144}
+          loading="eager"
         />
         <Image
           className="object-cover hidden dark:block"
@@ -27,6 +28,7 @@ export default function Brand() {
           alt={`${BRAND_NAME} logo`}
           height={72}
           width={144}
+          loading="eager"
         />
       </div>
     </NavbarBrand>
