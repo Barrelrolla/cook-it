@@ -1,5 +1,5 @@
-import { Card, CardTitle, Dialog } from "@barrelrolla/react-components-library";
 import { PropsWithChildren, Ref } from "react";
+import { Card, CardTitle, Dialog } from "@barrelrolla/react-components-library";
 
 type BaseModalProps = {
   formRef?: Ref<HTMLFormElement> | null;

@@ -1,10 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { authClient } from "@/auth/authClient";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ErrorContext } from "better-auth/react";
+import { authClient } from "@/auth/authClient";
+import z from "zod";
+import { ZodIssue } from "zod/v3";
+import { SignUpSchema } from "@/utils/validationSchemas";
+import BaseModal from "../baseModal";
+import SigninFormContent from "./signinFormContent";
 import { Button } from "@barrelrolla/react-components-library";
-import { PiCheckBold } from "react-icons/pi";
 import {
   SIGNIN,
   SIGNIN_PARAM,
@@ -12,13 +17,8 @@ import {
   SIGNUP_PARAM,
   SOMETHING_WENT_WRONG,
 } from "@/utils/constants";
-import z from "zod";
-import { ZodIssue } from "zod/v3";
-import { SignUpSchema } from "@/utils/validationSchemas";
-import BaseModal from "../baseModal";
-import SigninFormContent from "./signinFormContent";
 import userPlaceholderImage from "@/public/user-placeholder.png";
-import { ErrorContext } from "better-auth/react";
+import { PiCheckBold } from "react-icons/pi";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);

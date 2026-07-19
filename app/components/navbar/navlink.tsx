@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   NavbarLink,
   NavbarLinkProps,
 } from "@barrelrolla/react-components-library";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Navlink({
   href,

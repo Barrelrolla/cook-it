@@ -1,17 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import BaseModal from "../baseModal";
+import { authClient } from "@/auth/authClient";
+import z from "zod";
 import {
   CHOOSE_DISPLAY_NAME_PARAM,
   SOMETHING_WENT_WRONG,
 } from "@/utils/constants";
-import { Button, Input } from "@barrelrolla/react-components-library";
-import { useState } from "react";
-import z from "zod";
+import BaseModal from "../baseModal";
 import { usernameSchema } from "@/utils/validationSchemas";
+import { Button, Input } from "@barrelrolla/react-components-library";
 import { PiUserBold } from "react-icons/pi";
-import { authClient } from "@/auth/authClient";
 
 export default function UsernameModal() {
   const session = authClient.useSession();

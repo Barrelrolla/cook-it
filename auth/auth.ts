@@ -1,13 +1,13 @@
-import PasswordReset from "@/emails/passwordReset";
-import VerificationEmail from "@/emails/verificationEmail";
+import { betterAuth } from "better-auth";
+import { APIError, createAuthMiddleware } from "better-auth/api";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { username } from "better-auth/plugins/username";
+import { Resend } from "resend";
 import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
 import { SignUpSchema, usernameRegex } from "@/utils/validationSchemas";
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { APIError, createAuthMiddleware } from "better-auth/api";
-import { Resend } from "resend";
-import { username } from "better-auth/plugins/username";
+import PasswordReset from "@/emails/passwordReset";
+import VerificationEmail from "@/emails/verificationEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 

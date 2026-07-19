@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import {
   Body,
   Container,
@@ -10,9 +11,8 @@ import {
   Button,
   Img,
 } from "react-email";
-import tailwindConfig from "./tailwind.config";
 import { BRAND_NAME } from "@/utils/constants";
-import { PropsWithChildren } from "react";
+import tailwindConfig from "./tailwind.config";
 
 export default function EmailBase({ children }: PropsWithChildren) {
   return (

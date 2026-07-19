@@ -1,10 +1,10 @@
 "use client";
-import { NavbarBrand } from "@barrelrolla/react-components-library";
+import Image from "next/image";
 import Link from "next/link";
+import { BRAND_NAME } from "@/utils/constants";
+import { NavbarBrand } from "@barrelrolla/react-components-library";
 import logoLight from "@/public/logo-light.svg";
 import logoDark from "@/public/logo-dark.svg";
-import { BRAND_NAME } from "@/utils/constants";
-import Image from "next/image";
 
 export default function Brand() {
   return (

@@ -1,18 +1,18 @@
+import { Suspense } from "react";
+import { user } from "@/db/schemas/auth-schema";
+import { getSession } from "@/app/actions/authActions";
+import { LINKS } from "@/utils/constants";
+import Brand from "./brand";
+import Navlink from "./navlink";
+import SigninButton from "./signinButton";
+import { SignoutButton } from "./signoutButton";
+import UserButton from "./userButton";
 import {
   DarkModeToggle,
   Navbar,
   NavbarCollapse,
   NavbarToggle,
 } from "@barrelrolla/react-components-library";
-import SigninButton from "./signinButton";
-import Brand from "./brand";
-import Navlink from "./navlink";
-import { Suspense } from "react";
-import { SignoutButton } from "./signoutButton";
-import { LINKS } from "@/utils/constants";
-import { getSession } from "@/app/actions/authActions";
-import { user } from "@/db/schemas/auth-schema";
-import UserButton from "./userButton";
 
 export default async function MainNavbar() {
   const session = await getSession();

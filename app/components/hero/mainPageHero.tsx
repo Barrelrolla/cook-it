@@ -1,13 +1,13 @@
+import RecipeHero from "./recipeHero";
+import { ShareButton, ExploreButton } from "./actionButtons";
 import {
   HeroActions,
   HeroSection,
   HeroText,
   HeroTitle,
 } from "@barrelrolla/react-components-library";
-import RecipeHero from "./recipeHero";
 import heroLight from "../../../public/hero-light.png";
 import heroDark from "../../../public/hero-dark.png";
-import { ShareButton, ExploreButton } from "./actionButtons";
 
 export default function MainPageHero() {
   return (

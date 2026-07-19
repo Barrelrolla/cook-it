@@ -1,8 +1,8 @@
 "use client";
 
-import { CardInteract } from "@barrelrolla/react-components-library";
-import Link from "next/link";
 import { PropsWithChildren } from "react";
+import Link from "next/link";
+import { CardInteract } from "@barrelrolla/react-components-library";
 
 export default function RecipeInteract({
   recipeSlug,

@@ -1,5 +1,5 @@
-import ColorTest from "@/app/components/colorTest";
 import { Badge, Button } from "@barrelrolla/react-components-library";
+import ColorTest from "@/app/components/colorTest";
 
 export default function ColorTestPage() {
   return (

@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import { SOMETHING_WENT_WRONG } from "@/utils/constants";
+import { authClient } from "@/auth/authClient";
 import { Button } from "@barrelrolla/react-components-library";
 import GoogleLogo from "../logos/googleLogo";
-import { useState } from "react";
-import { authClient } from "@/auth/authClient";
-import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import AppleLogo from "../logos/appleLogo";
 
 type Social = "google" | "apple";

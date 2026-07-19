@@ -1,5 +1,9 @@
+import { useRef, useState } from "react";
+import z from "zod";
+import { ZodIssue } from "zod/v3";
 import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
+import SocialSigninButton from "./socialSigninButton";
 import {
   Anchor,
   Button,
@@ -7,11 +11,7 @@ import {
   Input,
   Spinner,
 } from "@barrelrolla/react-components-library";
-import { useRef, useState } from "react";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
-import SocialSigninButton from "./socialSigninButton";
-import { ZodIssue } from "zod/v3";
-import z from "zod";
 
 export default function SigninFormContent({
   emailNotVerified,

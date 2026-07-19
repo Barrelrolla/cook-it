@@ -1,11 +1,11 @@
+import { Suspense } from "react";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getSession } from "@/app/actions/authActions";
 import { getUserByUsername } from "@/app/actions/userActions";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 type Props = { params: Promise<{ username: string }> };
 

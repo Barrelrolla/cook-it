@@ -1,7 +1,7 @@
-import { getRecipeBySlug } from "@/app/actions/recipeActions";
-import RecipePageHero from "@/app/components/hero/recipePageHero";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getRecipeBySlug } from "@/app/actions/recipeActions";
+import RecipePageHero from "@/app/components/hero/recipePageHero";
 
 type Props = {
   params: Promise<{ slug: string }>;

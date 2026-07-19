@@ -1,5 +1,6 @@
-import { checkUsernameAvailability } from "@/app/actions/authActions";
 import z from "zod";
+import { checkUsernameAvailability } from "@/app/actions/authActions";
+
 export const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]*(?:-[a-zA-Z0-9]+)*$/;
 
 export const passwordSchema = z

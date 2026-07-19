@@ -1,12 +1,12 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SIGNIN, SIGNIN_PARAM, SIGNUP, SIGNUP_PARAM } from "@/utils/constants";
 import {
   Button,
   ButtonVariant,
   ColorType,
 } from "@barrelrolla/react-components-library";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function SigninButton({ signup }: { signup?: boolean }) {
   const path = usePathname();

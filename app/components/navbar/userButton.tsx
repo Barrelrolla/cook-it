@@ -1,9 +1,9 @@
 "use client";
 
-import { Anchor } from "@barrelrolla/react-components-library";
 import Link from "next/link";
 import { user as userSchema } from "@/db/schemas/auth-schema";
 import UserAvatar from "../userAvatar";
+import { Anchor } from "@barrelrolla/react-components-library";
 import { PiCaretDownBold } from "react-icons/pi";
 
 export default function UserButton({

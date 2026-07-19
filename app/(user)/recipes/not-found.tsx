@@ -1,6 +1,7 @@
 "use client";
-import { Anchor } from "@barrelrolla/react-components-library";
+
 import Link from "next/link";
+import { Anchor } from "@barrelrolla/react-components-library";
 
 export default function RecipeNotFound() {
   return (

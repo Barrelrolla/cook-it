@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
-import { Suspense } from "react";
 
 export default function RecipesPage() {
   return (

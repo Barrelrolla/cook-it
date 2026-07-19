@@ -1,7 +1,7 @@
 import { Suspense } from "react";
+import MainPageHero from "../components/hero/mainPageHero";
 import RecipeList from "../components/recipes/recipeList";
 import RecipeListLoading from "../components/recipes/recipeListLoading";
-import MainPageHero from "../components/hero/mainPageHero";
 
 export default function Home() {
   return (

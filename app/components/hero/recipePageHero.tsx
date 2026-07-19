@@ -1,5 +1,5 @@
-import { PiStarFill } from "react-icons/pi";
 import RecipeHero from "./recipeHero";
+import { RecipeItemType } from "../recipes/recipeItem";
 import {
   Badge,
   ColorType,
@@ -7,7 +7,7 @@ import {
   HeroText,
   HeroTitle,
 } from "@barrelrolla/react-components-library";
-import { RecipeItemType } from "../recipes/recipeItem";
+import { PiStarFill } from "react-icons/pi";
 
 type Props = {
   recipe: RecipeItemType;

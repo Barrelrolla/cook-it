@@ -1,3 +1,7 @@
+import { CSSProperties } from "react";
+import Image from "next/image";
+import { recipeTable } from "@/db/schemas/recipeSchema";
+import RecipeInteract from "./recipeInteract";
 import {
   Badge,
   Card,
@@ -7,10 +11,6 @@ import {
   ColorType,
 } from "@barrelrolla/react-components-library";
 import { PiStarFill } from "react-icons/pi";
-import Image from "next/image";
-import RecipeInteract from "./recipeInteract";
-import { recipeTable } from "@/db/schemas/recipeSchema";
-import { CSSProperties } from "react";
 
 export type RecipeItemType = typeof recipeTable.$inferSelect;
 

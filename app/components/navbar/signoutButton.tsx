@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
-import { Button } from "@barrelrolla/react-components-library";
 import { SIGNOUT } from "@/utils/constants";
+import { Button } from "@barrelrolla/react-components-library";
 
 export function SignoutButton() {
   const [isLoading, setIsLoading] = useState(false);
