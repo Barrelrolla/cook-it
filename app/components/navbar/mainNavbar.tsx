@@ -12,6 +12,7 @@ import { SignoutButton } from "./signoutButton";
 import { LINKS } from "@/utils/constants";
 import { getSession } from "@/app/actions/authActions";
 import { user } from "@/db/schemas/auth-schema";
+import UserButton from "./userButton";
 
 export default async function MainNavbar() {
   const session = await getSession();
@@ -22,7 +23,6 @@ export default async function MainNavbar() {
       glass={false}
       hasShadow={false}
       className="items-center"
-      style={{ width: "calc(100% - var(--floating-ui-scrollbar-width))" }}
     >
       <div className="flex flex-row min-h-18 gap-4">
         <Brand />
@@ -33,20 +33,25 @@ export default async function MainNavbar() {
             {link.name}
           </Navlink>
         ))}
-        <li className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
-          <DarkModeToggle color="main" variant="ghost" />
-          {!session && (
-            <>
-              <Suspense>
-                <SigninButton />
-              </Suspense>
-            </>
-          )}
-          {session && (
-            <SignoutButton user={session.user as typeof user.$inferSelect} />
-          )}
-        </li>
+        {session && (
+          <li>
+            <SignoutButton />
+          </li>
+        )}
       </NavbarCollapse>
+      <div className="flex flex-row justify-center items-center gap-4 md:ml-[calc(50vw-280px)]">
+        <DarkModeToggle color="main" variant="ghost" />
+        {!session && (
+          <>
+            <Suspense>
+              <SigninButton />
+            </Suspense>
+          </>
+        )}
+        {session && (
+          <UserButton user={session.user as typeof user.$inferSelect} />
+        )}
+      </div>
       <NavbarToggle />
     </Navbar>
   );

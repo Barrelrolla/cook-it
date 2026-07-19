@@ -17,6 +17,7 @@ import { ZodIssue } from "zod/v3";
 import { SignUpSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
+import userPlaceholderImage from "@/public/user-placeholder.png";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -110,6 +111,7 @@ export default function SigninModal() {
         displayName: user.data.displayName,
         email: user.data.email,
         password: user.data.password,
+        image: userPlaceholderImage.src,
         callbackURL: `/user/${user.data.displayName}`,
       },
       {

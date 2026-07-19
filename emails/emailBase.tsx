@@ -5,15 +5,14 @@ import {
   Html,
   Preview,
   Section,
-  Text,
   Tailwind,
   Font,
-  Img,
   Button,
 } from "react-email";
 import tailwindConfig from "./tailwind.config";
 import { BRAND_NAME } from "@/utils/constants";
 import { PropsWithChildren } from "react";
+import EmailLogo from "./emailLogo";
 
 export default function EmailBase({ children }: PropsWithChildren) {
   return (
@@ -51,19 +50,10 @@ export default function EmailBase({ children }: PropsWithChildren) {
             }}
           />
         </Head>
-        <Body className="bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark">
+        <Body className="rounded-sm bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark">
           <Preview>{`${BRAND_NAME} password reset.`}</Preview>
           <Container className="mb-10 p-8">
-            <Text className="font-logo text-4xl">
-              <span className="text-primary-content">
-                <Img
-                  src="https://i.ibb.co/hx88KG88/logo.jpg"
-                  className="size-8"
-                  style={{ display: "inline" }}
-                />
-              </span>
-              {BRAND_NAME}
-            </Text>
+            <EmailLogo />
             <Section>{children}</Section>
           </Container>
         </Body>

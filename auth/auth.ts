@@ -15,7 +15,7 @@ export const auth = betterAuth({
     additionalFields: { displayName: { type: "string", required: false } },
   },
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
-  trustedOrigins: ["http://192.168.100.72:3000"],
+  trustedOrigins: ["http://192.168.100.72:3000", "http://192.168.0.133:3000"],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
       switch (ctx.path) {

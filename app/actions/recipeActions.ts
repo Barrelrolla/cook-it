@@ -5,6 +5,9 @@ import { db } from "@/db";
 import { recipeTable } from "@/db/schemas/recipeSchema";
 
 export async function getAllRecipes() {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000);
+  });
   try {
     return await db.select().from(recipeTable);
   } catch (error) {

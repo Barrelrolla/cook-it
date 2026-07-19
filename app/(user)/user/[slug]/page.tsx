@@ -1,8 +1,11 @@
 import { getSession } from "@/app/actions/authActions";
 import { getUserBySlug } from "@/app/actions/userActions";
-import { authClient } from "@/auth/authClient";
+import RecipeList from "@/app/components/recipes/recipeList";
+import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
+import UserAvatar from "@/app/components/userAvatar";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,11 +34,35 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <main className="pt-4">
-      <h1 className="text-6xl font-heading">
-        {current
-          ? `Hello, ${user.displayName}!`
-          : `${user.displayName}'s profile`}
-      </h1>
+      <section
+        style={{
+          backgroundColor:
+            "color-mix(in oklab, var(--color-primary-content) %, var(--color-main))",
+        }}
+        className="flex m-4 mt-0 flex-col md:flex-row rounded-containers border border-main-content/(--border-transparency)"
+      >
+        <div className="w-1/3 p-4 lg:p-8 mx-auto justify-items-center">
+          {user.image && (
+            <UserAvatar
+              avatarUrl={user.image}
+              displayName={user.displayName || ""}
+              className="size-50"
+            />
+          )}
+        </div>
+        <div className="w-full md:w-2/3 md:pt-8 text-center md:text-left">
+          <h1 className="text-4xl font-heading">{user.name}</h1>
+          <p className="my-4">@{user.displayName}</p>
+        </div>
+      </section>
+      <section>
+        <h2 className="text-2xl mx-4">
+          {current ? "My recipes" : "Uploaded recipes"}
+        </h2>
+        <Suspense fallback={<RecipeListLoading />}>
+          <RecipeList />
+        </Suspense>
+      </section>
     </main>
   );
 }

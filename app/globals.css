@@ -29,7 +29,7 @@
   --max-content-width: 1280px;
   --border-transparency: 20%;
   --floating-ui-scrollbar-width: 0px;
-  scrollbar-gutter: auto;
+  scrollbar-gutter: stable;
 }
 
 .dark {

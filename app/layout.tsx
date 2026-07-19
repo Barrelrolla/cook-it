@@ -70,7 +70,14 @@ export default function RootLayout({
         />
       </head>
       <ThemeContextProvider>
-        <body>{children}</body>
+        <body
+          style={{
+            margin:
+              "0px calc(0px - var(--floating-ui-scrollbar-width)) 0px 0px",
+          }}
+        >
+          {children}
+        </body>
       </ThemeContextProvider>
     </html>
   );
