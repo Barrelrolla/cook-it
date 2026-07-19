@@ -1,5 +1,6 @@
-import { checkDisplayNameAvailability } from "@/app/actions/userActions";
+import { checkUsernameAvailability } from "@/app/actions/authActions";
 import z from "zod";
+export const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]*(?:-[a-zA-Z0-9]+)*$/;
 
 export const passwordSchema = z
   .string()
@@ -18,25 +19,27 @@ export const passwordSchema = z
     message: "Password should include at least one special character.",
   });
 
-export const displayNameSchema = z
+export const usernameSchema = z
   .string()
-  .min(3, "Display name must be at least 3 characters")
-  .max(20, "Display name cannot exceed 20 characters")
+  .min(3, "Username must be at least 3 characters.")
+  .max(30, "Username cannot exceed 30 characters.")
   .regex(
-    /^[a-zA-Z0-9_-]+$/,
-    "Display name can only contain letters, numbers, underscores, and hyphens",
-  )
-  .regex(/^[a-zA-Z]/, "Display name must start with a letter");
+    usernameRegex,
+    "Username must start with a letter and can only contain letters, numbers, and single hyphens.",
+  );
 
 export const SignUpSchema = z
   .object({
-    displayName: displayNameSchema,
+    username: usernameSchema,
     email: z.email(),
     password: passwordSchema,
   })
   .refine(
     async (data) => {
-      return await checkDisplayNameAvailability(data.displayName);
+      return await checkUsernameAvailability(data.username);
     },
-    { path: ["display-name"], message: "Display name is already in use" },
+    {
+      path: ["username"],
+      message: "Username is already in use",
+    },
   );

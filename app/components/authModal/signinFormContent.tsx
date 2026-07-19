@@ -15,7 +15,7 @@ import z from "zod";
 
 export default function SigninFormContent({
   emailNotVerified,
-  displayName,
+  username,
   email,
   password,
   repeatPassword,
@@ -26,8 +26,8 @@ export default function SigninFormContent({
   toggleSingin,
 }: {
   emailNotVerified: boolean;
-  displayName?: string;
-  email: string;
+  username: string;
+  email?: string;
   password: string;
   repeatPassword?: string;
   signup?: boolean;
@@ -115,41 +115,41 @@ export default function SigninFormContent({
 
   return (
     <>
+      <Input
+        required
+        startIcon={<PiUserBold />}
+        aria-label={signup ? "username" : "username or email"}
+        type="text"
+        placeholder={signup ? "username" : "username or email"}
+        id="username"
+        autoComplete="username"
+        name="username"
+        defaultValue={username}
+        error={
+          issue && issue.path.length > 0 && issue.path[0] === "username"
+            ? issue.message
+            : undefined
+        }
+      />
       {signup && (
         <Input
+          ref={emailRef}
           required
-          startIcon={<PiUserBold />}
-          aria-label="display name"
-          type="text"
-          placeholder="display name"
-          id="display-name"
-          autoComplete="username"
-          name="display-name"
-          defaultValue={displayName}
+          startIcon={<PiEnvelopeBold />}
+          aria-label="email"
+          type="email"
+          placeholder="email"
+          id="email"
+          autoComplete="email"
+          name="email"
+          defaultValue={email}
           error={
-            issue && issue.path.length > 0 && issue.path[0] === "display-name"
+            issue && issue.path.length > 0 && issue.path[0] === "email"
               ? issue.message
               : undefined
           }
         />
       )}
-      <Input
-        ref={emailRef}
-        required
-        startIcon={<PiEnvelopeBold />}
-        aria-label="email"
-        type="email"
-        placeholder="email"
-        id="email"
-        autoComplete="email"
-        name="email"
-        defaultValue={email}
-        error={
-          issue && issue.path.length > 0 && issue.path[0] === "email"
-            ? issue.message
-            : undefined
-        }
-      />
       <Input
         required
         startIcon={<PiKeyBold />}

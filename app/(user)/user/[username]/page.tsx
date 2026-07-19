@@ -1,5 +1,5 @@
 import { getSession } from "@/app/actions/authActions";
-import { getUserBySlug } from "@/app/actions/userActions";
+import { getUserByUsername } from "@/app/actions/userActions";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
@@ -7,30 +7,27 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ username: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const user = await getUserBySlug(slug);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   return {
     metadataBase: new URL(process.env.BASE_URL!),
-    title: user
-      ? `${user.displayName}'s profile `
-      : "User not found " + "| Garndish",
+    title: user ? `${user.name}'s profile ` : "User not found " + "| Garndish",
     openGraph: { images: user?.image || undefined },
   };
 }
 
 export default async function UserPage({ params }: Props) {
-  const { slug } = await params;
-  const user = await getUserBySlug(slug);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
   if (!user) {
     notFound();
   }
   const session = await getSession();
-  const current =
-    session?.user.displayName?.toLowerCase() === slug.toLowerCase();
+  const current = session?.user.username === username;
 
   return (
     <main className="pt-4">
@@ -39,14 +36,14 @@ export default async function UserPage({ params }: Props) {
           {user.image && (
             <UserAvatar
               avatarUrl={user.image}
-              displayName={user.displayName || ""}
+              name={user.name || ""}
               className="size-50"
             />
           )}
         </div>
         <div className="w-full md:w-2/3 md:pt-8 text-center md:text-left">
           <h1 className="text-4xl font-heading">{user.name}</h1>
-          <p className="my-4">@{user.displayName}</p>
+          <p className="my-4">@{user.displayUsername}</p>
         </div>
       </section>
       <section>

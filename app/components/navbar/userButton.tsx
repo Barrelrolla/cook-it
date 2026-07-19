@@ -17,13 +17,10 @@ export default function UserButton({
         color="main"
         className="flex flex-row items-center gap-2"
         as={Link}
-        href={`/user/${user.displayName?.toLowerCase()}`}
+        href={`/user/${user.username}`}
       >
         {user.image && (
-          <UserAvatar
-            avatarUrl={user.image}
-            displayName={user.displayName || ""}
-          />
+          <UserAvatar avatarUrl={user.image} name={user.name || ""} />
         )}
         <PiCaretDownBold />
       </Anchor>

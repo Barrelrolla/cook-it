@@ -2,7 +2,7 @@ import { PropsWithChildren, Suspense } from "react";
 import MainNavbar from "../components/navbar/mainNavbar";
 import SigninModal from "../components/authModal/signinModal";
 import ResetPasswordModal from "../components/authModal/resetPassModal";
-import DisplayNameModal from "../components/authModal/displayNameModal";
+import UsernameModal from "../components/authModal/usernameModal";
 
 export default async function UserLayout({ children }: PropsWithChildren) {
   return (
@@ -17,7 +17,7 @@ export default async function UserLayout({ children }: PropsWithChildren) {
         <ResetPasswordModal />
       </Suspense>
       <Suspense>
-        <DisplayNameModal />
+        <UsernameModal />
       </Suspense>
       <div className="mt-22">{children}</div>
     </>

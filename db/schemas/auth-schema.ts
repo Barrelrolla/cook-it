@@ -1,12 +1,20 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  index,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable(
   "user",
   {
     id: text("id").primaryKey(),
     name: text("name").notNull(),
-    displayName: text("display_name").unique(),
+    username: varchar("username", { length: 255 }).unique(),
+    displayUsername: varchar("display_username"),
     email: text("email").notNull().unique(),
     emailVerified: boolean("email_verified").default(false).notNull(),
     image: text("image"),
@@ -17,7 +25,7 @@ export const user = pgTable(
       .notNull(),
   },
   (table) => [
-    index("display_name_lower_idx").on(sql`lower(${table.displayName})`),
+    index("display_name_lower_idx").on(sql`lower(${table.username})`),
   ],
 );
 

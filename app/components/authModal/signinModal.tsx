@@ -18,6 +18,7 @@ import { SignUpSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
 import userPlaceholderImage from "@/public/user-placeholder.png";
+import { ErrorContext } from "better-auth/react";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function SigninModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
+  const [username, setUsername] = useState("");
   const [emailNotVerified, setEmailNotVerified] = useState(false);
   const signinFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
@@ -37,43 +38,73 @@ export default function SigninModal() {
   const showSignin = searchParams.has(SIGNIN_PARAM);
   const showSignup = searchParams.has(SIGNUP_PARAM);
 
+  function onRequest() {
+    setError("");
+    setEmailNotVerified(false);
+    setIssue(undefined);
+    setIsLoading(true);
+  }
+  function onSuccess() {
+    setIsLoading(false);
+    close();
+    router.refresh();
+  }
+  function onError(ctx: ErrorContext) {
+    if (ctx.error.status === 403) {
+      setEmailNotVerified(true);
+    }
+    setIsLoading(false);
+    setError(ctx.error.message || SOMETHING_WENT_WRONG);
+  }
+
   async function signin(formData: FormData) {
-    const enteredEmail = formData.get("email")?.toString() || "";
-    setEmail(enteredEmail);
+    const enteredUsername = formData.get("username")?.toString() || "";
+    setEmail(enteredUsername);
     const enteredPass = formData.get("password")?.toString() || "";
     setPassword(enteredPass);
-    await authClient.signIn.email(
-      {
-        email: enteredEmail,
-        password: enteredPass,
-        rememberMe: true,
-      },
-      {
-        onRequest: () => {
-          setError("");
-          setEmailNotVerified(false);
-          setIssue(undefined);
-          setIsLoading(true);
+    if (enteredUsername.indexOf("@") > 0) {
+      await authClient.signIn.email(
+        {
+          email: enteredUsername,
+          password: enteredPass,
+          rememberMe: true,
         },
-        onSuccess: () => {
-          setIsLoading(false);
-          close();
-          router.refresh();
+        {
+          onRequest: () => {
+            onRequest();
+          },
+          onSuccess: () => {
+            onSuccess();
+          },
+          onError: (ctx) => {
+            onError(ctx);
+          },
         },
-        onError: (ctx) => {
-          if (ctx.error.status === 403) {
-            setEmailNotVerified(true);
-          }
-          setIsLoading(false);
-          setError(ctx.error.message || SOMETHING_WENT_WRONG);
+      );
+    } else {
+      await authClient.signIn.username(
+        {
+          username: enteredUsername,
+          password: enteredPass,
         },
-      },
-    );
+        {
+          onRequest: () => {
+            onRequest();
+          },
+          onSuccess: () => {
+            onSuccess();
+          },
+          onError: (ctx) => {
+            onError(ctx);
+          },
+        },
+      );
+    }
   }
 
   async function signUp(formData: FormData) {
-    const enteredDisplayName = formData.get("display-name")?.toString() || "";
-    setDisplayName(enteredDisplayName);
+    const enteredUsername = formData.get("username")?.toString() || "";
+    setUsername(enteredUsername);
     const enteredEmail = formData.get("email")?.toString() || "";
     setEmail(enteredEmail);
     const enteredPass = formData.get("password")?.toString() || "";
@@ -90,7 +121,7 @@ export default function SigninModal() {
     );
 
     const user = await User.safeParseAsync({
-      displayName: enteredDisplayName,
+      username: enteredUsername,
       email: enteredEmail,
       password: enteredPass,
       repeatPassword: enteredRepeatPass,
@@ -107,12 +138,13 @@ export default function SigninModal() {
 
     await authClient.signUp.email(
       {
-        name: user.data.displayName,
-        displayName: user.data.displayName,
         email: user.data.email,
+        name: user.data.username,
         password: user.data.password,
+        username: user.data.username,
+        displayUsername: user.data.username,
         image: userPlaceholderImage.src,
-        callbackURL: `/user/${user.data.displayName}`,
+        callbackURL: `/user/${user.data.username}`,
       },
       {
         onRequest: () => {
@@ -138,7 +170,7 @@ export default function SigninModal() {
     setError("");
     setIssue(undefined);
     setAccountCreated(false);
-    setDisplayName("");
+    setUsername("");
     setEmail("");
     setPassword("");
     setRepeatPassword("");
@@ -183,7 +215,7 @@ export default function SigninModal() {
       >
         <SigninFormContent
           emailNotVerified={emailNotVerified}
-          email={email}
+          username={username}
           password={password}
           loading={isLoading}
           toggleSingin={toggleSignin}
@@ -220,7 +252,7 @@ export default function SigninModal() {
         {!accountCreated && (
           <SigninFormContent
             emailNotVerified={emailNotVerified}
-            displayName={displayName}
+            username={username}
             email={email}
             password={password}
             repeatPassword={repeatPassword}

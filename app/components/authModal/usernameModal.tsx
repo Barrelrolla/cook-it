@@ -9,15 +9,11 @@ import {
 import { Button, Input } from "@barrelrolla/react-components-library";
 import { useState } from "react";
 import z from "zod";
-import { displayNameSchema } from "@/utils/validationSchemas";
+import { usernameSchema } from "@/utils/validationSchemas";
 import { PiUserBold } from "react-icons/pi";
-import {
-  checkDisplayNameAvailability,
-  setUserDisplayName,
-} from "@/app/actions/userActions";
 import { authClient } from "@/auth/authClient";
 
-export default function DisplayNameModal() {
+export default function UsernameModal() {
   const session = authClient.useSession();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +26,7 @@ export default function DisplayNameModal() {
   }
   const user = session.data.user;
 
-  const isOpen: boolean = !user.displayName;
+  const isOpen: boolean = !user.username;
 
   function close() {
     const params = new URLSearchParams(searchParams.toString());
@@ -39,17 +35,12 @@ export default function DisplayNameModal() {
   }
 
   async function action(formData: FormData) {
-    const enteredName = formData.get("display-name")?.toString() || "";
+    const enteredName = formData.get("username")?.toString() || "";
     setName(enteredName);
     setLoading(true);
 
-    const Name = z.object({ displayName: displayNameSchema }).refine(
-      async (data) => {
-        return await checkDisplayNameAvailability(data.displayName);
-      },
-      { path: ["display-name"], message: "Display name is already in use" },
-    );
-    const parsedName = await Name.safeParseAsync({ displayName: enteredName });
+    const Name = z.object({ username: usernameSchema });
+    const parsedName = await Name.safeParseAsync({ username: enteredName });
     if (!parsedName.data) {
       if (parsedName.error.issues.length > 0) {
         setError(parsedName.error.issues[0].message);
@@ -60,22 +51,29 @@ export default function DisplayNameModal() {
       return;
     }
 
-    try {
-      await setUserDisplayName(parsedName.data.displayName, user.id);
-    } catch {
-      setLoading(false);
-      setError(SOMETHING_WENT_WRONG);
-      return;
-    }
-
-    setError("");
-    setLoading(false);
-    router.refresh();
+    await authClient.updateUser({
+      username: parsedName.data.username,
+      displayUsername: parsedName.data.username,
+      fetchOptions: {
+        onRequest() {
+          setError("");
+          setLoading(true);
+        },
+        onSuccess() {
+          setLoading(false);
+          router.refresh();
+        },
+        onError(ctx) {
+          setLoading(false);
+          setError(ctx.error.message || SOMETHING_WENT_WRONG);
+        },
+      },
+    });
   }
 
   return (
     <BaseModal
-      title="Choose your display name"
+      title="Choose your username"
       formAction={action}
       isOpen={isOpen}
       setIsOpen={close}
@@ -84,17 +82,17 @@ export default function DisplayNameModal() {
         required
         disabled={loading}
         startIcon={<PiUserBold />}
-        aria-label="display name"
+        aria-label="username"
         type="text"
-        placeholder="display name"
-        id="display-name"
-        name="display-name"
+        placeholder="username"
+        id="username"
+        name="username"
         autoComplete="username"
         error={error}
         defaultValue={name}
       />
       <Button type="submit" disabled={loading} className="w-full" size="sm">
-        Confirm display name
+        Confirm username
       </Button>
     </BaseModal>
   );

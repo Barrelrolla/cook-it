@@ -3,11 +3,11 @@ import Image from "next/image";
 export default function UserAvatar({
   className,
   avatarUrl,
-  displayName,
+  name,
 }: {
   className?: string;
   avatarUrl: string;
-  displayName: string;
+  name: string;
 }) {
   return (
     <div
@@ -16,12 +16,7 @@ export default function UserAvatar({
         className
       }
     >
-      <Image
-        src={avatarUrl}
-        alt={`${displayName}'s avatar`}
-        fill
-        sizes="10vw"
-      />
+      <Image src={avatarUrl} alt={`${name}'s avatar`} fill sizes="10vw" />
     </div>
   );
 }

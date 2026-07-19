@@ -2,18 +2,27 @@ import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
 import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
-import { SignUpSchema } from "@/utils/validationSchemas";
+import { SignUpSchema, usernameRegex } from "@/utils/validationSchemas";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { Resend } from "resend";
+import { username } from "better-auth/plugins/username";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export const auth = betterAuth({
-  user: {
-    additionalFields: { displayName: { type: "string", required: false } },
-  },
+  plugins: [
+    username({
+      usernameValidator(username) {
+        return (
+          username.length > 3 &&
+          username.length < 30 &&
+          usernameRegex.test(username)
+        );
+      },
+    }),
+  ],
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
   trustedOrigins: ["http://192.168.100.72:3000", "http://192.168.0.133:3000"],
   hooks: {
@@ -51,7 +60,7 @@ export const auth = betterAuth({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
           subject: "Verify your Garndish account",
-          react: VerificationEmail({ name: user.name, url }),
+          react: VerificationEmail({ name: user.name.toLowerCase(), url }),
         });
       } catch {}
     },

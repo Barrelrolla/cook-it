@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { user } from "@/db/schemas/auth-schema";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 export async function getUserById(id: string) {
   const res = await db.select().from(user).where(eq(user.id, id)).limit(1);
@@ -13,49 +13,15 @@ export async function getUserById(id: string) {
   }
 }
 
-export async function getUserBySlug(slug: string) {
+export async function getUserByUsername(username: string) {
   const res = await db
     .select()
     .from(user)
-    .where(eq(sql`lower(${user.displayName})`, slug.toLowerCase()))
+    .where(eq(user.username, username.toLowerCase()))
     .limit(1);
   if (res.length > 0) {
     return res[0];
   } else {
     return null;
   }
-}
-
-export async function getUserByDisplayName(displayName: string) {
-  const res = await db
-    .select()
-    .from(user)
-    .where(eq(user.displayName, displayName))
-    .limit(1);
-  if (res.length > 0) {
-    return res[0];
-  } else {
-    return null;
-  }
-}
-
-export async function checkDisplayNameAvailability(displayName: string) {
-  const res = await db
-    .select()
-    .from(user)
-    .where(eq(sql`lower(${user.displayName})`, displayName.toLowerCase()))
-    .limit(1);
-  if (res.length > 0) {
-    return false;
-  }
-  return true;
-}
-
-export async function setUserDisplayName(displayName: string, userId: string) {
-  try {
-    await db
-      .update(user)
-      .set({ displayName: displayName })
-      .where(eq(user.id, userId));
-  } catch {}
 }
