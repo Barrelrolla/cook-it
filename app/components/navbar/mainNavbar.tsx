@@ -41,7 +41,7 @@ export default async function MainNavbar() {
         )}
       </NavbarCollapse>
       <div className="flex flex-row justify-center items-center gap-4">
-        <DarkModeToggle suppressHydrationWarning color="main" variant="ghost" />
+        <DarkModeToggle color="main" variant="ghost" />
         {!session && (
           <>
             <Suspense>

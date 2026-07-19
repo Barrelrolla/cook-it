@@ -6,6 +6,7 @@ import { getUserByUsername } from "@/app/actions/userActions";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
+import PopulateButton from "./populateButton";
 
 type Props = { params: Promise<{ username: string }> };
 
@@ -46,6 +47,7 @@ export default async function UserPage({ params }: Props) {
           <p className="my-4">@{user.displayUsername}</p>
         </div>
       </section>
+      {user.role === "admin" && <PopulateButton />}
       <section>
         <h2 className="text-2xl mx-4">
           {current ? "My recipes" : "Uploaded recipes"}

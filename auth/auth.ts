@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { username } from "better-auth/plugins/username";
+import { admin } from "better-auth/plugins/admin";
 import { Resend } from "resend";
 import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
@@ -13,6 +14,7 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export const auth = betterAuth({
   plugins: [
+    admin(),
     username({
       usernameValidator(username) {
         return (

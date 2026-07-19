@@ -12,7 +12,7 @@ export default async function RecipeList() {
           })}
         </ul>
       )}
-      {!recipes && <p>No recipes</p>}
+      {(!recipes || recipes.length === 0) && <p>No recipes</p>}
     </div>
   );
 }
