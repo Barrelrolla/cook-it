@@ -59,7 +59,7 @@ export default function SigninModal() {
 
   async function signin(formData: FormData) {
     const enteredUsername = formData.get("username")?.toString() || "";
-    setEmail(enteredUsername);
+    setUsername(enteredUsername);
     const enteredPass = formData.get("password")?.toString() || "";
     setPassword(enteredPass);
     if (enteredUsername.indexOf("@") > 0) {

@@ -29,6 +29,7 @@ export default async function UserPage({ params }: Props) {
   }
   const session = await getSession();
   const current = session?.user.username === username;
+  const isAdmin = current && user.role === "admin";
 
   return (
     <main className="pt-4">
@@ -47,7 +48,7 @@ export default async function UserPage({ params }: Props) {
           <p className="my-4">@{user.displayUsername}</p>
         </div>
       </section>
-      {user.role === "admin" && <PopulateButton />}
+      {isAdmin && <PopulateButton />}
       <section>
         <h2 className="text-2xl mx-4">
           {current ? "My recipes" : "Uploaded recipes"}
