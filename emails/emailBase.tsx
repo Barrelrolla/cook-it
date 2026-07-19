@@ -8,11 +8,11 @@ import {
   Tailwind,
   Font,
   Button,
+  Img,
 } from "react-email";
 import tailwindConfig from "./tailwind.config";
 import { BRAND_NAME } from "@/utils/constants";
 import { PropsWithChildren } from "react";
-import EmailLogo from "./emailLogo";
 
 export default function EmailBase({ children }: PropsWithChildren) {
   return (
@@ -50,10 +50,15 @@ export default function EmailBase({ children }: PropsWithChildren) {
             }}
           />
         </Head>
-        <Body className="rounded-sm bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark">
+        <Body>
           <Preview>{`${BRAND_NAME} password reset.`}</Preview>
-          <Container className="mb-10 p-8">
-            <EmailLogo />
+          <Container className="rounded-sm bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark mb-10 p-8 max-w-160">
+            <Img
+              className="h-18"
+              src={
+                "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1784429447/logo_irxicr.png"
+              }
+            />
             <Section>{children}</Section>
           </Container>
         </Body>
