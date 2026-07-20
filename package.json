@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@barrelrolla/react-components-library": "^0.2.53",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "better-auth": "^1.6.23",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",

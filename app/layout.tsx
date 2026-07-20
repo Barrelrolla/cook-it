@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
-import { ThemeContextProvider } from "@barrelrolla/react-components-library";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IS_DEV, IS_PROD } from "@/utils/helpers";
+import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 import ComingSoonPage from "./comingSoon";
 
 export const manrope = Manrope({
@@ -82,6 +84,8 @@ export default function RootLayout({
           {IS_PROD && <ComingSoonPage />}
         </body>
       </ThemeContextProvider>
+      <Analytics />
+      <SpeedInsights />
     </html>
   );
 }
