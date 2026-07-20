@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IS_DEV, IS_PROD } from "@/utils/helpers";
 import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 import ComingSoonPage from "./comingSoon";
+import { cookies } from "next/headers";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -37,16 +38,19 @@ export const metadata: Metadata = {
   description: "The next-gen cooking app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const darkMode = cookieStore.get("darkMode")?.value ?? "";
+
   return (
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${manrope.variable} ${fraunces.variable} ${hurricane.variable} ${roboto.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} ${hurricane.variable} ${roboto.variable} h-full antialiased ${darkMode}`}
     >
       <head>
         <script
@@ -64,9 +68,13 @@ export default function RootLayout({
               }
               if (savedDarkMode === "system" || !savedDarkMode) {
                 const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                if (isDark) classList.add("dark");
+                if (isDark) {
+                  classList.add("dark");
+                  document.cookie = 'darkMode=dark';
+                }
               } else if (savedDarkMode === "dark") {
                 classList.add("dark");
+                document.cookie = 'darkMode=dark';
               }
             };
             setTheme();`,

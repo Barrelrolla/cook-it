@@ -19,7 +19,7 @@ export default async function MainNavbar() {
   return (
     <Navbar
       suppressHydrationWarning
-      backdropClasses="bg-stone-800/30"
+      backdropClasses="bg-stone-800/30 backdrop-blur-[2px]"
       collapseAt="md"
       glass={false}
       hasShadow={false}
@@ -40,7 +40,7 @@ export default async function MainNavbar() {
           </li>
         )}
       </NavbarCollapse>
-      <div className="flex flex-row justify-center items-center gap-4">
+      <div className="flex flex-row justify-end items-center gap-4 min-w-48">
         <DarkModeToggle color="main" variant="ghost" />
         {!session && (
           <>

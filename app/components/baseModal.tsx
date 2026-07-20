@@ -19,7 +19,7 @@ export default function BaseModal({
 }: BaseModalProps) {
   return (
     <Dialog
-      backdropClasses="items-start md:items-center"
+      backdropClasses="items-start md:items-center backdrop-blur-[2px]"
       className="mt-22 md:mt-0"
       isOpen={isOpen}
       setIsOpen={setIsOpen}

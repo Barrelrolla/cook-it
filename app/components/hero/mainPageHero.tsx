@@ -8,13 +8,22 @@ import {
 } from "@barrelrolla/react-components-library";
 import heroLight from "../../../public/hero-light.png";
 import heroDark from "../../../public/hero-dark.png";
+import { cookies } from "next/headers";
 
-export default function MainPageHero() {
+export default async function MainPageHero() {
+  const cookieStore = await cookies();
+  const darkMode = cookieStore.get("darkMode")?.value;
+  let isDark = undefined;
+  if (darkMode) {
+    isDark = darkMode === "dark";
+  }
+
   return (
     <RecipeHero
       imageUrl={heroLight.src}
       darkImageUrl={heroDark.src}
       imageAlt="A bowl of pasta"
+      initialDark={isDark}
     >
       <HeroSection className="justify-end md:justify-center mb-2">
         <HeroTitle className="font-heading text-6xl md:text-7xl">

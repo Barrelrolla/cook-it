@@ -13,23 +13,25 @@ export default function Brand() {
       href="/"
       className="font-logo text-4xl font-normal flex items-center gap-2"
     >
-      <div className="h-18 overflow-clip flex">
-        <Image
-          className="object-cover block dark:hidden"
-          src={logoLight}
-          alt={`${BRAND_NAME} logo`}
-          height={72}
-          width={144}
-          loading="eager"
-        />
-        <Image
-          className="object-cover hidden dark:block"
-          src={logoDark}
-          alt={`${BRAND_NAME} logo`}
-          height={72}
-          width={144}
-          loading="eager"
-        />
+      <div className="h-18 overflow-clip flex items-center">
+        <div className="h-22 flex">
+          <Image
+            className="object-cover block dark:hidden"
+            src={logoLight}
+            alt={`${BRAND_NAME} logo`}
+            height={72}
+            width={160}
+            loading="eager"
+          />
+          <Image
+            className="object-cover hidden dark:block -ml-2"
+            src={logoDark}
+            alt={`${BRAND_NAME} logo`}
+            height={88}
+            width={200}
+            loading="eager"
+          />
+        </div>
       </div>
     </NavbarBrand>
   );
