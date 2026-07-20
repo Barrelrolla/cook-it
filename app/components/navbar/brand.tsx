@@ -16,11 +16,11 @@ export default function Brand() {
       <div className="h-18 overflow-clip flex items-center">
         <div className="h-22 flex">
           <Image
-            className="object-cover block dark:hidden"
+            className="object-cover block dark:hidden -ml-2"
             src={logoLight}
             alt={`${BRAND_NAME} logo`}
-            height={72}
-            width={160}
+            height={88}
+            width={200}
             loading="eager"
           />
           <Image
