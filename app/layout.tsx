@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { ThemeContextProvider } from "@barrelrolla/react-components-library";
+import { IS_DEV, IS_PROD } from "@/utils/helpers";
+import ComingSoonPage from "./comingSoon";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -76,7 +78,8 @@ export default function RootLayout({
               "0px calc(0px - var(--floating-ui-scrollbar-width)) 0px 0px",
           }}
         >
-          {children}
+          {IS_DEV && children}
+          {IS_PROD && <ComingSoonPage />}
         </body>
       </ThemeContextProvider>
     </html>
