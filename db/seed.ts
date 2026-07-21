@@ -15,7 +15,7 @@ export async function seed() {
         displayUsername: "Barrelrolla",
         emailVerified: true,
         image:
-          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_fill,g_auto,w_200,h_200/PXL_20250719_150744754_ews8e8.jpg",
+          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_fill,g_auto,w_400,h_400,f_auto,q_auto/PXL_20250719_150744754_ews8e8.jpg",
       },
       password: "Pass123$",
       role: "admin",
@@ -40,7 +40,7 @@ export async function seed() {
     preparationTime: 25,
     difficulty: "easy",
     instructions: "follow those instructions",
-    rating: 49,
+    rating: 4.9,
     ratingsCount: 256,
   });
   await db.insert(recipeTable).values({

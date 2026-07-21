@@ -19,8 +19,8 @@ export default function UserAvatar({
       <Image
         src={avatarUrl}
         alt={`${name}'s avatar`}
-        fill
-        sizes="10vw"
+        height={200}
+        width={200}
         loading="eager"
       />
     </div>
