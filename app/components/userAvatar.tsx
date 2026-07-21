@@ -16,7 +16,13 @@ export default function UserAvatar({
         className
       }
     >
-      <Image src={avatarUrl} alt={`${name}'s avatar`} fill sizes="10vw" />
+      <Image
+        src={avatarUrl}
+        alt={`${name}'s avatar`}
+        fill
+        sizes="10vw"
+        loading="eager"
+      />
     </div>
   );
 }

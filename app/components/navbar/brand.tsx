@@ -19,7 +19,7 @@ export default function Brand() {
             className="object-cover block dark:hidden -ml-2"
             src={logoLight}
             alt={`${BRAND_NAME} logo`}
-            height={88}
+            height={90}
             width={200}
             loading="eager"
           />
@@ -27,7 +27,7 @@ export default function Brand() {
             className="object-cover hidden dark:block -ml-2"
             src={logoDark}
             alt={`${BRAND_NAME} logo`}
-            height={88}
+            height={90}
             width={200}
             loading="eager"
           />

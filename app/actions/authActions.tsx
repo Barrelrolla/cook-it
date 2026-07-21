@@ -17,8 +17,7 @@ export async function checkUsernameAvailability(username: string) {
       body: { username },
     });
     return available;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return false;
   }
 }

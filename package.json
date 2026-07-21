@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "docker": "docker compose up",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "docker": "docker compose up",
-    "docker:wipe-down": "docker compose down -v",
-    "docker:wipe-up": "docker compose up -d",
+    "db:seed": "npx tsx ./db/seed.ts",
+    "db:reset": "docker compose down -v && docker compose up -d --wait && npm run db:migrate && npm run db:seed",
     "email": "email dev"
   },
   "dependencies": {

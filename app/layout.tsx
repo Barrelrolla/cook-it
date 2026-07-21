@@ -1,12 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IS_DEV, IS_PROD } from "@/utils/helpers";
 import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 import ComingSoonPage from "./comingSoon";
 import { cookies } from "next/headers";
+import { VercelMetrics } from "./vercelMetrics";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -92,8 +91,7 @@ export default async function RootLayout({
           {IS_PROD && <ComingSoonPage />}
         </body>
       </ThemeContextProvider>
-      <Analytics />
-      <SpeedInsights />
+      <VercelMetrics />
     </html>
   );
 }

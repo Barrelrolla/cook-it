@@ -17,7 +17,6 @@ export default function RecipeHero({
 } & PropsWithChildren) {
   const theme = useTheme();
   const isDark = theme?.isDark === undefined ? initialDark : theme.isDark;
-  console.log(isDark);
 
   return (
     <Hero

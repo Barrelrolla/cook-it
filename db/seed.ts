@@ -1,10 +1,26 @@
 "use server";
 
+import { auth } from "@/auth/auth";
 import { db } from ".";
 import { recipeTable } from "./schemas/recipeSchema";
 import { getUniqueRecipeSlug } from "@/utils/helpers";
 
-export async function populate() {
+export async function seed() {
+  auth.api.createUser({
+    body: {
+      email: "chetkara@gmail.com",
+      name: "Julian",
+      data: {
+        username: "barrelrolla",
+        displayUsername: "Barrelrolla",
+        emailVerified: true,
+        image:
+          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_fill,g_auto,w_200,h_200/PXL_20250719_150744754_ews8e8.jpg",
+      },
+      password: "Pass123$",
+      role: "admin",
+    },
+  });
   await db.insert(recipeTable).values({
     slug: getUniqueRecipeSlug("Creamy Mushroom Pasta"),
     title: "Creamy Mushroom Pasta",
@@ -50,3 +66,5 @@ export async function populate() {
     ratingsCount: 312,
   });
 }
+
+seed();

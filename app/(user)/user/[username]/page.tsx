@@ -6,7 +6,6 @@ import { getUserByUsername } from "@/app/actions/userActions";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
-import PopulateButton from "./populateButton";
 
 type Props = { params: Promise<{ username: string }> };
 
@@ -29,7 +28,7 @@ export default async function UserPage({ params }: Props) {
   }
   const session = await getSession();
   const current = session?.user.username === username;
-  const isAdmin = current && user.role === "admin";
+  // const isAdmin = current && user.role === "admin";
 
   return (
     <main className="pt-4">
@@ -48,7 +47,6 @@ export default async function UserPage({ params }: Props) {
           <p className="my-4">@{user.displayUsername}</p>
         </div>
       </section>
-      {isAdmin && <PopulateButton />}
       <section>
         <h2 className="text-2xl mx-4">
           {current ? "My recipes" : "Uploaded recipes"}
