@@ -29,6 +29,7 @@ export default function SigninModal() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [emailNotVerified, setEmailNotVerified] = useState(false);
   const signinFormRef = useRef<HTMLFormElement>(null);
   const signupFormRef = useRef<HTMLFormElement>(null);
@@ -62,6 +63,8 @@ export default function SigninModal() {
     setUsername(enteredUsername);
     const enteredPass = formData.get("password")?.toString() || "";
     setPassword(enteredPass);
+    const enteredRemember = formData.get("remember")?.toString() === "on";
+    setRememberMe(enteredRemember);
     if (enteredUsername.indexOf("@") > 0) {
       await authClient.signIn.email(
         {
@@ -86,6 +89,7 @@ export default function SigninModal() {
         {
           username: enteredUsername,
           password: enteredPass,
+          rememberMe: enteredRemember,
         },
         {
           onRequest: () => {
@@ -174,6 +178,7 @@ export default function SigninModal() {
     setEmail("");
     setPassword("");
     setRepeatPassword("");
+    setRememberMe(false);
     setEmailNotVerified(false);
     signinFormRef.current?.reset();
     signupFormRef.current?.reset();
@@ -217,6 +222,7 @@ export default function SigninModal() {
           emailNotVerified={emailNotVerified}
           username={username}
           password={password}
+          rememberMe={rememberMe}
           loading={isLoading}
           toggleSingin={toggleSignin}
           error={error}

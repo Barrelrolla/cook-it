@@ -8,6 +8,7 @@ import {
   Anchor,
   Button,
   CardActions,
+  Checkbox,
   Input,
   Spinner,
 } from "@barrelrolla/react-components-library";
@@ -19,6 +20,7 @@ export default function SigninFormContent({
   email,
   password,
   repeatPassword,
+  rememberMe,
   signup = false,
   loading = false,
   error,
@@ -30,6 +32,7 @@ export default function SigninFormContent({
   email?: string;
   password: string;
   repeatPassword?: string;
+  rememberMe?: boolean;
   signup?: boolean;
   loading?: boolean;
   error?: string;
@@ -185,6 +188,11 @@ export default function SigninFormContent({
               : undefined
           }
         />
+      )}
+      {!signup && (
+        <Checkbox name="remember" defaultChecked={rememberMe}>
+          Remember me?
+        </Checkbox>
       )}
       <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
         <Button
