@@ -178,7 +178,7 @@ export default function SigninModal() {
     setEmail("");
     setPassword("");
     setRepeatPassword("");
-    setRememberMe(false);
+    setRememberMe(true);
     setEmailNotVerified(false);
     signinFormRef.current?.reset();
     signupFormRef.current?.reset();

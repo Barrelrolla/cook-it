@@ -1,4 +1,4 @@
-import { CSSProperties, Suspense } from "react";
+import { Suspense } from "react";
 import { user } from "@/db/schemas/auth-schema";
 import { getSession } from "@/app/actions/authActions";
 import { LINKS } from "@/utils/constants";

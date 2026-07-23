@@ -15,7 +15,7 @@
     "email": "email dev"
   },
   "dependencies": {
-    "@barrelrolla/react-components-library": "^0.2.72",
+    "@barrelrolla/react-components-library": "^0.2.74",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.0.4",
     "better-auth": "^1.6.24",

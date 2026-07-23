@@ -190,7 +190,11 @@ export default function SigninFormContent({
         />
       )}
       {!signup && (
-        <Checkbox name="remember" defaultChecked={rememberMe}>
+        <Checkbox
+          wrapperClasses="mt-2 w-fit"
+          name="remember"
+          defaultChecked={rememberMe}
+        >
           Remember me?
         </Checkbox>
       )}
