@@ -3,7 +3,6 @@
 import { user as userSchema } from "@/db/schemas/auth-schema";
 import UserAvatar from "../userAvatar";
 import {
-  Button,
   Divider,
   Dropdown,
   DropdownContent,
@@ -98,12 +97,10 @@ export default function UserButton({
             </span>
           </DropdownListItem>
           <Divider className="opacity-10" />
-          <DropdownListItem
-            color="error"
-            // loading={isLoading}
-            onClick={signout}
-          >
-            {isLoading ? (
+          <DropdownListItem color="error" onClick={signout}>
+            {error ? (
+              error
+            ) : isLoading ? (
               "working..."
             ) : (
               <span className="flex items-center gap-2">
