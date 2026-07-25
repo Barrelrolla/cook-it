@@ -24,7 +24,7 @@ export default function BaseModal({
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      <Card containerClasses="min-w-70 w-70 md:min-w-80 md:w-80">
+      <Card containerClasses="w-[80vw] max-w-80">
         <CardTitle className="font-heading">{title}</CardTitle>
         <form
           action={formAction}

@@ -32,8 +32,8 @@ export default async function MainPageHero() {
           <span className="text-primary-content">Share.</span>
         </HeroTitle>
         <HeroText className="md:max-w-2/3">
-          Join a community of food lovers. Share your recipes, new favourites,
-          and let AI help you cook something amazing.
+          Join a community of food lovers. Share your recipes and find something
+          amazing to cook.
         </HeroText>
         <HeroActions className="justify-start gap-2">
           <ShareButton />

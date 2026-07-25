@@ -19,7 +19,7 @@ export default async function UserLayout({ children }: PropsWithChildren) {
       <Suspense>
         <UsernameModal />
       </Suspense>
-      <div className="mt-22">{children}</div>
+      <div className="mt-18 md:mt-22">{children}</div>
     </>
   );
 }

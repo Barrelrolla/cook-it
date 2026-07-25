@@ -13,8 +13,8 @@ export default function Brand() {
       href="/"
       className="font-logo text-4xl font-normal flex items-center gap-2"
     >
-      <div className="h-18 overflow-clip flex items-center">
-        <div className="h-22 flex">
+      <div className="h-14 overflow-clip flex items-center">
+        <div className="h-18 w-34 md:w-50 md:h-22 flex">
           <Image
             className="object-cover block dark:hidden -ml-2"
             src={logoLight}

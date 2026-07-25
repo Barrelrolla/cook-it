@@ -18,7 +18,7 @@ export default function Navlink({
       as={Link}
       href={href}
       selected={path.startsWith(href)}
-      className="selected:text-primary-content"
+      className="md:selected:text-primary-content"
       {...rest}
     >
       {children}

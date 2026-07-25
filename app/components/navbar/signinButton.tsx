@@ -24,6 +24,7 @@ export default function SigninButton({ signup }: { signup?: boolean }) {
   const variant: ButtonVariant = signup ? "ghost" : "solid";
   return (
     <Button
+      className="btn-sm md:btn-md"
       onClick={() => {
         router.replace(`${path}/?${query}`, {
           scroll: false,

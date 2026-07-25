@@ -25,7 +25,7 @@ export default async function MainNavbar() {
       hasShadow={false}
       className="items-center bg-muted"
     >
-      <div className="flex flex-row min-h-18 gap-4">
+      <div className="flex flex-row min-h-14 md:min-h-18 gap-4">
         <Brand />
       </div>
       <NavbarCollapse className="font-bold">
@@ -34,11 +34,6 @@ export default async function MainNavbar() {
             {link.name}
           </Navlink>
         ))}
-        {session && (
-          <li>
-            <SignoutButton />
-          </li>
-        )}
       </NavbarCollapse>
       <div className="flex flex-row justify-end items-center gap-4 min-w-48">
         <DarkModeToggle color="main" variant="ghost" />
