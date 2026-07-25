@@ -120,6 +120,7 @@ export default function SigninFormContent({
     <>
       <Input
         required
+        ref={emailRef}
         startIcon={<PiUserBold />}
         aria-label={signup ? "username" : "username or email"}
         type="text"
@@ -136,7 +137,6 @@ export default function SigninFormContent({
       />
       {signup && (
         <Input
-          ref={emailRef}
           required
           startIcon={<PiEnvelopeBold />}
           aria-label="email"

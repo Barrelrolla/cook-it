@@ -65,12 +65,19 @@ export default function UserButton({
             avatarUrl={user.image || placeholderImage.src}
             name={user.name || ""}
           />
-          <PiCaretDownBold />
+          <PiCaretDownBold
+            className={
+              !isOpen
+                ? "rotate- transition-transform"
+                : " rotate-180 transition-transform"
+            }
+          />
         </span>
       </DropdownTrigger>
-      <DropdownContent className="p-6 sm:p-2">
-        <DropdownList>
+      <DropdownContent className="p-2">
+        <DropdownList className="gap-1">
           <DropdownListItem
+            className="p-6 sm:p-2"
             as={Link}
             href={`/user/${user.username}`}
             onClick={() => {
@@ -84,6 +91,7 @@ export default function UserButton({
             </span>
           </DropdownListItem>
           <DropdownListItem
+            className="p-6 sm:p-2"
             as={Link}
             href={`/settings`}
             onClick={() => {
@@ -96,8 +104,12 @@ export default function UserButton({
               Settings
             </span>
           </DropdownListItem>
-          <Divider className="opacity-10" />
-          <DropdownListItem color="error" onClick={signout}>
+          <Divider className="opacity-10 my-2" />
+          <DropdownListItem
+            className="p-6 sm:p-2"
+            color="error"
+            onClick={signout}
+          >
             {error ? (
               error
             ) : isLoading ? (
