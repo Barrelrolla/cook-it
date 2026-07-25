@@ -12,7 +12,8 @@
     "db:migrate": "npx drizzle-kit migrate",
     "db:seed": "npx tsx ./db/seed.ts",
     "db:reset": "docker compose down -v && docker compose up -d --wait && npm run db:migrate && npm run db:seed",
-    "email": "email dev"
+    "email": "email dev",
+    "prepare": "husky"
   },
   "dependencies": {
     "@barrelrolla/react-components-library": "^0.2.80",
@@ -44,6 +45,7 @@
     "@types/slug": "^5.0.9",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "husky": "^9.1.7",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
     "typescript": "^5"

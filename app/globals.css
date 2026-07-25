@@ -95,7 +95,7 @@ body {
 }
 
 main {
-  @apply min-h-screen max-w-(--max-content-width) mx-auto;
+  @apply max-w-(--max-content-width) mx-auto;
 }
 
 @theme {
