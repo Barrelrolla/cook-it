@@ -32,7 +32,6 @@ export default function UserButton({
 
   async function signout() {
     {
-      navbar?.setIsOpen(false);
       await authClient.signOut({
         fetchOptions: {
           onRequest: () => {
@@ -60,7 +59,12 @@ export default function UserButton({
       placement="bottom-start"
     >
       <DropdownTrigger>
-        <span className="flex items-center cursor-pointer gap-2">
+        <button
+          onClick={() => {
+            navbar?.setIsOpen(false);
+          }}
+          className="flex items-center cursor-pointer gap-2"
+        >
           <UserAvatar
             avatarUrl={user.image || placeholderImage.src}
             name={user.name || ""}
@@ -72,7 +76,7 @@ export default function UserButton({
                 : " rotate-180 transition-transform"
             }
           />
-        </span>
+        </button>
       </DropdownTrigger>
       <DropdownContent className="p-2">
         <DropdownList className="gap-1">
@@ -80,25 +84,13 @@ export default function UserButton({
             className="p-6 sm:p-2"
             as={Link}
             href={`/user/${user.username}`}
-            onClick={() => {
-              navbar?.setIsOpen(false);
-              setIsOpen(false);
-            }}
           >
             <span className="flex items-center gap-2">
               <PiUser />
               Profile
             </span>
           </DropdownListItem>
-          <DropdownListItem
-            className="p-6 sm:p-2"
-            as={Link}
-            href={`/settings`}
-            onClick={() => {
-              navbar?.setIsOpen(false);
-              setIsOpen(false);
-            }}
-          >
+          <DropdownListItem className="p-6 sm:p-2" as={Link} href={`/settings`}>
             <span className="flex items-center gap-2">
               <PiGear />
               Settings
