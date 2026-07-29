@@ -2,20 +2,31 @@
 import { authClient } from "@/auth/authClient";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import {
-  Button,
-  ButtonGroup,
-  ButtonProps,
   Sidemenu,
+  SidemenuItem,
+  SidemenuSection,
   Spinner,
-  useIsMobile,
 } from "@barrelrolla/react-components-library";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState(0);
-  const isMobile = useIsMobile();
-  const contents = [AppearanceSettings, AccountSettings, SecuritySettings];
+
+  const contents = [
+    ProfileSettings,
+    AccountSettings,
+    ConnectedSettings,
+    AppearanceSettings,
+    DataSettings,
+  ];
+  const contentNames = [
+    "Profile",
+    "Account",
+    "Connected Services",
+    "Appearance",
+    "Data",
+  ];
   const { data, isPending, error } = authClient.useSession();
   const router = useRouter();
 
@@ -42,77 +53,73 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-(--max-content-width) mx-auto p-4">
+    <div className="max-w-(--max-content-width) mx-auto p-4 w-auto">
       <h1 className="font-heading text-3xl">Settings</h1>
-      <main className="flex flex-col sm:grid sm:grid-cols-4 gap-4">
-        <Sidemenu wrapperClassName="col-span-1">
-          <ButtonGroup
-            className="w-full"
-            divider={isMobile}
-            variant="ghost"
-            vertical={!isMobile}
-          >
-            <MenuButton
-              index={0}
-              activeIndex={activeTab}
-              setActiveIndex={setActiveTab}
-            >
-              Appearance
-            </MenuButton>
-            <MenuButton
-              index={1}
-              activeIndex={activeTab}
-              setActiveIndex={setActiveTab}
-            >
-              Account
-            </MenuButton>
-            <MenuButton
-              index={2}
-              activeIndex={activeTab}
-              setActiveIndex={setActiveTab}
-            >
-              Security
-            </MenuButton>
-          </ButtonGroup>
+      <main className="flex flex-col sm:grid sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <Sidemenu
+          className="max-h-[calc(100vh-142px)]"
+          initialActiveIndex={activeTab}
+          onActiveIndexChange={setActiveTab}
+          wrapperClassName="col-span-1"
+        >
+          <SidemenuSection>
+            {contentNames.map((name, index) => {
+              return (
+                <SidemenuItem key={name} index={index}>
+                  {name}
+                </SidemenuItem>
+              );
+            })}
+          </SidemenuSection>
         </Sidemenu>
-        <div className="col-span-3">{contents[activeTab]()}</div>
+        <div className="col-span-2 md:col-span-3">{contents[activeTab]()}</div>
       </main>
     </div>
   );
 }
 
-function MenuButton({
-  index,
-  activeIndex,
-  setActiveIndex,
-  children,
-  ...rest
-}: {
-  index: number;
-  activeIndex: number;
-  setActiveIndex: (index: number) => void;
-} & ButtonProps<"button">) {
+function ProfileSettings() {
   return (
-    <Button
-      wrapperClassName="w-full"
-      className="w-full justify-start"
-      selected={index === activeIndex}
-      onClick={() => {
-        setActiveIndex(index);
-      }}
-      {...rest}
-    >
-      {children}
-    </Button>
+    <div>
+      <h2>Profile</h2>
+      <div>Photo</div>
+      <div>name</div>
+    </div>
   );
 }
-
-function AppearanceSettings() {
-  return <h2>Appearance</h2>;
-}
 function AccountSettings() {
-  return <h2>Account</h2>;
+  return (
+    <div>
+      <h2>Account</h2>
+      <div>Password</div>
+      <div>Email</div>
+    </div>
+  );
 }
-function SecuritySettings() {
-  return <h2>Security</h2>;
+function ConnectedSettings() {
+  return (
+    <div>
+      <h2>Conntected Seriveces</h2>
+      <div>Google</div>
+      <div>Apple</div>
+    </div>
+  );
+}
+function AppearanceSettings() {
+  return (
+    <div>
+      <h2>Appearance</h2>
+      <div>Color theme</div>
+      <div>Dark mode</div>
+    </div>
+  );
+}
+function DataSettings() {
+  return (
+    <div>
+      <h2>Data</h2>
+      <div>Download your data</div>
+      <div className="text-error-content">Delete account</div>
+    </div>
+  );
 }
