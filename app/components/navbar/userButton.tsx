@@ -3,11 +3,13 @@
 import { user as userSchema } from "@/db/schemas/auth-schema";
 import UserAvatar from "../userAvatar";
 import {
+  Button,
   Divider,
   Dropdown,
   DropdownContent,
   DropdownList,
   DropdownListItem,
+  DropdownTitle,
   DropdownTrigger,
   useNavbarContext,
 } from "@barrelrolla/react-components-library";
@@ -54,16 +56,19 @@ export default function UserButton({
   return (
     <Dropdown
       requireClick
+      strategy="fixed"
       isOpen={isOpen}
       onOpenChange={setIsOpen}
-      placement="bottom-start"
+      placement="bottom-end"
     >
       <DropdownTrigger>
-        <button
+        <Button
+          variant="ghost"
+          color="main"
           onClick={() => {
             navbar?.setIsOpen(false);
           }}
-          className="flex items-center cursor-pointer gap-2"
+          className="flex p-2 items-center cursor-pointer gap-2 h-10"
         >
           <UserAvatar
             avatarUrl={user.image || placeholderImage.src}
@@ -76,39 +81,33 @@ export default function UserButton({
                 : " rotate-180 transition-transform"
             }
           />
-        </button>
+        </Button>
       </DropdownTrigger>
-      <DropdownContent className="p-2">
-        <DropdownList className="gap-1">
-          <DropdownListItem
-            className="p-6 sm:p-2"
-            as={Link}
-            href={`/user/${user.username}`}
-          >
-            <span className="flex items-center gap-2">
-              <PiUser />
+      <DropdownContent>
+        <DropdownTitle className="sm:hidden">{user.name}</DropdownTitle>
+        <Divider className="opacity-10 my-2 sm:hidden" />
+        <DropdownList>
+          <DropdownListItem as={Link} href={`/user/${user.username}`}>
+            <span>
+              <PiUser className="inline mr-4" />
               Profile
             </span>
           </DropdownListItem>
-          <DropdownListItem className="p-6 sm:p-2" as={Link} href={`/settings`}>
-            <span className="flex items-center gap-2">
-              <PiGear />
+          <DropdownListItem as={Link} href={`/settings`}>
+            <span>
+              <PiGear className="inline mr-4" />
               Settings
             </span>
           </DropdownListItem>
           <Divider className="opacity-10 my-2" />
-          <DropdownListItem
-            className="p-6 sm:p-2"
-            color="error"
-            onClick={signout}
-          >
+          <DropdownListItem color="error" onClick={signout}>
             {error ? (
               error
             ) : isLoading ? (
               "working..."
             ) : (
-              <span className="flex items-center gap-2">
-                <PiSignOut />
+              <span>
+                <PiSignOut className="inline mr-4" />
                 {SIGNOUT}
               </span>
             )}

@@ -191,7 +191,7 @@ export default function SigninFormContent({
       )}
       {!signup && (
         <Checkbox
-          wrapperClasses="mt-2 w-fit"
+          wrapperClassName="mt-2 w-fit"
           name="remember"
           defaultChecked={rememberMe}
         >
@@ -200,7 +200,7 @@ export default function SigninFormContent({
       )}
       <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
         <Button
-          wrapperClasses="flex-1"
+          wrapperClassName="flex-1"
           className="w-full"
           size="sm"
           type="submit"

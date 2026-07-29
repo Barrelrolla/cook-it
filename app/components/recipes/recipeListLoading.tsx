@@ -10,7 +10,7 @@ export default function RecipeListLoading() {
           return (
             <li key={i++}>
               <Card
-                containerClasses="border-main-content/30 shadow-sm min-w-70"
+                containerClassName="border-main-content/30 shadow-sm min-w-70"
                 className="h-60 bg-main-content/60"
               ></Card>
             </li>

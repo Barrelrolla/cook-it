@@ -12,7 +12,7 @@ export default function UserAvatar({
   return (
     <div
       className={
-        "relative rounded-full overflow-clip size-10 border border-main-content/(--border-transparency) " +
+        "rounded-full overflow-clip size-10 border border-main-content/(--border-transparency) " +
         className
       }
     >

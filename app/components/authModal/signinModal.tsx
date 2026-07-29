@@ -246,7 +246,7 @@ export default function SigninModal() {
             <p>We&apos;ve sent you an email with a verification link.</p>
             <Button
               className="w-full mt-4"
-              wrapperClasses="w-full"
+              wrapperClassName="w-full"
               role="button"
               size="sm"
               onClick={close}

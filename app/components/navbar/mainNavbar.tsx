@@ -10,6 +10,7 @@ import {
   DarkModeToggle,
   Navbar,
   NavbarCollapse,
+  NavbarMenu,
   NavbarToggle,
 } from "@barrelrolla/react-components-library";
 
@@ -18,7 +19,7 @@ export default async function MainNavbar() {
   return (
     <Navbar
       suppressHydrationWarning
-      backdropClasses="bg-stone-800/30 backdrop-blur-[2px]"
+      backdropClassName="bg-stone-800/30 backdrop-blur-[2px]"
       collapseAt="md"
       glass={false}
       hasShadow={false}
@@ -28,14 +29,16 @@ export default async function MainNavbar() {
         <Brand />
       </div>
       <NavbarCollapse className="font-bold">
-        {LINKS.map((link) => (
-          <Navlink key={link.name} href={link.url}>
-            {link.name}
-          </Navlink>
-        ))}
+        <NavbarMenu>
+          {LINKS.map((link) => (
+            <Navlink key={link.name} href={link.url}>
+              {link.name}
+            </Navlink>
+          ))}
+        </NavbarMenu>
       </NavbarCollapse>
-      <div className="flex flex-row justify-end items-center gap-4 min-w-48">
-        <DarkModeToggle color="main" variant="ghost" />
+      <div className="flex flex-row justify-end items-center gap-1 min-w-48 min-h-14 md:min-h-18">
+        <DarkModeToggle color="main" variant="ghost" className="size-10" />
         {!session && (
           <>
             <Suspense>
@@ -46,7 +49,11 @@ export default async function MainNavbar() {
         {session && (
           <UserButton user={session.user as typeof user.$inferSelect} />
         )}
-        <NavbarToggle />
+        <NavbarToggle
+          wrapperClassName="size-10 flex items-center"
+          ghostHover="muted"
+          className="h-full w-full"
+        />
       </div>
     </Navbar>
   );

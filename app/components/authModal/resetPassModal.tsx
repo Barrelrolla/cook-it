@@ -111,7 +111,7 @@ export default function ResetPasswordModal() {
         startIcon={<PiKeyBold />}
         aria-label="password"
         type="password"
-        placeholder="password"
+        placeholder="new password"
         id="password"
         name="password"
         autoComplete={"new-password"}
@@ -147,7 +147,7 @@ export default function ResetPasswordModal() {
       )}
       <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
         <Button
-          wrapperClasses="flex-1"
+          wrapperClassName="flex-1"
           className="w-full"
           size="sm"
           type="submit"

@@ -28,7 +28,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
       <Card
         size="xl"
         className="h-60"
-        containerClasses=" shadow-sm shadow-main-content/20 w-full"
+        containerClassName=" shadow-sm shadow-main-content/20 w-full"
         containerStyle={{ "--bg-color": "var(--color-muted)" } as CSSProperties}
       >
         <RecipeInteract recipeSlug={recipe.slug}>

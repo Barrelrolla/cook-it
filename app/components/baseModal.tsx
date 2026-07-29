@@ -19,12 +19,12 @@ export default function BaseModal({
 }: BaseModalProps) {
   return (
     <Dialog
-      backdropClasses="items-start md:items-center backdrop-blur-[2px]"
+      backdropClassName="items-start md:items-center backdrop-blur-[2px]"
       className="mt-22 md:mt-0"
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      <Card containerClasses="w-[80vw] max-w-80">
+      <Card containerClassName="w-[80vw] max-w-80">
         <CardTitle className="font-heading">{title}</CardTitle>
         <form
           action={formAction}
