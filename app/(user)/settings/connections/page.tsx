@@ -1,6 +1,6 @@
 "use client";
 import { useTransition } from "react";
-import SettingsBase from "../settingsBase2";
+import SettingsBase from "../settingsBase";
 import { Input } from "@barrelrolla/react-components-library";
 
 export default function ConnectionsSettingsPage() {
