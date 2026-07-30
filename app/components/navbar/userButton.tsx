@@ -89,13 +89,13 @@ export default function UserButton({
         <DropdownList>
           <DropdownListItem as={Link} href={`/user/${user.username}`}>
             <span>
-              <PiUser className="inline mr-4" />
+              <PiUser className="inline mr-4 sm:mr-2" />
               Profile
             </span>
           </DropdownListItem>
           <DropdownListItem as={Link} href={`/settings`}>
             <span>
-              <PiGear className="inline mr-4" />
+              <PiGear className="inline mr-4 sm:mr-2" />
               Settings
             </span>
           </DropdownListItem>
@@ -107,7 +107,7 @@ export default function UserButton({
               "working..."
             ) : (
               <span>
-                <PiSignOut className="inline mr-4" />
+                <PiSignOut className="inline mr-4 sm:mr-2" />
                 {SIGNOUT}
               </span>
             )}

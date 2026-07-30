@@ -15,7 +15,7 @@ export async function seed() {
         displayUsername: "Barrelrolla",
         emailVerified: true,
         image:
-          "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1785421900/cook-it/user-avatars/barrelrolla-avatar.webp",
+          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_auto,g_auto,h_400,w_400/v1785421900/cook-it/user-avatars/barrelrolla-avatar.webp",
       },
       password: "Pass123$",
       role: "admin",
