@@ -15,7 +15,7 @@ import Image from "next/image";
 import { ChangeEvent, useState, useTransition } from "react";
 import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
 import z from "zod";
-import SettingsBase from "../settingsBase";
+import SettingsBase from "../settingsBase2";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
