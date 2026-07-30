@@ -11,7 +11,8 @@ export function getUniqueRecipeSlug(baseSlug: string) {
 
 export async function uploadUserAvatar(username: string, image: File) {
   const folderName = IS_DEV ? "cook-it/user-avatars" : "garndish/user-avatars";
-  return await uploadImage(username, folderName, image);
+  const imageName = `${username}-avatar`;
+  return await uploadImage(imageName, folderName, image);
 }
 
 async function uploadImage(name: string, folder: string, file: File) {

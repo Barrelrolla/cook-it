@@ -103,7 +103,9 @@ export default function ProfileSettings({
         updatedUserData.name = name.data.name;
       }
       if (uploadedImageUrl) {
-        updatedUserData.image = uploadedImageUrl;
+        const split = uploadedImageUrl.split("upload/");
+        const transofrmedImageUrl = `${split[0]}upload/c_auto,g_auto,h_400,w_400/${split[1]}`;
+        updatedUserData.image = transofrmedImageUrl;
       }
 
       if (Object.keys(updatedUserData).length > 0) {
