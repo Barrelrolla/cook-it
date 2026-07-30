@@ -6,9 +6,12 @@ import {
   SidemenuItem,
   SidemenuSection,
   Spinner,
+  useIsMobile,
 } from "@barrelrolla/react-components-library";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { user as userSchema } from "@/db/schemas/auth-schema";
+import ProfileSettings from "./ProfileSettings";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -27,25 +30,29 @@ export default function SettingsPage() {
     "Appearance",
     "Data",
   ];
-  const { data, isPending, error } = authClient.useSession();
+
+  const ActiveTabComponent = contents[activeTab];
+
   const router = useRouter();
+  const isMobile = useIsMobile();
+  const { data, isPending, error } = authClient.useSession();
 
   useEffect(() => {
     if (!isPending && !data) {
       router.replace("/?signin=");
     }
-  }, [isPending, data, router]);
+  }, [isPending, data, router, error]);
 
   if (isPending) {
     return (
-      <div>
-        <Spinner />
-      </div>
+      <main className="flex justify-center items-center mt-22">
+        <Spinner className="text-9xl" />
+      </main>
     );
   }
 
   if (error) {
-    throw new Error(SOMETHING_WENT_WRONG);
+    return null;
   }
 
   if (!data) {
@@ -53,41 +60,40 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-(--max-content-width) mx-auto p-4 w-auto">
-      <h1 className="font-heading text-3xl">Settings</h1>
-      <main className="flex flex-col sm:grid sm:grid-cols-3 md:grid-cols-4 gap-4">
-        <Sidemenu
-          className="max-h-[calc(100vh-142px)]"
-          initialActiveIndex={activeTab}
-          onActiveIndexChange={setActiveTab}
-          wrapperClassName="col-span-1"
-        >
-          <SidemenuSection>
-            {contentNames.map((name, index) => {
-              return (
-                <SidemenuItem key={name} index={index}>
-                  {name}
-                </SidemenuItem>
-              );
-            })}
-          </SidemenuSection>
-        </Sidemenu>
-        <div className="col-span-2 md:col-span-3">{contents[activeTab]()}</div>
+    <div className="max-w-(--max-content-width) mx-auto w-auto">
+      <h1 className="font-heading text-4xl py-4 px-6">Settings</h1>
+      <main className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 sm:pl-4">
+        <div>
+          <Sidemenu
+            className="max-h-[calc(100vh-142px)]"
+            initialActiveIndex={activeTab}
+            onActiveIndexChange={setActiveTab}
+            wrapperClassName="col-span-1 not-sm:rounded-navigation not-sm:border-l-0 not-sm:border-r-0"
+          >
+            <SidemenuSection radius={isMobile ? "none" : "default"}>
+              {contentNames.map((name, index) => {
+                return (
+                  <SidemenuItem key={name} index={index}>
+                    {name}
+                  </SidemenuItem>
+                );
+              })}
+            </SidemenuSection>
+          </Sidemenu>
+        </div>
+        <div className="col-span-2 md:col-span-3 px-4 py-4 sm:py-0">
+          {data.user && (
+            <ActiveTabComponent
+              user={data.user as typeof userSchema.$inferSelect}
+            />
+          )}
+        </div>
       </main>
     </div>
   );
 }
 
-function ProfileSettings() {
-  return (
-    <div>
-      <h2>Profile</h2>
-      <div>Photo</div>
-      <div>name</div>
-    </div>
-  );
-}
-function AccountSettings() {
+function AccountSettings({ user }: { user: typeof userSchema.$inferSelect }) {
   return (
     <div>
       <h2>Account</h2>
@@ -96,7 +102,7 @@ function AccountSettings() {
     </div>
   );
 }
-function ConnectedSettings() {
+function ConnectedSettings({ user }: { user: typeof userSchema.$inferSelect }) {
   return (
     <div>
       <h2>Conntected Seriveces</h2>
@@ -105,7 +111,11 @@ function ConnectedSettings() {
     </div>
   );
 }
-function AppearanceSettings() {
+function AppearanceSettings({
+  user,
+}: {
+  user: typeof userSchema.$inferSelect;
+}) {
   return (
     <div>
       <h2>Appearance</h2>
@@ -114,7 +124,7 @@ function AppearanceSettings() {
     </div>
   );
 }
-function DataSettings() {
+function DataSettings({ user }: { user: typeof userSchema.$inferSelect }) {
   return (
     <div>
       <h2>Data</h2>
