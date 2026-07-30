@@ -7,7 +7,6 @@ import {
 import {
   Button,
   Input,
-  Spinner,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -16,11 +15,12 @@ import Image from "next/image";
 import { ChangeEvent, useState, useTransition } from "react";
 import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
 import z from "zod";
-import SettingsBase from "../SettingsBase";
+import SettingsBase from "../settingsBase";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
 import { uploadUserAvatar } from "@/utils/helpers";
+import Loading from "@/app/components/loading";
 
 export default function ProfileSettings() {
   const [image, setImage] = useState("");
@@ -33,11 +33,7 @@ export default function ProfileSettings() {
   const { data, isPending, error } = authClient.useSession();
 
   if (isPending) {
-    return (
-      <main className="flex justify-center items-center mt-22">
-        <Spinner className="text-9xl" />
-      </main>
-    );
+    return <Loading />;
   }
 
   if (error) {
@@ -158,6 +154,7 @@ export default function ProfileSettings() {
                 as="label"
                 aria-label="pick image"
                 htmlFor="file-select"
+                tabIndex={0}
                 className="absolute top-4 -right-2"
                 size="sm"
                 radius="pill"
@@ -189,6 +186,7 @@ export default function ProfileSettings() {
                   disabled={isLoading}
                   as="label"
                   aria-label="revert image"
+                  tabIndex={0}
                   onClick={() => {
                     setImage("");
                   }}

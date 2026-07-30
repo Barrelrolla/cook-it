@@ -3,7 +3,7 @@ import { useTransition } from "react";
 import SettingsBase from "../settingsBase";
 import { Input } from "@barrelrolla/react-components-library";
 
-export default function AccountSettingsPage() {
+export default function ConnectionsSettingsPage() {
   const [isLoading, startTransition] = useTransition();
 
   async function saveData(formData: FormData) {
@@ -18,11 +18,11 @@ export default function AccountSettingsPage() {
   return (
     <SettingsBase
       formAction={handleFormAction}
-      label="Account"
+      label="Connected services"
       isLoading={isLoading}
     >
-      <Input label="password" />
-      <Input label="email" />
+      <Input label="google" />
+      <Input label="apple" />
     </SettingsBase>
   );
 }

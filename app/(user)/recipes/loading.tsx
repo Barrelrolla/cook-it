@@ -1,9 +1,5 @@
-import { Spinner } from "@barrelrolla/react-components-library";
+import Loading from "@/app/components/loading";
 
 export default function RecipeLoding() {
-  return (
-    <main className="flex justify-center items-center -mt-22">
-      <Spinner className="text-9xl" />
-    </main>
-  );
+  return <Loading />;
 }
