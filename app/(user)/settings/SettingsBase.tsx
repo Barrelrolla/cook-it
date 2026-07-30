@@ -12,7 +12,7 @@ export default function SettingsBase({
   children,
 }: SettingBaseProps) {
   return (
-    <div className="max-w-150 mx-auto border border-main-content/(--border-transparency) p-4 rounded-containers max-h-[calc(100vh-160px)] overflow-y-auto">
+    <div className="max-w-150 mx-auto border border-main-content/(--border-transparency) p-4 rounded-containers max-h-[calc(100vh-160px)] overflow-y-auto bg-muted">
       <h2 className="font-heading text-3xl mb-6">{label}</h2>
       <form action={formAction}>{children}</form>
     </div>

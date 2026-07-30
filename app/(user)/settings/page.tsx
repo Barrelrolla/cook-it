@@ -9,7 +9,7 @@ import {
   useIsMobile,
 } from "@barrelrolla/react-components-library";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { user as userSchema } from "@/db/schemas/auth-schema";
 import ProfileSettings from "./ProfileSettings";
 
@@ -65,6 +65,9 @@ export default function SettingsPage() {
       <main className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 sm:pl-4">
         <div>
           <Sidemenu
+            wrapperStyle={
+              { "--bg-color": "var(--color-muted)" } as CSSProperties
+            }
             className="max-h-[calc(100vh-142px)]"
             initialActiveIndex={activeTab}
             onActiveIndexChange={setActiveTab}
