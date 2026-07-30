@@ -1,6 +1,5 @@
 "use client";
 
-import { user as userSchema } from "@/db/schemas/auth-schema";
 import {
   ImageFileSchema,
   permissiveDisplayNameSchema,
@@ -8,32 +7,48 @@ import {
 import {
   Button,
   Input,
+  Spinner,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@barrelrolla/react-components-library";
 import Image from "next/image";
 import { ChangeEvent, useState, useTransition } from "react";
-import { PiFloppyDiskBold, PiPencilFill, PiXCircleFill } from "react-icons/pi";
+import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
 import z from "zod";
-import SettingsBase from "./SettingsBase";
+import SettingsBase from "../SettingsBase";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
 import { uploadUserAvatar } from "@/utils/helpers";
 
-export default function ProfileSettings({
-  user,
-}: {
-  user: typeof userSchema.$inferSelect;
-}) {
+export default function ProfileSettings() {
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, startTransition] = useTransition();
   const router = useRouter();
+  const { data, isPending, error } = authClient.useSession();
+
+  if (isPending) {
+    return (
+      <main className="flex justify-center items-center mt-22">
+        <Spinner className="text-9xl" />
+      </main>
+    );
+  }
+
+  if (error) {
+    return null;
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  const user = data.user;
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
     const selectedImage = e.target.files?.[0];
@@ -128,14 +143,18 @@ export default function ProfileSettings({
   };
 
   return (
-    <SettingsBase formAction={handleFormAction} label="Profile">
+    <SettingsBase
+      formAction={handleFormAction}
+      label="Profile"
+      isLoading={isLoading}
+    >
       {user.image && (
         <div className="relative w-fit">
-          <p>Avatar</p>
+          <p className="text-sm">Avatar</p>
           <Tooltip>
             <TooltipTrigger>
               <Button
-                disabled={isPending}
+                disabled={isLoading}
                 as="label"
                 aria-label="pick image"
                 htmlFor="file-select"
@@ -167,7 +186,7 @@ export default function ProfileSettings({
             <Tooltip>
               <TooltipTrigger>
                 <Button
-                  disabled={isPending}
+                  disabled={isLoading}
                   as="label"
                   aria-label="revert image"
                   onClick={() => {
@@ -188,7 +207,7 @@ export default function ProfileSettings({
       {imageError && <p className="text-error-content">{imageError}</p>}
       <div className="flex mt-8">
         <Input
-          disabled={isPending}
+          disabled={isLoading}
           id="name"
           name="name"
           tabIndex={0}
@@ -199,16 +218,6 @@ export default function ProfileSettings({
         />
       </div>
       {nameError && <p className="text-error-content">{nameError}</p>}
-      <div className="w-full flex justify-end">
-        <Button
-          color="primary"
-          className="mt-4"
-          startIcon={<PiFloppyDiskBold />}
-          loading={isPending}
-        >
-          Save
-        </Button>
-      </div>
     </SettingsBase>
   );
 }
