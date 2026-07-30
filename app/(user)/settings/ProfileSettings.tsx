@@ -17,10 +17,10 @@ import { ChangeEvent, useState, useTransition } from "react";
 import { PiFloppyDiskBold, PiPencilFill, PiXCircleFill } from "react-icons/pi";
 import z from "zod";
 import SettingsBase from "./SettingsBase";
-import { generateSignature } from "@/app/actions/imageActions";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
+import { uploadUserAvatar } from "@/utils/helpers";
 
 export default function ProfileSettings({
   user,
@@ -28,8 +28,8 @@ export default function ProfileSettings({
   user: typeof userSchema.$inferSelect;
 }) {
   const [image, setImage] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [imageError, setImageError] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -84,40 +84,11 @@ export default function ProfileSettings({
       }
 
       let uploadedImageUrl = "";
-      if (file) {
+      if (file && user.username) {
         try {
-          const timestamp = Math.round(new Date().getTime() / 1000);
-          const public_id = `${user.username}-avatar`;
-          const folder = "cook-it/user-avatars";
-          const paramsToSign = {
-            timestamp,
-            folder,
-            public_id,
-          };
-          const { signature } = await generateSignature(paramsToSign);
-
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append(
-            "api_key",
-            process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!,
-          );
-          formData.append("timestamp", timestamp.toString());
-          formData.append("signature", signature);
-          formData.append("folder", folder);
-          formData.append("public_id", public_id);
-
-          const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-          const res = await fetch(
-            `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
-            {
-              method: "POST",
-              body: formData,
-            },
-          );
-          const data = await res.json();
-          if (data.secure_url) {
-            uploadedImageUrl = data.secure_url;
+          const uploadedImageData = await uploadUserAvatar(user.username, file);
+          if (uploadedImageData.secure_url) {
+            uploadedImageUrl = uploadedImageData.secure_url;
           } else {
             setImageError(SOMETHING_WENT_WRONG);
             return;
@@ -127,21 +98,21 @@ export default function ProfileSettings({
         }
       }
 
-      const data: Record<string, unknown> = {};
+      const updatedUserData: Record<string, unknown> = {};
       if (name.data?.name) {
-        data.name = name.data.name;
+        updatedUserData.name = name.data.name;
       }
       if (uploadedImageUrl) {
-        data.image = uploadedImageUrl;
+        updatedUserData.image = uploadedImageUrl;
       }
 
-      if (Object.keys(data).length > 0) {
-        await authClient.updateUser(data);
+      if (Object.keys(updatedUserData).length > 0) {
+        await authClient.updateUser(updatedUserData);
       }
 
       setImage("");
-      setFile(null);
       setName("");
+      setFile(null);
       router.refresh();
     } catch {
       throw new Error(SOMETHING_WENT_WRONG);
