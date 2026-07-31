@@ -2,8 +2,6 @@
 
 import { useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import z from "zod";
-import { ZodIssue } from "zod/v3";
 import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { PasswordInputSchema } from "@/utils/validationSchemas";
@@ -14,11 +12,12 @@ import {
   Input,
 } from "@barrelrolla/react-components-library";
 import { PiCheckBold, PiKeyBold } from "react-icons/pi";
+import { $ZodIssue } from "zod/v4/core";
 
 export default function ResetPasswordModal() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [issue, setIssue] = useState<ZodIssue | undefined>(undefined);
+  const [issue, setIssue] = useState<$ZodIssue | undefined>(undefined);
   const [passwordReset, setPasswordReset] = useState(false);
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -41,7 +40,7 @@ export default function ResetPasswordModal() {
 
     if (!parsedPass.data) {
       if (parsedPass.error.issues.length > 0) {
-        setIssue(parsedPass.error.issues[0] as ZodIssue);
+        setIssue(parsedPass.error.issues[0]);
       } else {
         setError(SOMETHING_WENT_WRONG);
       }

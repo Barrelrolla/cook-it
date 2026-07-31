@@ -5,7 +5,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ErrorContext } from "better-auth/react";
 import { authClient } from "@/auth/authClient";
 import z from "zod";
-import { ZodIssue } from "zod/v3";
 import { SignUpSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
@@ -19,11 +18,12 @@ import {
 } from "@/utils/constants";
 import userPlaceholderImage from "@/public/user-placeholder.png";
 import { PiCheckBold } from "react-icons/pi";
+import { $ZodIssue } from "zod/v4/core";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [issue, setIssue] = useState<ZodIssue | undefined>(undefined);
+  const [issue, setIssue] = useState<$ZodIssue | undefined>(undefined);
   const [accountCreated, setAccountCreated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -133,7 +133,7 @@ export default function SigninModal() {
     if (!user.data) {
       if (user.error.issues.length > 0) {
         setError(user.error.issues[0].message);
-        setIssue(user.error.issues[0] as ZodIssue);
+        setIssue(user.error.issues[0]);
       } else {
         setError(SOMETHING_WENT_WRONG);
       }

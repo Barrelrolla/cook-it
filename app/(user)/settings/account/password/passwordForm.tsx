@@ -3,11 +3,11 @@
 import { useState, useTransition } from "react";
 import { Input } from "@barrelrolla/react-components-library";
 import SettingsForm from "../../settingsForm";
-import { ZodIssue } from "zod";
 import { PasswordInputSchema } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";
 import { setPassword } from "@/app/actions/authActions";
 import { SOMETHING_WENT_WRONG } from "@/utils/constants";
+import { $ZodIssue } from "zod/v4/core";
 
 export default function PasswordForm({
   hasPassword,
@@ -18,7 +18,7 @@ export default function PasswordForm({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [issue, setIssue] = useState<ZodIssue | undefined>(undefined);
+  const [issue, setIssue] = useState<$ZodIssue | undefined>(undefined);
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);

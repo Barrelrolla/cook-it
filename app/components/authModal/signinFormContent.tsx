@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import z from "zod";
-import { ZodIssue } from "zod/v3";
+import { $ZodIssue } from "zod/v4/core";
 import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
 import SocialSigninButton from "./socialSigninButton";
@@ -36,7 +36,7 @@ export default function SigninFormContent({
   signup?: boolean;
   loading?: boolean;
   error?: string;
-  issue?: ZodIssue;
+  issue?: $ZodIssue;
   toggleSingin: (signup?: boolean) => void;
 }) {
   const [resetLoading, setResetLoading] = useState(false);
