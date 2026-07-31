@@ -1,0 +1,162 @@
+"use client";
+import { ChangeEvent, useState, useTransition } from "react";
+import { user as userSchema } from "@/db/schemas/auth-schema";
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@barrelrolla/react-components-library";
+import Image from "next/image";
+import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
+import { SOMETHING_WENT_WRONG } from "@/utils/constants";
+import { ImageFileSchema } from "@/utils/validationSchemas";
+import { uploadUserAvatar } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/auth/authClient";
+import SettingsForm from "../../settingsForm";
+
+export default function ProfilePictureForm({
+  user,
+}: {
+  user: typeof userSchema.$inferSelect;
+}) {
+  const [image, setImage] = useState("");
+  const [imageError, setImageError] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
+  function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
+    const selectedImage = e.target.files?.[0];
+    if (!selectedImage) {
+      return;
+    }
+
+    setImageError("");
+    if (!selectedImage) {
+      return;
+    }
+
+    const data = ImageFileSchema.safeParse(selectedImage);
+
+    if (data.error) {
+      if (data.error.issues.length > 0) {
+        setImageError(data.error.issues[0].message);
+      } else {
+        setImageError(data.error.message);
+      }
+      return;
+    }
+
+    URL.revokeObjectURL(image);
+    const previewUrl = URL.createObjectURL(selectedImage);
+    setImage(previewUrl);
+    setFile(selectedImage);
+  }
+
+  async function saveData() {
+    try {
+      let uploadedImageUrl = "";
+      if (file && user.username) {
+        try {
+          const uploadedImageData = await uploadUserAvatar(user.username, file);
+          if (uploadedImageData.secure_url) {
+            uploadedImageUrl = uploadedImageData.secure_url;
+          } else {
+            setImageError(SOMETHING_WENT_WRONG);
+            return;
+          }
+        } catch {
+          setImageError(SOMETHING_WENT_WRONG);
+        }
+      }
+
+      if (uploadedImageUrl) {
+        const split = uploadedImageUrl.split("upload/");
+        const transofrmedImageUrl = `${split[0]}upload/c_auto,g_auto,h_400,w_400/${split[1]}`;
+        await authClient.updateUser({
+          image: transofrmedImageUrl,
+        });
+      }
+
+      setImage("");
+      setFile(null);
+      router.refresh();
+    } catch {
+      throw new Error(SOMETHING_WENT_WRONG);
+    }
+  }
+
+  const handleFormAction = () => {
+    startTransition(async () => {
+      await saveData();
+    });
+  };
+
+  return (
+    <SettingsForm
+      label="Profile picture"
+      isLoading={isPending}
+      formAction={handleFormAction}
+    >
+      <div className="relative w-fit">
+        <p className="text-sm">Avatar</p>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              disabled={isPending}
+              as="label"
+              aria-label="pick image"
+              htmlFor="file-select"
+              tabIndex={0}
+              className="absolute top-4 -right-2"
+              size="sm"
+              radius="pill"
+              color="primary"
+              startIcon={<PiPencilFill />}
+            />
+          </TooltipTrigger>
+          <TooltipContent>Pick new image</TooltipContent>
+        </Tooltip>
+        <Image
+          className="rounded-containers w-[94vw] max-w-50 h-50 object-cover"
+          src={image || user.image || ""}
+          width={200}
+          height={200}
+          loading="eager"
+          alt={`${user.name}'s avatar`}
+        />
+        <input
+          onChange={handleImageChange}
+          id="file-select"
+          type="file"
+          className="hidden"
+          accept="image/png, image/jpeg, image/webp"
+        />
+        {image && (
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                disabled={isPending}
+                as="label"
+                aria-label="revert image"
+                tabIndex={0}
+                onClick={() => {
+                  setImage("");
+                }}
+                className="absolute -bottom-2 -right-2"
+                size="sm"
+                radius="pill"
+                color="error"
+                startIcon={<PiXCircleFill />}
+              />
+            </TooltipTrigger>
+            <TooltipContent>Cancel</TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+      {imageError && <p className="text-error-content">{imageError}</p>}
+    </SettingsForm>
+  );
+}

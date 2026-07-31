@@ -1,28 +1,11 @@
-"use client";
-import { useTransition } from "react";
 import SettingsBase from "../settingsBase";
-import { Input } from "@barrelrolla/react-components-library";
+import SettingsLink from "../settingsLink";
 
-export default function AccountSettingsPage() {
-  const [isLoading, startTransition] = useTransition();
-
-  async function saveData(formData: FormData) {
-    console.log(formData);
-  }
-
-  function handleFormAction(formData: FormData) {
-    startTransition(async () => {
-      await saveData(formData);
-    });
-  }
+export default function AccountSettings() {
   return (
-    <SettingsBase
-      formAction={handleFormAction}
-      label="Account"
-      isLoading={isLoading}
-    >
-      <Input label="password" />
-      <Input label="email" />
+    <SettingsBase label="Account">
+      <SettingsLink label="Password" href="/settings/account/password" />
+      <SettingsLink label="Email" href="/settings/account/email" />
     </SettingsBase>
   );
 }
