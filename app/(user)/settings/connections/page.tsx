@@ -1,26 +1,18 @@
-"use client";
-import { useTransition } from "react";
+import { getSession } from "@/app/actions/authActions";
 import SettingsBase from "../settingsBase";
 import { Input } from "@barrelrolla/react-components-library";
+import { redirect } from "next/navigation";
+import { SIGNIN_PARAM } from "@/utils/constants";
 
-export default function ConnectionsSettingsPage() {
-  const [isLoading, startTransition] = useTransition();
+export default async function ConnectionsSettingsPage() {
+  const session = await getSession();
 
-  async function saveData(formData: FormData) {
-    console.log(formData);
+  if (!session) {
+    redirect(`/?${SIGNIN_PARAM}`);
   }
 
-  function handleFormAction(formData: FormData) {
-    startTransition(async () => {
-      await saveData(formData);
-    });
-  }
   return (
-    <SettingsBase
-      formAction={handleFormAction}
-      label="Connected services"
-      isLoading={isLoading}
-    >
+    <SettingsBase label="Connected services">
       <Input label="google" />
       <Input label="apple" />
     </SettingsBase>

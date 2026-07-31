@@ -10,5 +10,6 @@ export default async function PictureSettingsPage() {
   if (!session) {
     redirect(`/?${SIGNIN_PARAM}`);
   }
+
   return <ProfilePictureForm user={session.user as typeof user.$inferSelect} />;
 }
