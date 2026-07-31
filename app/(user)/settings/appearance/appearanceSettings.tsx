@@ -19,7 +19,7 @@ export default function AppearanceSettings() {
   }
 
   return (
-    <div>
+    <div className="px-4">
       <RadioGroup title="Color theme" name="colors" className="flex gap-8">
         <Radio
           style={{ "--fg-color": "var(--color-green)" } as CSSProperties}
