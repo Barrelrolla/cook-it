@@ -6,7 +6,7 @@ import z from "zod";
 import { ZodIssue } from "zod/v3";
 import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
-import { passwordSchema } from "@/utils/validationSchemas";
+import { PasswordInputSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import {
   Button,
@@ -34,14 +34,7 @@ export default function ResetPasswordModal() {
     const repeatPass = formData.get("repeat-password")?.toString() || "";
     setRepeatPassword(repeatPass);
 
-    const Pass = z
-      .object({ password: passwordSchema, repeatPassword: z.string() })
-      .refine((data) => data.password === data.repeatPassword, {
-        path: ["repeat-password"],
-        message: "Passwords do not match.",
-      });
-
-    const parsedPass = Pass.safeParse({
+    const parsedPass = PasswordInputSchema.safeParse({
       password: pass,
       repeatPassword: repeatPass,
     });

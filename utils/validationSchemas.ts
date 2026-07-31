@@ -67,6 +67,13 @@ export const SignUpSchema = z
     },
   );
 
+export const PasswordInputSchema = z
+  .object({ password: passwordSchema, repeatPassword: z.string() })
+  .refine((data) => data.password === data.repeatPassword, {
+    path: ["repeat-password"],
+    message: "Passwords do not match.",
+  });
+
 const MAX_FILE_SIZE = 5;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 

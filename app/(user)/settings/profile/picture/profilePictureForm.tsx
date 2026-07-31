@@ -25,6 +25,7 @@ export default function ProfilePictureForm({
   const [imageError, setImageError] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isChanged, setIsChanged] = useState(false);
   const router = useRouter();
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
@@ -33,6 +34,7 @@ export default function ProfilePictureForm({
       return;
     }
 
+    setIsChanged(false);
     setImageError("");
     if (!selectedImage) {
       return;
@@ -82,6 +84,7 @@ export default function ProfilePictureForm({
 
       setImage("");
       setFile(null);
+      setIsChanged(true);
       router.refresh();
     } catch {
       throw new Error(SOMETHING_WENT_WRONG);
@@ -100,8 +103,8 @@ export default function ProfilePictureForm({
       isLoading={isPending}
       formAction={handleFormAction}
     >
+      <p className="text-sm mb-4">Choose a new profile picture</p>
       <div className="relative w-fit">
-        <p className="text-sm">Avatar</p>
         <Tooltip>
           <TooltipTrigger>
             <Button
@@ -110,7 +113,7 @@ export default function ProfilePictureForm({
               aria-label="pick image"
               htmlFor="file-select"
               tabIndex={0}
-              className="absolute top-4 -right-2"
+              className="absolute -top-2 -right-2"
               size="sm"
               radius="pill"
               color="primary"
@@ -156,7 +159,10 @@ export default function ProfilePictureForm({
           </Tooltip>
         )}
       </div>
-      {imageError && <p className="text-error-content">{imageError}</p>}
+      {imageError && <p className="text-error-content text-sm">{imageError}</p>}
+      {isChanged && (
+        <p className="text-success-content text-sm">Photo changed!</p>
+      )}
     </SettingsForm>
   );
 }

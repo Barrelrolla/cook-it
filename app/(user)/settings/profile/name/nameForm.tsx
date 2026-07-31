@@ -18,6 +18,7 @@ export default function NameForm({
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [isChanged, setIsChanged] = useState(false);
   const router = useRouter();
 
   async function saveData(formData: FormData) {
@@ -47,6 +48,7 @@ export default function NameForm({
       }
 
       setName("");
+      setIsChanged(true);
       router.refresh();
     } catch {
       throw new Error(SOMETHING_WENT_WRONG);
@@ -65,19 +67,25 @@ export default function NameForm({
       formAction={handleFormAction}
       isLoading={isPending}
     >
-      <div className="flex mt-8">
-        <Input
-          disabled={isPending}
-          id="name"
-          name="name"
-          tabIndex={0}
-          defaultValue={name}
-          autoComplete="name"
-          label="Display name"
-          placeholder={user.name}
-        />
-      </div>
-      {nameError && <p className="text-error-content">{nameError}</p>}
+      <p className="text-sm mb-6">Choose a new display name</p>
+      <Input
+        disabled={isPending}
+        color={isChanged ? "success" : "main"}
+        id="name"
+        name="name"
+        tabIndex={0}
+        onChange={() => {
+          setIsChanged(false);
+        }}
+        error={nameError}
+        defaultValue={name}
+        autoComplete="name"
+        label="Display name"
+        placeholder={user.name}
+      />
+      {isChanged && (
+        <p className="text-success-content text-sm">Name changed!</p>
+      )}
     </SettingsForm>
   );
 }
