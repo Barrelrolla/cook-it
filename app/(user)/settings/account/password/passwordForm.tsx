@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Input } from "@barrelrolla/react-components-library";
+import { Checkbox, Input } from "@barrelrolla/react-components-library";
 import SettingsForm from "../../settingsForm";
 import { PasswordInputSchema } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";
@@ -18,6 +18,7 @@ export default function PasswordForm({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [revokeSessions, setRevokeSessions] = useState(false);
   const [issue, setIssue] = useState<$ZodIssue | undefined>(undefined);
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -31,6 +32,8 @@ export default function PasswordForm({
     setNewPassword(enteredNewPass);
     const enteredRepeatPass = formData.get("repeat-password")?.toString() || "";
     setRepeatPassword(enteredRepeatPass);
+    const checkedRevoke = formData.get("revoke")?.toString() === "on";
+    setRevokeSessions(checkedRevoke);
     setIssue(undefined);
     setError("");
 
@@ -39,7 +42,6 @@ export default function PasswordForm({
       repeatPassword: enteredRepeatPass,
     });
 
-    console.log("gggm");
     if (pass.error) {
       if (pass.error.issues.length > 0) {
         setIssue(pass.error.issues[0]);
@@ -54,6 +56,7 @@ export default function PasswordForm({
         {
           currentPassword: enteredOldPass,
           newPassword: pass.data.password,
+          revokeOtherSessions: checkedRevoke,
         },
         {
           onRequest: () => {
@@ -97,6 +100,7 @@ export default function PasswordForm({
     <SettingsForm
       label={"Password"}
       formAction={handleFormAction}
+      isActionDisabled={wasChanged}
       isLoading={isPending || isLoading}
     >
       <p className="text-sm mb-6">
@@ -131,6 +135,16 @@ export default function PasswordForm({
           issue && issue.path[0] === "repeat-password" ? issue.message : ""
         }
       />
+      {hasPass && (
+        <Checkbox
+          defaultChecked={revokeSessions}
+          name="revoke"
+          size={18}
+          labelClassName="text-sm"
+        >
+          Revoke other sessions?
+        </Checkbox>
+      )}
       {error && <p className="text-error-content text-sm">{error}</p>}
       {wasChanged && (
         <p className="text-success-content text-sm">

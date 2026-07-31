@@ -7,6 +7,7 @@ export type SettingsFormProps = {
   label: string;
   formAction: (formdata: FormData) => void;
   isLoading: boolean;
+  isActionDisabled: boolean;
   children: ReactNode;
 };
 
@@ -14,6 +15,7 @@ export default function SettingsForm({
   label,
   formAction,
   isLoading,
+  isActionDisabled,
   children,
 }: SettingsFormProps) {
   return (
@@ -26,6 +28,7 @@ export default function SettingsForm({
             className="mt-4"
             startIcon={<PiFloppyDiskBold />}
             loading={isLoading}
+            disabled={isActionDisabled}
           >
             Save
           </Button>

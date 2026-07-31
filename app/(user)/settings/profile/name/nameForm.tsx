@@ -66,6 +66,7 @@ export default function NameForm({
       label="Name"
       formAction={handleFormAction}
       isLoading={isPending}
+      isActionDisabled={false}
     >
       <p className="text-sm mb-6">Choose a new display name</p>
       <Input
