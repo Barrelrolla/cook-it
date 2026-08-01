@@ -98,7 +98,7 @@ export default function DeleteAccountButton() {
         Delete account
       </Button>
       {isRequested && (
-        <p className="text-sm text-error-content">
+        <p className="text-sm">
           We&apos;ve sent you a confirmation email. Click the link inside to
           complete the deletion.
         </p>

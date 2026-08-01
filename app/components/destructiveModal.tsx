@@ -6,7 +6,7 @@ import {
   CardTitle,
   Dialog,
 } from "@barrelrolla/react-components-library";
-import { PiWarning, PiWarningBold } from "react-icons/pi";
+import { PiWarning } from "react-icons/pi";
 
 export type DestructiveModalProps = {
   isOpen: boolean;
