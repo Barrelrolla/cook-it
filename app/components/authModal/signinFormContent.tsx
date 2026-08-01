@@ -119,6 +119,7 @@ export default function SigninFormContent({
   return (
     <>
       <Input
+        inputContainerClassName="w-full"
         required
         ref={emailRef}
         startIcon={<PiUserBold />}
@@ -137,6 +138,7 @@ export default function SigninFormContent({
       />
       {signup && (
         <Input
+          inputContainerClassName="w-full"
           required
           startIcon={<PiEnvelopeBold />}
           aria-label="email"
@@ -154,6 +156,7 @@ export default function SigninFormContent({
         />
       )}
       <Input
+        inputContainerClassName="w-full"
         required
         startIcon={<PiKeyBold />}
         aria-label="password"
@@ -171,6 +174,7 @@ export default function SigninFormContent({
       />
       {signup && (
         <Input
+          inputContainerClassName="w-full"
           required
           startIcon={<PiKeyBold />}
           aria-label="repeat password"

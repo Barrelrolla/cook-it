@@ -9,6 +9,7 @@ import { authSchema } from "@/db/schemas/auth-schema";
 import { SignUpSchema, usernameRegex } from "@/utils/validationSchemas";
 import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
+import DeleteAccount from "@/emails/deleteAccount";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -43,6 +44,19 @@ export const auth = betterAuth({
   },
   user: {
     changeEmail: { enabled: true },
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async ({ user, url }) => {
+        try {
+          await resend.emails.send({
+            from: "Garndish <noreply@resend.dev>",
+            to: "chetkara@gmail.com",
+            subject: "Delete account confirmation",
+            react: DeleteAccount({ user: user.name, url }),
+          });
+        } catch {}
+      },
+    },
   },
   emailAndPassword: {
     enabled: true,
@@ -66,7 +80,7 @@ export const auth = betterAuth({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
           subject: "Verify your Garndish account",
-          react: VerificationEmail({ name: user.name.toLowerCase(), url }),
+          react: VerificationEmail({ name: user.name, url }),
         });
       } catch {}
     },

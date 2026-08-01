@@ -52,6 +52,7 @@ export default function EmailForm() {
       formAction={requestEmailChange}
       isLoading={isLoading}
       isActionDisabled={wasChanged}
+      showBack
     >
       <p className="text-sm mb-6">Change your email</p>
       <Input

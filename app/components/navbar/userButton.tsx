@@ -4,11 +4,6 @@ import { user as userSchema } from "@/db/schemas/auth-schema";
 import UserAvatar from "../userAvatar";
 import {
   Button,
-  Card,
-  CardActions,
-  CardText,
-  CardTitle,
-  Dialog,
   Divider,
   Dropdown,
   DropdownContent,
@@ -25,6 +20,7 @@ import { useState } from "react";
 import { SIGNOUT } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
+import DestructiveModal from "../destructiveModal";
 
 export default function UserButton({
   user,
@@ -61,27 +57,12 @@ export default function UserButton({
 
   return (
     <>
-      <Dialog isOpen={isConfirmationOpen} setIsOpen={setIsConfirmationOpen}>
-        <Card className="w-[90vw] max-w-60">
-          <form action={signout}>
-            <CardTitle className="font-heading">{SIGNOUT}</CardTitle>
-            <CardText>Are you sure?</CardText>
-            <CardActions className="flex justify-between w-full">
-              <Button
-                color="success"
-                size="sm"
-                type="button"
-                onClick={() => setIsConfirmationOpen(false)}
-              >
-                NO
-              </Button>
-              <Button size="sm" color="error">
-                YES
-              </Button>
-            </CardActions>
-          </form>
-        </Card>
-      </Dialog>
+      <DestructiveModal
+        isOpen={isConfirmationOpen}
+        setIsOpen={setIsConfirmationOpen}
+        title={SIGNOUT}
+        action={signout}
+      />
       <Dropdown
         requireClick
         strategy="fixed"

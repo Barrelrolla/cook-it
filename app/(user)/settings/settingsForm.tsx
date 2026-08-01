@@ -8,6 +8,7 @@ export type SettingsFormProps = {
   formAction: (formdata: FormData) => void;
   isLoading: boolean;
   isActionDisabled: boolean;
+  showBack?: boolean;
   children: ReactNode;
 };
 
@@ -16,10 +17,11 @@ export default function SettingsForm({
   formAction,
   isLoading,
   isActionDisabled,
+  showBack,
   children,
 }: SettingsFormProps) {
   return (
-    <SettingsBase label={label}>
+    <SettingsBase showBack={showBack} label={label}>
       <form className="px-4" action={formAction}>
         {children}
         <div className="w-full flex justify-end">

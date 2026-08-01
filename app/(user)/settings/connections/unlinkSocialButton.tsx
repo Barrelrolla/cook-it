@@ -1,5 +1,6 @@
 "use client";
 
+import DestructiveModal from "@/app/components/destructiveModal";
 import { authClient } from "@/auth/authClient";
 import {
   Button,
@@ -43,27 +44,12 @@ export default function UnlinkSocialButton({
   }
   return (
     <>
-      <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Card className="w-[90vw] max-w-60">
-          <form action={unlink}>
-            <CardTitle className="font-heading">Unlink account</CardTitle>
-            <CardText>Are you sure?</CardText>
-            <CardActions className="flex justify-between w-full">
-              <Button
-                color="success"
-                size="sm"
-                type="button"
-                onClick={() => setIsOpen(false)}
-              >
-                NO
-              </Button>
-              <Button size="sm" color="error">
-                YES
-              </Button>
-            </CardActions>
-          </form>
-        </Card>
-      </Dialog>
+      <DestructiveModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        action={unlink}
+        title="Unlink accountn"
+      />
       <Button
         loading={isLoading}
         size="xs"

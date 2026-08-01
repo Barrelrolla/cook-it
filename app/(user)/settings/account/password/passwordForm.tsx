@@ -102,6 +102,7 @@ export default function PasswordForm({
       formAction={handleFormAction}
       isActionDisabled={wasChanged}
       isLoading={isPending || isLoading}
+      showBack
     >
       <p className="text-sm mb-6">
         {hasPass ? "Change password" : "Set a password"}

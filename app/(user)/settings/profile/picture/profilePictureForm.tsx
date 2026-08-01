@@ -103,6 +103,7 @@ export default function ProfilePictureForm({
       isLoading={isPending}
       formAction={handleFormAction}
       isActionDisabled={false}
+      showBack
     >
       <p className="text-sm mb-4">Choose a new profile picture</p>
       <div className="relative w-fit">

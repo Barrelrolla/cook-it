@@ -1,8 +1,8 @@
 import { getSession } from "@/app/actions/authActions";
 import SettingsBase from "../settingsBase";
-import { Input } from "@barrelrolla/react-components-library";
 import { redirect } from "next/navigation";
 import { SIGNIN_PARAM } from "@/utils/constants";
+import SettingsLink from "../settingsLink";
 
 export default async function DataSettingsPage() {
   const session = await getSession();
@@ -13,8 +13,8 @@ export default async function DataSettingsPage() {
 
   return (
     <SettingsBase label="Data">
-      <Input label="download" />
-      <Input label="delete" color="error" />
+      <SettingsLink label="Download your data" href="/settings/data/download" />
+      <SettingsLink label="Delete your account" href="/settings/data/delete" />
     </SettingsBase>
   );
 }

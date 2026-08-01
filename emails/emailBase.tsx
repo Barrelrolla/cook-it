@@ -68,14 +68,16 @@ export default function EmailBase({ children }: PropsWithChildren) {
 }
 
 export function EmailButton({
+  color,
   url,
   children,
-}: { url: string } & PropsWithChildren) {
+}: { color?: "primary" | "error"; url: string } & PropsWithChildren) {
+  const primary =
+    "px-4 py-2 rounded-sm bg-primary-content dark:bg-primary-content-dark text-primary dark:text-primary-dark";
+  const error =
+    "px-4 py-2 rounded-sm bg-error-content dark:bg-error-content-dark text-error dark:text-error-dark";
   return (
-    <Button
-      className="px-4 py-2 rounded-sm bg-primary-content dark:bg-primary-content-dark text-primary dark:text-primary-dark"
-      href={url}
-    >
+    <Button className={color === "error" ? error : primary} href={url}>
       {children}
     </Button>
   );
