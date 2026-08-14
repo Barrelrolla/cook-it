@@ -72,7 +72,7 @@ export default function NameForm({
       <p className="text-sm mb-6">Choose a new display name</p>
       <Input
         disabled={isPending}
-        color={isChanged ? "success" : "main"}
+        color={isChanged ? "success" : "primary"}
         id="name"
         name="name"
         tabIndex={0}
@@ -85,9 +85,7 @@ export default function NameForm({
         label="Display name"
         placeholder={user.name}
       />
-      {isChanged && (
-        <p className="text-success-content text-sm">Name changed!</p>
-      )}
+      {isChanged && <p className="text-success text-sm">Name changed!</p>}
     </SettingsForm>
   );
 }

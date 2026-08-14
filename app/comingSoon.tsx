@@ -18,7 +18,7 @@ export default function ComingSoonPage() {
         alt={`${BRAND_NAME} logo`}
         priority
       />
-      <h1 className="font-heading text-6xl text-center text-primary-content">
+      <h1 className="font-heading text-6xl text-center text-primary">
         Coming soon
       </h1>
     </main>

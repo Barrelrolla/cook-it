@@ -31,7 +31,6 @@ export default function SigninButton({ signup }: { signup?: boolean }) {
       }}
       color={color}
       variant={variant}
-      ghostHover="outline"
     >
       {signup ? SIGNUP : SIGNIN}
     </Button>

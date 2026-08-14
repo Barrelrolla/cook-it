@@ -146,9 +146,9 @@ export default function PasswordForm({
           Revoke other sessions?
         </Checkbox>
       )}
-      {error && <p className="text-error-content text-sm">{error}</p>}
+      {error && <p className="text-error text-sm">{error}</p>}
       {wasChanged && (
-        <p className="text-success-content text-sm">
+        <p className="text-success text-sm">
           {hasPass ? "Password changed" : "Password set"}
         </p>
       )}

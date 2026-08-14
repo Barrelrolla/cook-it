@@ -13,10 +13,12 @@ export default function SettingsLink({
 }) {
   return (
     <Button
+      color="main"
       className="flex justify-between"
       variant="ghost"
       as={Link}
       href={href}
+      scaling={false}
     >
       <span>{label}</span>
       <PiArrowRight />

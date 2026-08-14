@@ -239,7 +239,7 @@ export default function SigninModal() {
           <div className="flex flex-col w-full items-center text-center justify-center h-75">
             <p className="flex items-center">
               Account created.{" "}
-              <span className="text-success-content ml-2 text-xl">
+              <span className="text-success ml-2 text-xl">
                 <PiCheckBold />
               </span>
             </p>

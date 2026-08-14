@@ -13,7 +13,7 @@ export default function AppearanceSettings() {
   if (!theme || theme.darkMode === undefined) {
     return (
       <div className="h-20 overflow-clip">
-        <Spinner className="size-20" />
+        <Spinner className="mx-auto size-20" />
       </div>
     );
   }

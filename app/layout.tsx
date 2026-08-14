@@ -6,6 +6,7 @@ import { ThemeContextProvider } from "@barrelrolla/react-components-library";
 import ComingSoonPage from "./comingSoon";
 import { cookies } from "next/headers";
 import { VercelMetrics } from "./vercelMetrics";
+import "@/utils/extensions";
 
 export const manrope = Manrope({
   subsets: ["latin"],

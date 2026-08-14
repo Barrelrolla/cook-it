@@ -119,9 +119,10 @@ export default function SigninFormContent({
   return (
     <>
       <Input
-        inputContainerClassName="w-full"
+        wrapperClassName="w-full"
         required
         ref={emailRef}
+        as="input"
         startIcon={<PiUserBold />}
         aria-label={signup ? "username" : "username or email"}
         type="text"
@@ -138,7 +139,7 @@ export default function SigninFormContent({
       />
       {signup && (
         <Input
-          inputContainerClassName="w-full"
+          wrapperClassName="w-full"
           required
           startIcon={<PiEnvelopeBold />}
           aria-label="email"
@@ -156,7 +157,7 @@ export default function SigninFormContent({
         />
       )}
       <Input
-        inputContainerClassName="w-full"
+        wrapperClassName="w-full"
         required
         startIcon={<PiKeyBold />}
         aria-label="password"
@@ -174,7 +175,7 @@ export default function SigninFormContent({
       />
       {signup && (
         <Input
-          inputContainerClassName="w-full"
+          wrapperClassName="w-full"
           required
           startIcon={<PiKeyBold />}
           aria-label="repeat password"
@@ -215,7 +216,7 @@ export default function SigninFormContent({
           {signup ? "Sign up" : "Sign in"}
         </Button>
         {error && !issue && (
-          <p className="mt-1 text-center text-error-content">{error}</p>
+          <p className="mt-1 text-center text-error">{error}</p>
         )}
         {!emailNotVerified && !signup && error && !resetReqested && (
           <p className="text-xs text-center flex items-center justify-center">
@@ -256,12 +257,10 @@ export default function SigninFormContent({
           <p className="text-xs text-center">Email sent.</p>
         )}
         {resetError && (
-          <p className="text-xs text-error-content text-center">{resetError}</p>
+          <p className="text-xs text-error text-center">{resetError}</p>
         )}
         {verificationError && (
-          <p className="text-xs text-error-content text-center">
-            {verificationError}
-          </p>
+          <p className="text-xs text-error text-center">{verificationError}</p>
         )}
         <SocialSigninButton social="google" />
         <SocialSigninButton social="apple" />

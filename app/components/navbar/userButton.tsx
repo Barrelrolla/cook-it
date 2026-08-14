@@ -111,6 +111,7 @@ export default function UserButton({
             <Divider className="opacity-10 my-2" />
             <DropdownListItem
               color="error"
+              className="text-error"
               onClick={() => {
                 setIsConfirmationOpen(true);
               }}

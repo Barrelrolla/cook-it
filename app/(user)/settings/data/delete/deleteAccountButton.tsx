@@ -103,7 +103,7 @@ export default function DeleteAccountButton() {
           complete the deletion.
         </p>
       )}
-      {error && <p className="text-sm text-error-content">{error}</p>}
+      {error && <p className="text-sm text-error">{error}</p>}
     </>
   );
 }

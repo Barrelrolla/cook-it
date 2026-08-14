@@ -98,6 +98,7 @@ export default function ResetPasswordModal() {
       setIsOpen={close}
     >
       <Input
+        wrapperClassName="w-full"
         required
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
@@ -115,6 +116,7 @@ export default function ResetPasswordModal() {
         }
       />
       <Input
+        wrapperClassName="w-full"
         required
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
@@ -131,9 +133,9 @@ export default function ResetPasswordModal() {
             : undefined
         }
       />
-      {error && <p className="mt-1 text-center text-error-content">{error}</p>}
+      {error && <p className="mt-1 text-center text-error">{error}</p>}
       {passwordReset && (
-        <p className="flex place-self-center mt-1 items-center text-success-content">
+        <p className="flex place-self-center mt-1 items-center text-success">
           Password changed! <PiCheckBold className="ml-2" />
         </p>
       )}

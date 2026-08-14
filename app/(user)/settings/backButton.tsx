@@ -8,6 +8,7 @@ export default function BackButton() {
   const router = useRouter();
   return (
     <Button
+      color="main"
       className="-mx-2 mb-2"
       size="xs"
       variant="ghost"

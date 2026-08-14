@@ -51,7 +51,6 @@ export default async function MainNavbar() {
         )}
         <NavbarToggle
           wrapperClassName="size-10 flex items-center"
-          ghostHover="muted"
           className="h-full w-full"
         />
       </div>

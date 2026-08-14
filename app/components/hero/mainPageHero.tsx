@@ -29,7 +29,7 @@ export default async function MainPageHero() {
         <HeroTitle className="font-heading text-6xl md:text-7xl">
           Discover. Cook.
           <br />
-          <span className="text-primary-content">Share.</span>
+          <span className="text-primary">Share.</span>
         </HeroTitle>
         <HeroText className="md:max-w-2/3">
           Join a community of food lovers. Share your recipes and find something

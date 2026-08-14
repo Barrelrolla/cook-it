@@ -6,6 +6,13 @@ import { Button } from "@barrelrolla/react-components-library";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+Object.defineProperty(String.prototype, "capitalize", {
+  value: function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false,
+});
+
 export default function UnlinkSocialButton({
   social,
 }: {
@@ -41,7 +48,7 @@ export default function UnlinkSocialButton({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         action={unlink}
-        title="Unlink accountn"
+        title={`Unlink ${social.capitalize()} account`}
       />
       <Button
         loading={isLoading}
@@ -53,7 +60,7 @@ export default function UnlinkSocialButton({
       >
         Unlink
       </Button>
-      {error && <p className="text-sm text-error-content">{error}</p>}
+      {error && <p className="text-sm text-error">{error}</p>}
     </>
   );
 }

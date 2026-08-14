@@ -161,10 +161,8 @@ export default function ProfilePictureForm({
           </Tooltip>
         )}
       </div>
-      {imageError && <p className="text-error-content text-sm">{imageError}</p>}
-      {isChanged && (
-        <p className="text-success-content text-sm">Photo changed!</p>
-      )}
+      {imageError && <p className="text-error text-sm">{imageError}</p>}
+      {isChanged && <p className="text-success text-sm">Photo changed!</p>}
     </SettingsForm>
   );
 }

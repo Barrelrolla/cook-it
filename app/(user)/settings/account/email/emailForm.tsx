@@ -66,7 +66,7 @@ export default function EmailForm() {
         error={error}
       />
       {wasChanged && (
-        <p className="text-sm text-success-content">Confirmation email sent!</p>
+        <p className="text-sm text-success">Confirmation email sent!</p>
       )}
     </SettingsForm>
   );

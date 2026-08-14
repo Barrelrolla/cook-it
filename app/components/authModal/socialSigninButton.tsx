@@ -62,7 +62,7 @@ export default function SocialSigninButton({ social }: { social: Social }) {
       >
         <span>{`Sign in with ${socialName}`}</span>
       </Button>
-      {error && <p className="text-center text-error-content">{error}</p>}
+      {error && <p className="text-center text-error">{error}</p>}
     </>
   );
 }

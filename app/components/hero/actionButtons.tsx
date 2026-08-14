@@ -13,7 +13,7 @@ export function ShareButton() {
 
 export function ExploreButton() {
   return (
-    <Button as={Link} href="/recipes" variant="ghost" ghostHover="outline">
+    <Button as={Link} href="/recipes" variant="ghost" color="main">
       Explore recipes <PiArrowRightBold />
     </Button>
   );

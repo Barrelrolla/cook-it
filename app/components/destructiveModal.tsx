@@ -23,15 +23,21 @@ export default function DestructiveModal({
 }: DestructiveModalProps) {
   return (
     <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Card className="w-[90vw] max-w-60">
+      <Card className="w-[90vw] max-w-70">
         <form action={action}>
           <CardTitle className="font-heading">{title}</CardTitle>
           <CardText className="text-4xl flex justify-center w-full">
-            <PiWarning className="text-error-content" />
+            <PiWarning className="text-error" />
           </CardText>
           <CardText className="text-center">Are you sure?</CardText>
           <CardActions className="flex justify-between w-full">
-            <Button size="sm" type="button" onClick={() => setIsOpen(false)}>
+            <Button
+              size="sm"
+              type="button"
+              color="main"
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+            >
               NO
             </Button>
             <Button size="sm" color="error">

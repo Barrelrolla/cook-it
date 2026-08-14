@@ -18,31 +18,23 @@ export default async function ConnectionsSettingsPage() {
 
   return (
     <SettingsBase label="Connected services">
-      <div className="px-4">
+      <div className="px-4 w-70">
         <p>Google</p>
         {hasGoogle && (
-          <div>
-            <p className="text-sm text-success-content">Connected</p>
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-success">Connected</p>
             <UnlinkSocialButton social="google" />
           </div>
         )}
-        {!hasGoogle && (
-          <div className="w-fit">
-            <SocialSigninButton social="google" />
-          </div>
-        )}
+        {!hasGoogle && <SocialSigninButton social="google" />}
         <p className="mt-6">Apple</p>
         {hasApple && (
           <div>
-            <p className="text-sm text-success-content">Connected</p>
+            <p className="text-sm text-success">Connected</p>
             <UnlinkSocialButton social="apple" />
           </div>
         )}
-        {!hasApple && (
-          <div className="w-fit">
-            <SocialSigninButton social="apple" />
-          </div>
-        )}
+        {!hasApple && <SocialSigninButton social="apple" />}
       </div>
     </SettingsBase>
   );
