@@ -1,5 +1,5 @@
+import { RecipeWithRelations } from "@/app/actions/recipeActions";
 import RecipeHero from "./recipeHero";
-import { RecipeItemType } from "../recipes/recipeItem";
 import {
   Badge,
   ColorType,
@@ -7,20 +7,21 @@ import {
   HeroText,
   HeroTitle,
 } from "@barrelrolla/react-components-library";
-import { PiStarFill } from "react-icons/pi";
 
 type Props = {
-  recipe: RecipeItemType;
+  recipe: RecipeWithRelations;
 };
 
 export default function RecipePageHero({ recipe }: Props) {
-  const { imageUrl, title, rating, ratingsCount, author, difficulty } = recipe;
+  const { imageUrl, title, author, difficulty } = recipe;
   let color: ColorType = "success";
   if (difficulty === "medium") {
     color = "warning";
   } else if (difficulty === "hard") {
     color = "error";
   }
+  const name = author?.name || "Deleted user";
+
   return (
     <RecipeHero imageUrl={imageUrl} imageAlt="The cooked meal">
       <HeroSection className="justify-end md:justify-center mb-2">
@@ -30,19 +31,8 @@ export default function RecipePageHero({ recipe }: Props) {
         <HeroTitle className="font-heading font-normal text-5xl md:text-6xl">
           {title}
         </HeroTitle>
-        <HeroText className="">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet, rerum?
-          Reiciendis possimus veritatis tempore, nemo laboriosam eligendi
-          aliquid deserunt. Placeat doloribus excepturi est officia laborum.
-        </HeroText>
-        <p className="px-4 flex items-center">
-          <span className="flex items-center text-accent">
-            <PiStarFill />
-            {rating}{" "}
-          </span>
-          <span className="text-main-content"> ({ratingsCount} reviews)</span> •{" "}
-          by {author}
-        </p>
+        <HeroText className="">{recipe.description}</HeroText>
+        <p className="px-4 flex items-center text-sm">by {name}</p>
       </HeroSection>
       <HeroSection className="hidden md:block" />
     </RecipeHero>

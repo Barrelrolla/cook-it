@@ -1,6 +1,5 @@
 import { CSSProperties } from "react";
 import Image from "next/image";
-import { recipeTable } from "@/db/schemas/recipeSchema";
 import RecipeInteract from "./recipeInteract";
 import {
   Badge,
@@ -10,12 +9,15 @@ import {
   CardTitle,
   ColorType,
 } from "@barrelrolla/react-components-library";
-import { PiStarFill } from "react-icons/pi";
+import { RecipeWithRelations } from "@/app/actions/recipeActions";
 
-export type RecipeItemType = typeof recipeTable.$inferSelect;
-
-export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
+export default function RecipeItem({
+  recipe,
+}: {
+  recipe: RecipeWithRelations;
+}) {
   const { difficulty } = recipe;
+  const name = recipe.author?.name || "Deleted user";
   let color: ColorType = "success";
   if (difficulty === "medium") {
     color = "warning";
@@ -44,12 +46,7 @@ export default function RecipeItem({ recipe }: { recipe: RecipeItemType }) {
           <CardSection>
             <CardTitle>{recipe.title}</CardTitle>
             <div className="flex justify-between px-4 pb-2 text-sm">
-              <p className="flex items-center">
-                <span className="flex items-center text-accent">
-                  <PiStarFill /> {recipe.rating}
-                </span>{" "}
-                ({recipe.ratingsCount}) • by {recipe.author}
-              </p>
+              <p className="flex items-center">by {name}</p>
               <Badge color={color}>{recipe.difficulty}</Badge>
             </div>
           </CardSection>
