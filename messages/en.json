@@ -1,17 +1,15 @@
 {
   "Global": {
     "brand-name": "Garndish",
+    "logo-alt": "{brand} logo",
     "metadata-description": "Your new favourite recipe app.",
     "page-not-found": "Page not found.",
     "something-went-wrong": "Something went wrong.",
     "google": "Google",
-    "apple": "Apple"
-  },
-  "ComingSoonPage": {
+    "apple": "Apple",
     "coming-soon": "Coming soon"
   },
   "Navbar": {
-    "logo-alt": "{brand} logo",
     "profile-button-label": "Profile",
     "settings-button-label": "Settings",
     "user-avatar": "{name}'s avatar",

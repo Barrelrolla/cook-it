@@ -9,11 +9,11 @@ export default function SettingNotFound() {
   return (
     <p>
       {t.rich("not-found", {
-        settings: (chunks) => {
+        settings: (chunks) => (
           <Anchor as={Link} href={"/settings"}>
             {chunks}
-          </Anchor>;
-        },
+          </Anchor>
+        ),
       })}
     </p>
   );

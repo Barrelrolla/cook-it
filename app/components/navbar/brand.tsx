@@ -7,8 +7,8 @@ import logoDark from "@/public/logo-dark.svg";
 import { useTranslations } from "next-intl";
 
 export default function Brand() {
-  const tGlobal = useTranslations("Global");
-  const t = useTranslations("Navbar");
+  const t = useTranslations("Global");
+  const brand = t("brand-name");
   return (
     <NavbarBrand
       as={Link}
@@ -20,7 +20,7 @@ export default function Brand() {
           <Image
             className="object-cover block dark:hidden -ml-2"
             src={logoLight}
-            alt={t("logo-alt", { brand: tGlobal("brand-name") })}
+            alt={t("logo-alt", { brand })}
             height={88}
             width={200}
             loading="eager"
@@ -28,7 +28,7 @@ export default function Brand() {
           <Image
             className="object-cover hidden dark:block -ml-2"
             src={logoDark}
-            alt={t("logo-alt", { brand: tGlobal("brand-name") })}
+            alt={t("logo-alt", { brand })}
             height={88}
             width={200}
             loading="eager"

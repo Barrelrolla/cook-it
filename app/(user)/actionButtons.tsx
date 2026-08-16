@@ -8,7 +8,7 @@ export function ShareButton() {
   const t = useTranslations("HomeHero");
   return (
     <Button as={Link} href={"/share"} color="primary">
-      {t("shareButton")}
+      {t("share-button")}
       <PiPlusBold />
     </Button>
   );
@@ -18,7 +18,7 @@ export function ExploreButton() {
   const t = useTranslations("HomeHero");
   return (
     <Button as={Link} href="/recipes" variant="ghost" color="main">
-      {t("exploreButton")} <PiArrowRightBold />
+      {t("explore-button")} <PiArrowRightBold />
     </Button>
   );
 }
