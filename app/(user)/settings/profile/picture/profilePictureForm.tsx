@@ -9,12 +9,12 @@ import {
 } from "@barrelrolla/react-components-library";
 import Image from "next/image";
 import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
-import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { ImageFileSchema } from "@/utils/validationSchemas";
 import { uploadUserAvatar } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import SettingsForm from "../../settingsForm";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePictureForm({
   user,
@@ -27,6 +27,9 @@ export default function ProfilePictureForm({
   const [isPending, startTransition] = useTransition();
   const [isChanged, setIsChanged] = useState(false);
   const router = useRouter();
+  const tGlobal = useTranslations("Global");
+  const tProfile = useTranslations("Settings.Profile");
+  const t = useTranslations("Settings.Profile.Picture");
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
     const selectedImage = e.target.files?.[0];
@@ -66,11 +69,11 @@ export default function ProfilePictureForm({
           if (uploadedImageData.secure_url) {
             uploadedImageUrl = uploadedImageData.secure_url;
           } else {
-            setImageError(SOMETHING_WENT_WRONG);
+            setImageError(tGlobal("something-went-wrong"));
             return;
           }
         } catch {
-          setImageError(SOMETHING_WENT_WRONG);
+          setImageError(tGlobal("something-went-wrong"));
         }
       }
 
@@ -87,7 +90,7 @@ export default function ProfilePictureForm({
       setIsChanged(true);
       router.refresh();
     } catch {
-      throw new Error(SOMETHING_WENT_WRONG);
+      throw new Error(tGlobal("something-went-wrong"));
     }
   }
 
@@ -99,20 +102,20 @@ export default function ProfilePictureForm({
 
   return (
     <SettingsForm
-      label="Profile picture"
+      label={tProfile("picture")}
       isLoading={isPending}
       formAction={handleFormAction}
       isActionDisabled={false}
       showBack
     >
-      <p className="text-sm mb-4">Choose a new profile picture</p>
+      <p className="text-sm mb-4">{t("choose-picture")}</p>
       <div className="relative w-fit">
-        <Tooltip>
+        <Tooltip isLabel>
           <TooltipTrigger>
             <Button
               disabled={isPending}
               as="label"
-              aria-label="pick image"
+              aria-label={t("pick-image")}
               htmlFor="file-select"
               tabIndex={0}
               className="absolute -top-2 -right-2"
@@ -122,7 +125,7 @@ export default function ProfilePictureForm({
               startIcon={<PiPencilFill />}
             />
           </TooltipTrigger>
-          <TooltipContent>Pick new image</TooltipContent>
+          <TooltipContent>{t("pick-image")}</TooltipContent>
         </Tooltip>
         <Image
           className="rounded-containers w-[94vw] max-w-50 h-50 object-cover"
@@ -130,7 +133,7 @@ export default function ProfilePictureForm({
           width={200}
           height={200}
           loading="eager"
-          alt={`${user.name}'s avatar`}
+          alt={t("user-avatar", { name: user.name })}
         />
         <input
           onChange={handleImageChange}
@@ -145,7 +148,7 @@ export default function ProfilePictureForm({
               <Button
                 disabled={isPending}
                 as="label"
-                aria-label="revert image"
+                aria-label={t("cancel")}
                 tabIndex={0}
                 onClick={() => {
                   setImage("");
@@ -157,12 +160,14 @@ export default function ProfilePictureForm({
                 startIcon={<PiXCircleFill />}
               />
             </TooltipTrigger>
-            <TooltipContent>Cancel</TooltipContent>
+            <TooltipContent>{t("cancel")}</TooltipContent>
           </Tooltip>
         )}
       </div>
       {imageError && <p className="text-error text-sm">{imageError}</p>}
-      {isChanged && <p className="text-success text-sm">Photo changed!</p>}
+      {isChanged && (
+        <p className="text-success text-sm">{t("photo-changed")}</p>
+      )}
     </SettingsForm>
   );
 }

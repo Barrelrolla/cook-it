@@ -1,12 +1,16 @@
 import { getSession, getUserAuthMethods } from "@/app/actions/authActions";
-import SettingsBase from "../settingsBase";
 import { redirect } from "next/navigation";
-import { SIGNIN_PARAM } from "@/utils/constants";
+import { formatSettingsCategory, SIGNIN_PARAM } from "@/constants";
+import SettingsBase from "../settingsBase";
 import SocialSigninButton from "@/app/components/authModal/socialSigninButton";
 import UnlinkSocialButton from "./unlinkSocialButton";
+import { getTranslations } from "next-intl/server";
 
 export default async function ConnectionsSettingsPage() {
   const session = await getSession();
+  const label = await formatSettingsCategory("connections");
+  const tGlobal = await getTranslations("Global");
+  const t = await getTranslations("Settings.Connections");
 
   if (!session) {
     redirect(`/?${SIGNIN_PARAM}`);
@@ -17,20 +21,20 @@ export default async function ConnectionsSettingsPage() {
   const hasApple = methods?.providers.includes("apple");
 
   return (
-    <SettingsBase label="Connected services">
+    <SettingsBase label={label}>
       <div className="px-4 w-70">
-        <p>Google</p>
+        <p>{tGlobal("google")}</p>
         {hasGoogle && (
           <div className="flex justify-between items-center">
-            <p className="text-sm text-success">Connected</p>
+            <p className="text-sm text-success">{t("connected")}</p>
             <UnlinkSocialButton social="google" />
           </div>
         )}
         {!hasGoogle && <SocialSigninButton social="google" />}
-        <p className="mt-6">Apple</p>
+        <p className="mt-6">{tGlobal("apple")}</p>
         {hasApple && (
           <div>
-            <p className="text-sm text-success">Connected</p>
+            <p className="text-sm text-success">{t("connected")}</p>
             <UnlinkSocialButton social="apple" />
           </div>
         )}

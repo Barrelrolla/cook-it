@@ -1,5 +1,6 @@
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
-import RecipeHero from "./recipeHero";
+import RecipeHero from "@/app/components/hero/baseHero";
+import { formatDifficulty } from "@/constants/recipeHelpers";
 import {
   Badge,
   ColorType,
@@ -7,12 +8,15 @@ import {
   HeroText,
   HeroTitle,
 } from "@barrelrolla/react-components-library";
+import { getTranslations } from "next-intl/server";
 
-type Props = {
+type RecipePageProps = {
   recipe: RecipeWithRelations;
 };
 
-export default function RecipePageHero({ recipe }: Props) {
+export default async function RecipePageHero({ recipe }: RecipePageProps) {
+  const t = await getTranslations("RecipePage");
+  const tUser = await getTranslations("Recipes.User");
   const { imageUrl, title, author, difficulty } = recipe;
   let color: ColorType = "success";
   if (difficulty === "medium") {
@@ -20,19 +24,23 @@ export default function RecipePageHero({ recipe }: Props) {
   } else if (difficulty === "hard") {
     color = "error";
   }
-  const name = author?.name || "Deleted user";
+  const name = author?.name || tUser("deleted");
 
   return (
-    <RecipeHero imageUrl={imageUrl} imageAlt="The cooked meal">
+    <RecipeHero imageUrl={imageUrl} imageAlt={t("img-alt")}>
       <HeroSection className="justify-end md:justify-center mb-2">
-        <Badge color={color} className="w-fit ml-4">
-          {recipe.difficulty}
-        </Badge>
+        {recipe.difficulty && (
+          <Badge color={color} className="w-fit ml-4">
+            {formatDifficulty(recipe.difficulty)}
+          </Badge>
+        )}
         <HeroTitle className="font-heading font-normal text-5xl md:text-6xl">
           {title}
         </HeroTitle>
         <HeroText className="">{recipe.description}</HeroText>
-        <p className="px-4 flex items-center text-sm">by {name}</p>
+        <p className="px-4 flex items-center text-sm">
+          {t("author", { name })}
+        </p>
       </HeroSection>
       <HeroSection className="hidden md:block" />
     </RecipeHero>

@@ -11,10 +11,12 @@ import {
   Button,
   Img,
 } from "react-email";
-import { BRAND_NAME } from "@/utils/constants";
 import tailwindConfig from "./tailwind.config";
 
-export default function EmailBase({ children }: PropsWithChildren) {
+export default function EmailBase({
+  preview,
+  children,
+}: { preview: string } & PropsWithChildren) {
   return (
     <Html>
       <Tailwind config={tailwindConfig}>
@@ -51,7 +53,7 @@ export default function EmailBase({ children }: PropsWithChildren) {
           />
         </Head>
         <Body>
-          <Preview>{`${BRAND_NAME} password reset.`}</Preview>
+          <Preview>{preview}</Preview>
           <Container className="rounded-sm bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark mb-10 p-8 max-w-160">
             <Img
               className="h-18"

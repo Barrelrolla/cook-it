@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { user } from "@/db/schemas/auth-schema";
 import { getSession } from "@/app/actions/authActions";
-import { LINKS } from "@/utils/constants";
+import { formatNavLink, NAV_LINKS } from "@/constants";
 import Brand from "./brand";
 import Navlink from "./navlink";
 import SigninButton from "./signinButton";
@@ -18,7 +18,6 @@ export default async function MainNavbar() {
   const session = await getSession();
   return (
     <Navbar
-      suppressHydrationWarning
       backdropClassName="bg-stone-800/30 backdrop-blur-[2px]"
       collapseAt="md"
       glass={false}
@@ -30,9 +29,9 @@ export default async function MainNavbar() {
       </div>
       <NavbarCollapse className="font-bold">
         <NavbarMenu>
-          {LINKS.map((link) => (
-            <Navlink key={link.name} href={link.url}>
-              {link.name}
+          {NAV_LINKS.map((link) => (
+            <Navlink key={link} href={`/${link}`}>
+              {formatNavLink(link)}
             </Navlink>
           ))}
         </NavbarMenu>

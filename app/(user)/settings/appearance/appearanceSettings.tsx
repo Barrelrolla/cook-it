@@ -6,9 +6,11 @@ import {
   Spinner,
   useTheme,
 } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 import { CSSProperties } from "react";
 
 export default function AppearanceSettings() {
+  const t = useTranslations("Settings.Appearance");
   const theme = useTheme();
   if (!theme || theme.darkMode === undefined) {
     return (
@@ -20,14 +22,14 @@ export default function AppearanceSettings() {
 
   return (
     <div className="px-4">
-      <RadioGroup title="Color theme" name="colors" className="flex gap-8">
+      <RadioGroup title={t("color-theme")} name="colors" className="flex gap-8">
         <Radio
           style={{ "--fg-color": "var(--color-green)" } as CSSProperties}
           labelStyle={{ "--fg-color": "var(--color-green)" } as CSSProperties}
           defaultChecked={theme.theme === "green"}
           onChange={() => theme.setTheme("green")}
         >
-          {"Green (default)"}
+          {t("green")}
         </Radio>
         <Radio
           style={{ "--fg-color": "var(--color-red)" } as CSSProperties}
@@ -35,7 +37,7 @@ export default function AppearanceSettings() {
           defaultChecked={theme.theme === "red"}
           onChange={() => theme.setTheme("red")}
         >
-          Red
+          {t("red")}
         </Radio>
         <Radio
           style={{ "--fg-color": "var(--color-orange)" } as CSSProperties}
@@ -43,27 +45,31 @@ export default function AppearanceSettings() {
           defaultChecked={theme.theme === "orange"}
           onChange={() => theme.setTheme("orange")}
         >
-          Orange
+          {t("orange")}
         </Radio>
       </RadioGroup>
-      <RadioGroup title="Dark mode" name="darkMode" className="flex gap-8 mt-6">
+      <RadioGroup
+        title={t("dark-mode")}
+        name="darkMode"
+        className="flex gap-8 mt-6"
+      >
         <Radio
           defaultChecked={theme.darkMode === "light"}
           onChange={() => theme.setDarkMode("light")}
         >
-          Light
+          {t("light")}
         </Radio>
         <Radio
           defaultChecked={theme.darkMode === "dark"}
           onChange={() => theme.setDarkMode("dark")}
         >
-          Dark
+          {t("dark")}
         </Radio>
         <Radio
           defaultChecked={theme.darkMode === "system"}
           onChange={() => theme.setDarkMode("system")}
         >
-          System
+          {t("system")}
         </Radio>
       </RadioGroup>
     </div>

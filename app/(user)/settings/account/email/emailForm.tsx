@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@barrelrolla/react-components-library";
-import SettingsForm from "../../settingsForm";
 import z from "zod";
+import { Input } from "@barrelrolla/react-components-library";
 import { authClient } from "@/auth/authClient";
+import SettingsForm from "../../settingsForm";
+import { useTranslations } from "next-intl";
 
 export default function EmailForm() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [wasChanged, setWasChanged] = useState(false);
+  const tAcc = useTranslations("Settings.Account");
+  const t = useTranslations("Settings.Account.Email");
 
   async function requestEmailChange(formData: FormData) {
     const enteredEmail = formData.get("email")?.toString() || "";
@@ -48,25 +51,25 @@ export default function EmailForm() {
 
   return (
     <SettingsForm
-      label="Email"
+      label={tAcc("email")}
       formAction={requestEmailChange}
       isLoading={isLoading}
       isActionDisabled={wasChanged}
       showBack
     >
-      <p className="text-sm mb-6">Change your email</p>
+      <p className="text-sm mb-6">{t("description")}</p>
       <Input
         required
         disabled={isLoading || wasChanged}
         defaultValue={email}
         name="email"
-        label="New email"
+        label={t("new-email")}
         type="email"
         autoComplete="email"
         error={error}
       />
       {wasChanged && (
-        <p className="text-sm text-success">Confirmation email sent!</p>
+        <p className="text-sm text-success">{t("confirmation-email-sent")}</p>
       )}
     </SettingsForm>
   );

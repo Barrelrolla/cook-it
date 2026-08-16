@@ -6,6 +6,7 @@ import {
   CardTitle,
   Dialog,
 } from "@barrelrolla/react-components-library";
+import { getTranslations } from "next-intl/server";
 import { PiWarning } from "react-icons/pi";
 
 export type DestructiveModalProps = {
@@ -15,12 +16,13 @@ export type DestructiveModalProps = {
   title: string;
 };
 
-export default function DestructiveModal({
+export default async function DestructiveModal({
   isOpen,
   setIsOpen,
   action,
   title,
 }: DestructiveModalProps) {
+  const t = await getTranslations("DestructiveModal");
   return (
     <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
       <Card className="w-[90vw] max-w-70">
@@ -29,7 +31,7 @@ export default function DestructiveModal({
           <CardText className="text-4xl flex justify-center w-full">
             <PiWarning className="text-error" />
           </CardText>
-          <CardText className="text-center">Are you sure?</CardText>
+          <CardText className="text-center">{t("are-you-sure")}</CardText>
           <CardActions className="flex justify-between w-full">
             <Button
               size="sm"
@@ -38,10 +40,10 @@ export default function DestructiveModal({
               variant="outline"
               onClick={() => setIsOpen(false)}
             >
-              NO
+              {t("no")}
             </Button>
             <Button size="sm" color="error">
-              YES
+              {t("yes")}
             </Button>
           </CardActions>
         </form>

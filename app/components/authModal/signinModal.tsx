@@ -9,16 +9,11 @@ import { SignUpSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
 import { Button } from "@barrelrolla/react-components-library";
-import {
-  SIGNIN,
-  SIGNIN_PARAM,
-  SIGNUP,
-  SIGNUP_PARAM,
-  SOMETHING_WENT_WRONG,
-} from "@/utils/constants";
+import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/constants";
 import userPlaceholderImage from "@/public/user-placeholder.png";
 import { PiCheckBold } from "react-icons/pi";
 import { $ZodIssue } from "zod/v4/core";
+import { useTranslations } from "next-intl";
 
 export default function SigninModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +33,8 @@ export default function SigninModal() {
   const searchParams = useSearchParams();
   const showSignin = searchParams.has(SIGNIN_PARAM);
   const showSignup = searchParams.has(SIGNUP_PARAM);
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("AuthModal");
 
   function onRequest() {
     setError("");
@@ -55,7 +52,7 @@ export default function SigninModal() {
       setEmailNotVerified(true);
     }
     setIsLoading(false);
-    setError(ctx.error.message || SOMETHING_WENT_WRONG);
+    setError(ctx.error.message || tGlobal("something-went-wrong"));
   }
 
   async function signin(formData: FormData) {
@@ -135,7 +132,7 @@ export default function SigninModal() {
         setError(user.error.issues[0].message);
         setIssue(user.error.issues[0]);
       } else {
-        setError(SOMETHING_WENT_WRONG);
+        setError(tGlobal("something-went-wrong"));
       }
       return;
     }
@@ -163,7 +160,7 @@ export default function SigninModal() {
         },
         onError: (ctx) => {
           setIsLoading(false);
-          setError(ctx.error.message || SOMETHING_WENT_WRONG);
+          setError(ctx.error.message || tGlobal("something-went-wrong"));
         },
       },
     );
@@ -212,7 +209,7 @@ export default function SigninModal() {
   return (
     <>
       <BaseModal
-        title={SIGNIN}
+        title={t("sign-in")}
         formRef={signinFormRef}
         formAction={signin}
         isOpen={showSignin}
@@ -229,7 +226,7 @@ export default function SigninModal() {
         />
       </BaseModal>
       <BaseModal
-        title={SIGNUP}
+        title={t("sign-up")}
         formRef={signupFormRef}
         formAction={signUp}
         isOpen={showSignup}
@@ -238,12 +235,12 @@ export default function SigninModal() {
         {accountCreated && (
           <div className="flex flex-col w-full items-center text-center justify-center h-75">
             <p className="flex items-center">
-              Account created.{" "}
+              {t("account-created")}
               <span className="text-success ml-2 text-xl">
                 <PiCheckBold />
               </span>
             </p>
-            <p>We&apos;ve sent you an email with a verification link.</p>
+            <p>{t("verification-sent")}</p>
             <Button
               className="w-full mt-4"
               wrapperClassName="w-full"
@@ -251,7 +248,7 @@ export default function SigninModal() {
               size="sm"
               onClick={close}
             >
-              Close
+              {t("close-button")}
             </Button>
           </div>
         )}

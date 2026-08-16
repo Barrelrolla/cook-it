@@ -10,6 +10,7 @@ import {
   Dialog,
   Input,
 } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function DeleteAccountButton() {
@@ -18,6 +19,7 @@ export default function DeleteAccountButton() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isRequested, setIsRequested] = useState(false);
+  const t = useTranslations("Settings.Data.Delete");
 
   function deleteAccount(formData: FormData) {
     const enteredPass = formData.get("password")?.toString() || "";
@@ -47,7 +49,7 @@ export default function DeleteAccountButton() {
       <DestructiveModal
         isOpen={isConfirmationOpen}
         setIsOpen={setIsConfirmationOpen}
-        title="Delete account"
+        title={t("delete-account")}
         action={() => {
           setIsConfirmationOpen(false);
           setIsPasswordOpen(true);
@@ -55,12 +57,8 @@ export default function DeleteAccountButton() {
       />
       <Dialog isOpen={isPasswordOpen} setIsOpen={setIsPasswordOpen}>
         <Card>
-          <CardTitle>Delete account</CardTitle>
-          <CardText className="text-sm">
-            This account is irrevirsible. This will permanently delete your
-            account as well as all recipes you&apos;ve shared. If you&apos;re
-            certain you want to continue, please enter your password.
-          </CardText>
+          <CardTitle>{t("delete-account")}</CardTitle>
+          <CardText className="text-sm">{t("warning-message")}</CardText>
           <CardActions className="w-full">
             <form className="w-full flex flex-col gap-4" action={deleteAccount}>
               <Input
@@ -76,10 +74,10 @@ export default function DeleteAccountButton() {
                   }}
                   size="sm"
                 >
-                  Cancel
+                  {t("cancel")}
                 </Button>
                 <Button size="sm" color="error">
-                  Delete
+                  {t("delete")}
                 </Button>
               </div>
             </form>
@@ -95,14 +93,9 @@ export default function DeleteAccountButton() {
           setIsConfirmationOpen(true);
         }}
       >
-        Delete account
+        {t("delete-button")}
       </Button>
-      {isRequested && (
-        <p className="text-sm">
-          We&apos;ve sent you a confirmation email. Click the link inside to
-          complete the deletion.
-        </p>
-      )}
+      {isRequested && <p className="text-sm">{t("email-sent")}</p>}
       {error && <p className="text-sm text-error">{error}</p>}
     </>
   );

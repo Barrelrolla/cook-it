@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@barrelrolla/react-components-library";
 import Link from "next/link";
 import { PiArrowRight } from "react-icons/pi";
+import { Button } from "@barrelrolla/react-components-library";
 
 export default function SettingsLink({
   label,

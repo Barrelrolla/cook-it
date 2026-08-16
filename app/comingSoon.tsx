@@ -2,8 +2,10 @@ import Image from "next/image";
 import logoLight from "@/public/logo-light.svg";
 import logoDark from "@/public/logo-dark.svg";
 import { BRAND_NAME } from "@/utils/constants";
+import { getTranslations } from "next-intl/server";
 
-export default function ComingSoonPage() {
+export default async function ComingSoonPage() {
+  const t = await getTranslations("ComingSoonPage");
   return (
     <main className="flex flex-col justify-center min-h-[70vh]!">
       <Image
@@ -19,7 +21,7 @@ export default function ComingSoonPage() {
         priority
       />
       <h1 className="font-heading text-6xl text-center text-primary">
-        Coming soon
+        {t("coming-soon")}
       </h1>
     </main>
   );

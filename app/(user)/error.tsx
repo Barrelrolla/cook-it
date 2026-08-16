@@ -1,10 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export default function ErrorPage({ error }: { error: { message: string } }) {
+  const t = useTranslations("Global");
   return (
     <div>
-      Something went wrong. <br />
-      {error.message}
+      <p>{t("something-went-wrong")}</p>
+      <p>{error.message}</p>
     </div>
   );
 }

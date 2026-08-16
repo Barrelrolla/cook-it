@@ -8,15 +8,15 @@ import {
 } from "@barrelrolla/react-components-library";
 import { usePathname } from "next/navigation";
 import { CSSProperties } from "react";
-import { SETTINGS_CATEGORIES } from "./settingsCategories";
 import Link from "next/link";
+import { formatSettingsCategory, SETTINGS_CATEGORIES } from "@/constants";
 
 export default function SettingsSideMenu() {
   const isMobile = useIsMobile();
   const path = usePathname();
 
   const foundIndex = SETTINGS_CATEGORIES.findIndex((item) => {
-    return path.includes(`${item.slug}`);
+    return path.includes(`${item}`);
   });
   return (
     <div>
@@ -31,12 +31,12 @@ export default function SettingsSideMenu() {
           {SETTINGS_CATEGORIES.map((cat, index) => {
             return (
               <SidemenuItem
-                key={cat.slug}
+                key={cat}
                 index={index}
                 as={Link}
-                href={`/settings/${cat.slug}`}
+                href={`/settings/${cat}`}
               >
-                {cat.name}
+                {formatSettingsCategory(cat)}
               </SidemenuItem>
             );
           })}

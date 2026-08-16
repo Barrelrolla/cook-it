@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { SIGNIN_PARAM } from "@/utils/constants";
 import { getSession } from "@/app/actions/authActions";
+import { SIGNIN_PARAM } from "@/constants";
 import EmailForm from "./emailForm";
 
 export default async function PasswordSettingsPage() {

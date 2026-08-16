@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { BRAND_NAME } from "@/utils/constants";
 import { NavbarBrand } from "@barrelrolla/react-components-library";
 import logoLight from "@/public/logo-light.svg";
 import logoDark from "@/public/logo-dark.svg";
+import { useTranslations } from "next-intl";
 
 export default function Brand() {
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("Navbar");
   return (
     <NavbarBrand
       as={Link}
@@ -18,7 +20,7 @@ export default function Brand() {
           <Image
             className="object-cover block dark:hidden -ml-2"
             src={logoLight}
-            alt={`${BRAND_NAME} logo`}
+            alt={t("logo-alt", { brand: tGlobal("brand-name") })}
             height={88}
             width={200}
             loading="eager"
@@ -26,7 +28,7 @@ export default function Brand() {
           <Image
             className="object-cover hidden dark:block -ml-2"
             src={logoDark}
-            alt={`${BRAND_NAME} logo`}
+            alt={t("logo-alt", { brand: tGlobal("brand-name") })}
             height={88}
             width={200}
             loading="eager"

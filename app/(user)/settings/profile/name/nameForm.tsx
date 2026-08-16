@@ -6,9 +6,9 @@ import { user as userSchema } from "@/db/schemas/auth-schema";
 import { permissiveDisplayNameSchema } from "@/utils/validationSchemas";
 import z from "zod";
 import { authClient } from "@/auth/authClient";
-import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import SettingsForm from "../../settingsForm";
+import { useTranslations } from "next-intl";
 
 export default function NameForm({
   user,
@@ -20,6 +20,9 @@ export default function NameForm({
   const [isPending, startTransition] = useTransition();
   const [isChanged, setIsChanged] = useState(false);
   const router = useRouter();
+  const tGlobal = useTranslations("Global");
+  const tProfile = useTranslations("Settings.Profile");
+  const t = useTranslations("Settings.Profile.Name");
 
   async function saveData(formData: FormData) {
     const enteredName = formData.get("name")?.toString() || "";
@@ -51,7 +54,7 @@ export default function NameForm({
       setIsChanged(true);
       router.refresh();
     } catch {
-      throw new Error(SOMETHING_WENT_WRONG);
+      throw new Error(tGlobal("something-went-wrong"));
     }
   }
 
@@ -63,13 +66,13 @@ export default function NameForm({
 
   return (
     <SettingsForm
-      label="Name"
+      label={tProfile("name")}
       formAction={handleFormAction}
       isLoading={isPending}
       isActionDisabled={false}
       showBack
     >
-      <p className="text-sm mb-6">Choose a new display name</p>
+      <p className="text-sm mb-6">{t("choose-name")}</p>
       <Input
         disabled={isPending}
         color={isChanged ? "success" : "primary"}
@@ -82,10 +85,10 @@ export default function NameForm({
         error={nameError}
         defaultValue={name}
         autoComplete="name"
-        label="Display name"
+        label={t("display-name")}
         placeholder={user.name}
       />
-      {isChanged && <p className="text-success text-sm">Name changed!</p>}
+      {isChanged && <p className="text-success text-sm">{t("name-changed")}</p>}
     </SettingsForm>
   );
 }

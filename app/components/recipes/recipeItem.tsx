@@ -10,8 +10,10 @@ import {
   ColorType,
 } from "@barrelrolla/react-components-library";
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
+import { getTranslations } from "next-intl/server";
+import { formatDifficulty } from "@/constants/recipeHelpers";
 
-export default function RecipeItem({
+export default async function RecipeItem({
   recipe,
 }: {
   recipe: RecipeWithRelations;
@@ -24,6 +26,7 @@ export default function RecipeItem({
   } else if (difficulty === "hard") {
     color = "error";
   }
+  const t = await getTranslations("RecipePage");
 
   return (
     <li className="justify-items-center">
@@ -40,14 +43,18 @@ export default function RecipeItem({
               className="card-image relative"
               fill
               src={recipe.imageUrl}
-              alt="the end result of the recipe"
+              alt={t("img-alt")}
             />
           </CardImageContainer>
           <CardSection>
             <CardTitle>{recipe.title}</CardTitle>
             <div className="flex justify-between px-4 pb-2 text-sm">
-              <p className="flex items-center">by {name}</p>
-              <Badge color={color}>{recipe.difficulty}</Badge>
+              <p className="flex items-center">{t("author", { name })}</p>
+              {recipe.difficulty && (
+                <Badge color={color}>
+                  {formatDifficulty(recipe.difficulty)}
+                </Badge>
+              )}
             </div>
           </CardSection>
         </RecipeInteract>

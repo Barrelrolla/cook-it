@@ -6,8 +6,8 @@ import SettingsForm from "../../settingsForm";
 import { PasswordInputSchema } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";
 import { setPassword } from "@/app/actions/authActions";
-import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { $ZodIssue } from "zod/v4/core";
+import { useTranslations } from "next-intl";
 
 export default function PasswordForm({
   hasPassword,
@@ -24,6 +24,9 @@ export default function PasswordForm({
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
   const [wasChanged, setWasChanged] = useState(false);
+  const tGlobal = useTranslations("Global");
+  const tAcc = useTranslations("Settings.Account");
+  const t = useTranslations("Settings.Account.Password");
 
   async function saveData(formData: FormData) {
     const enteredOldPass = formData.get("old-password")?.toString() || "";
@@ -79,7 +82,7 @@ export default function PasswordForm({
       try {
         await setPassword(pass.data.password);
       } catch {
-        setError(SOMETHING_WENT_WRONG);
+        setError(tGlobal("something-went-wrong"));
         return;
       }
       setHasPass(true);
@@ -98,14 +101,14 @@ export default function PasswordForm({
 
   return (
     <SettingsForm
-      label={"Password"}
+      label={tAcc("password")}
       formAction={handleFormAction}
       isActionDisabled={wasChanged}
       isLoading={isPending || isLoading}
       showBack
     >
       <p className="text-sm mb-6">
-        {hasPass ? "Change password" : "Set a password"}
+        {hasPass ? t("change-password") : t("set-password")}
       </p>
       {hasPass && (
         <Input
@@ -113,7 +116,7 @@ export default function PasswordForm({
           disabled={wasChanged || isLoading || isPending}
           defaultValue={oldPassword}
           name="old-password"
-          label="Old password"
+          label={t("old-password")}
           autoComplete="current-password"
         />
       )}
@@ -122,7 +125,7 @@ export default function PasswordForm({
         disabled={wasChanged || isLoading || isPending}
         defaultValue={newPassword}
         name="new-password"
-        label="New Password"
+        label={t("new-password")}
         autoComplete="new-password"
         error={issue && issue.path[0] === "password" ? issue.message : ""}
       />
@@ -131,7 +134,7 @@ export default function PasswordForm({
         disabled={wasChanged || isLoading || isPending}
         defaultValue={repeatPassword}
         name="repeat-password"
-        label="Repeat Password"
+        label={t("repeat-password")}
         error={
           issue && issue.path[0] === "repeat-password" ? issue.message : ""
         }
@@ -143,13 +146,13 @@ export default function PasswordForm({
           size={18}
           labelClassName="text-sm"
         >
-          Revoke other sessions?
+          {t("revoke-sessions")}
         </Checkbox>
       )}
       {error && <p className="text-error text-sm">{error}</p>}
       {wasChanged && (
         <p className="text-success text-sm">
-          {hasPass ? "Password changed" : "Password set"}
+          {hasPass ? t("password-changed") : t("password-set")}
         </p>
       )}
     </SettingsForm>

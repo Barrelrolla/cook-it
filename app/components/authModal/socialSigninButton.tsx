@@ -1,17 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { authClient } from "@/auth/authClient";
 import { Button } from "@barrelrolla/react-components-library";
 import GoogleLogo from "../logos/googleLogo";
 import AppleLogo from "../logos/appleLogo";
+import { useTranslations } from "next-intl";
 
 type Social = "google" | "apple";
 
 export default function SocialSigninButton({ social }: { social: Social }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("AuthModal");
 
   function signin() {
     authClient.signIn.social(
@@ -27,7 +29,7 @@ export default function SocialSigninButton({ social }: { social: Social }) {
         },
         onError: (ctx) => {
           setLoading(false);
-          setError(ctx.error.message ?? SOMETHING_WENT_WRONG);
+          setError(ctx.error.message ?? tGlobal("something-went-wrong"));
         },
       },
     );
@@ -36,10 +38,10 @@ export default function SocialSigninButton({ social }: { social: Social }) {
   let socialName = "";
   switch (social) {
     case "google":
-      socialName = "Google";
+      socialName = tGlobal("google");
       break;
     case "apple":
-      socialName = "Apple";
+      socialName = tGlobal("apple");
       break;
   }
 
@@ -60,7 +62,7 @@ export default function SocialSigninButton({ social }: { social: Social }) {
         loading={loading}
         onClick={signin}
       >
-        <span>{`Sign in with ${socialName}`}</span>
+        <span>{t("social-signin", { social: socialName })}</span>
       </Button>
       {error && <p className="text-center text-error">{error}</p>}
     </>

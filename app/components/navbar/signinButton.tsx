@@ -1,17 +1,19 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { SIGNIN, SIGNIN_PARAM, SIGNUP, SIGNUP_PARAM } from "@/utils/constants";
+import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/constants";
 import {
   Button,
   ButtonVariant,
   ColorType,
 } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 
 export default function SigninButton({ signup }: { signup?: boolean }) {
   const path = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations("AuthModal");
 
   const params = new URLSearchParams(searchParams.toString());
   if (signup) {
@@ -32,7 +34,7 @@ export default function SigninButton({ signup }: { signup?: boolean }) {
       color={color}
       variant={variant}
     >
-      {signup ? SIGNUP : SIGNIN}
+      {signup ? t("sign-up") : t("sign-in")}
     </Button>
   );
 }

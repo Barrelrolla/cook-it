@@ -2,18 +2,26 @@
 
 import Link from "next/link";
 import { Anchor } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 
 export default function RecipeNotFound() {
+  const t = useTranslations("RecipePage");
   return (
     <main>
-      We couldn&apos;t find that recipe. Please visit the{" "}
-      <Anchor href="/recipes" as={Link}>
-        recipe list
-      </Anchor>{" "}
-      or go back to the{" "}
-      <Anchor as={Link} href="/">
-        Home page
-      </Anchor>
+      <p>
+        {t.rich("recipe-not-found", {
+          recipeList: (chunks) => (
+            <Anchor href="/recipes" as={Link}>
+              {chunks}
+            </Anchor>
+          ),
+          home: (chunks) => (
+            <Anchor href="/" as={Link}>
+              {chunks}
+            </Anchor>
+          ),
+        })}
+      </p>
     </main>
   );
 }

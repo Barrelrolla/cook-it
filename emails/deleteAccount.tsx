@@ -1,4 +1,4 @@
-import { BRAND_NAME } from "@/utils/constants";
+import { useTranslations } from "next-intl";
 import EmailBase, { EmailButton } from "./emailBase";
 
 export default function DeleteAccount({
@@ -8,12 +8,15 @@ export default function DeleteAccount({
   user: string;
   url: string;
 }) {
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("Emails");
+  const title = t("delete-title", { brand: tGlobal("brand-name") });
   return (
-    <EmailBase>
-      <h1 className="font-heading">{`Delete your ${BRAND_NAME} account?`}</h1>
-      <p>{`Sorry to see you go, ${user}! If you're certain you want to proceed with deleting your account, click the button below:`}</p>
+    <EmailBase preview={title}>
+      <h1 className="font-heading">{title}</h1>
+      <p>{t("delete-message", { name: user })}</p>
       <EmailButton color="error" url={url}>
-        Delete account
+        {t("delete-button")}
       </EmailButton>
     </EmailBase>
   );

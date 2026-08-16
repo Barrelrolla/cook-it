@@ -3,15 +3,9 @@
 import DestructiveModal from "@/app/components/destructiveModal";
 import { authClient } from "@/auth/authClient";
 import { Button } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-Object.defineProperty(String.prototype, "capitalize", {
-  value: function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  },
-  enumerable: false,
-});
 
 export default function UnlinkSocialButton({
   social,
@@ -22,6 +16,9 @@ export default function UnlinkSocialButton({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("Settings.Connections");
+  const socialName = social === "google" ? tGlobal("google") : tGlobal("apple");
 
   function unlink() {
     setIsOpen(false);
@@ -48,7 +45,7 @@ export default function UnlinkSocialButton({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         action={unlink}
-        title={`Unlink ${social.capitalize()} account`}
+        title={t("unlink-message", { social: socialName })}
       />
       <Button
         loading={isLoading}
@@ -58,7 +55,7 @@ export default function UnlinkSocialButton({
           setIsOpen(true);
         }}
       >
-        Unlink
+        {t("unlink")}
       </Button>
       {error && <p className="text-sm text-error">{error}</p>}
     </>

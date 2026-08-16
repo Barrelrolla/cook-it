@@ -1,0 +1,203 @@
+{
+  "Global": {
+    "brand-name": "Garndish",
+    "metadata-description": "Your new favourite recipe app.",
+    "page-not-found": "Page not found.",
+    "something-went-wrong": "Something went wrong.",
+    "google": "Google",
+    "apple": "Apple"
+  },
+  "ComingSoonPage": {
+    "coming-soon": "Coming soon"
+  },
+  "Navbar": {
+    "logo-alt": "{brand} logo",
+    "profile-button-label": "Profile",
+    "settings-button-label": "Settings",
+    "user-avatar": "{name}'s avatar",
+    "Links": {
+      "recipes": "Recipes",
+      "categories": "Categories"
+    }
+  },
+  "HomeHero": {
+    "title": "Discover. Cook. <highlight>Share.</highlight>",
+    "title-highlight": "Share.",
+    "text": "Join a community of food lovers. Share your recipes and find something amazing to cook.",
+    "img-alt": "A bowl of pasta",
+    "share-button": "Share recipe",
+    "explore-button": "Explore recipes"
+  },
+  "RecipePage": {
+    "metadata-not-found": "Recipe not found",
+    "recipe-not-found": "We couldn't find that recipe. Please visit the <recipeList>recipe list</recipeList> or go back to the <home>Home page</home>.",
+    "img-alt": "the end result of the recipe",
+    "author": "by {name}",
+    "no-recipes-found": "No recipes found."
+  },
+  "Recipes": {
+    "Categories": {
+      "breakfast": "Breakfast & Brunch",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snacks & Appetizers",
+      "side": "Sides & Accompaniments",
+      "dessert": "Desserts & Sweets",
+      "drink": "Beverages & Cocktails",
+      "soup": "Soups & Stews",
+      "salad": "Salads",
+      "sauce": "Sauces & Condiments",
+      "bread": "Breads & Baking"
+    },
+    "Difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "Diet": {
+      "Diabetic": "Diabetic",
+      "Gluten-Free": "Gluten-Free",
+      "Halal": "Halal",
+      "Hindu": "Hindu",
+      "Kosher": "Kosher",
+      "Low-Calorie": "Low-Calorie",
+      "Low-Fat": "Low-Fat",
+      "Low-Lactose": "Low-Lactose",
+      "Low-Salt": "Low-Salt",
+      "Vegan": "Vegan",
+      "Vegetarian": "Vegetarian"
+    },
+    "User": {
+      "deleted": "Deleted user"
+    }
+  },
+  "Settings": {
+    "name": "Settings",
+    "back": "Back",
+    "save": "Save",
+    "not-found": "Invalid settings category. View <settings>Settings</settings>",
+    "Categories": {
+      "profile": "Profile",
+      "account": "Account",
+      "connections": "Connected Services",
+      "appearance": "Appearance",
+      "data": "Data"
+    },
+    "Account": {
+      "password": "Password",
+      "email": "Email",
+      "Password": {
+        "set-password": "Set a password",
+        "change-password": "Change your password",
+        "old-password": "Old password",
+        "new-password": "New password",
+        "repeat-password": "Repeat password",
+        "revoke-sessions": "Revoke other sessions?",
+        "password-changed": "Password changed",
+        "password-set": "Password set"
+      },
+      "Email": {
+        "description": "Change your email",
+        "new-email": "New email",
+        "confirmation-email-sent": "Confirmation email sent!"
+      }
+    },
+    "Appearance": {
+      "color-theme": "Color theme",
+      "green": "Green (default)",
+      "red": "Red",
+      "orange": "Orange",
+      "dark-mode": "Dark mode",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "Connections": {
+      "connected": "Connected",
+      "unlink": "Unlink",
+      "unlink-message": "Unlink {social} account"
+    },
+    "Data": {
+      "Download": {
+        "coming-soon": "Coming soon"
+      },
+      "Delete": {
+        "delete-account": "Delete account",
+        "warning-message": "This action is irrevirsible. This will permanently delete your account. Recipes you've shared will remain as published by 'Deleted user'. If you're certain you want to continue, please enter your password.",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "delete-button": "Delete account",
+        "email-sent": "We've sent you a confirmation email. Click the link inside to complete the deletion."
+      },
+      "download-data": "Download your data",
+      "delete-account": "Delete your account"
+    },
+    "Profile": {
+      "picture": "Profile picture",
+      "name": "Display name",
+      "Picture": {
+        "choose-picture": "Choose a new profile picture",
+        "pick-image": "Pick a new image",
+        "user-avatar": "{name}'s avatar",
+        "cancel": "Cancel",
+        "photo-changed": "Photo changed!"
+      },
+      "Name": {
+        "choose-name": "Choose a display name",
+        "display-name": "Display name",
+        "name-changed": "Name changed!"
+      }
+    }
+  },
+  "UserPage": {
+    "not-found": "We couldn't find that user. Go back to the <home>Home page</home>",
+    "metadata-title": "{name}'s profile",
+    "user-not-found": "User not found",
+    "my-recipes": "My recipes",
+    "uploaded-recipes": "Uploaded recipes"
+  },
+  "AuthModal": {
+    "reset-password-title": "Reset password",
+    "new-password-input-label": "new password",
+    "repeat-password-input-label": "repeat password",
+    "password-changed-message": "Password changed!",
+    "update-password-button": "Update password",
+    "username-input-label": "username",
+    "username-email-input-label": "username or email",
+    "email-input-label": "email",
+    "password-input-label": "password",
+    "remember-me": "Remember me?",
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "sign-out": "Sign out",
+    "forgotten-password": "Forgotten password?",
+    "request-reset-email": "Send reset email",
+    "verification-expired": "Verification expired?",
+    "request-verification": "Send new verification",
+    "email-sent": "Email sent.",
+    "dont-have-account": "Don't have an account?",
+    "already-have-account": "Already have an account?",
+    "account-created": "Account created.",
+    "verification-sent": "We've sent you an email with a verification link.",
+    "close-button": "Close",
+    "social-signin": "Sign in with {socialName}",
+    "choose-username-label": "Choose your username",
+    "confirm-username": "Confirm username"
+  },
+  "DestructiveModal": {
+    "are-you-sure": "Are you sure?",
+    "yes": "YES",
+    "no": "NO"
+  },
+  "Emails": {
+    "delete-title": "Delete your {brand} account?",
+    "delete-message": "Sorry to see you go, {name}! If you're certain you want to proceed with deleting your account, click the button below:",
+    "delete-button": "Delete account",
+    "password-reset-title": "Forgotten your {brand} password?",
+    "password-reset-message": "A password reset was requested for this account. If you didn't request one,  ignore this email. If you did, click the button below to choose a new password.",
+    "password-reset-button": "Reset Password",
+    "welcome-title": "Welcome to {brand}, {name}",
+    "welcome-message": "Thanks for joining the {brand} community! Just click the button below to verify your email and you can start saving and sharing recipes!",
+    "verify-button": "Verify email"
+  }
+}

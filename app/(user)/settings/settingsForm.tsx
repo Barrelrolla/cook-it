@@ -2,6 +2,7 @@ import { Button } from "@barrelrolla/react-components-library";
 import { ReactNode } from "react";
 import { PiFloppyDiskBold } from "react-icons/pi";
 import SettingsBase from "./settingsBase";
+import { getTranslations } from "next-intl/server";
 
 export type SettingsFormProps = {
   label: string;
@@ -12,7 +13,7 @@ export type SettingsFormProps = {
   children: ReactNode;
 };
 
-export default function SettingsForm({
+export default async function SettingsForm({
   label,
   formAction,
   isLoading,
@@ -20,6 +21,7 @@ export default function SettingsForm({
   showBack,
   children,
 }: SettingsFormProps) {
+  const t = await getTranslations("Settings");
   return (
     <SettingsBase showBack={showBack} label={label}>
       <form className="px-4" action={formAction}>
@@ -32,7 +34,7 @@ export default function SettingsForm({
             loading={isLoading}
             disabled={isActionDisabled}
           >
-            Save
+            {t("save")}
           </Button>
         </div>
       </form>

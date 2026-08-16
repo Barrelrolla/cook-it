@@ -1,12 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
-import { IS_DEV, IS_PROD } from "@/utils/helpers";
-import { ThemeContextProvider } from "@barrelrolla/react-components-library";
-import ComingSoonPage from "./comingSoon";
+import { NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
+import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { VercelMetrics } from "./vercelMetrics";
+import { ThemeContextProvider } from "@barrelrolla/react-components-library";
+import { IS_DEV, IS_PROD } from "@/utils/helpers";
+import ComingSoonPage from "./comingSoon";
 import "@/utils/extensions";
+import { getTranslations } from "next-intl/server";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -33,10 +35,15 @@ export const roboto = Roboto({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  title: "Garndish",
-  description: "The next-gen cooking app",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Global");
+
+  return {
+    metadataBase: new URL(process.env.BASE_URL!),
+    title: t("brand-name"),
+    description: t("metadata-description"),
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -81,17 +88,19 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <ThemeContextProvider>
-        <body
-          style={{
-            margin:
-              "0px calc(0px - var(--floating-ui-scrollbar-width)) 0px 0px",
-          }}
-        >
-          {IS_DEV && children}
-          {IS_PROD && <ComingSoonPage />}
-        </body>
-      </ThemeContextProvider>
+      <NextIntlClientProvider>
+        <ThemeContextProvider>
+          <body
+            style={{
+              margin:
+                "0px calc(0px - var(--floating-ui-scrollbar-width)) 0px 0px",
+            }}
+          >
+            {IS_DEV && children}
+            {IS_PROD && <ComingSoonPage />}
+          </body>
+        </ThemeContextProvider>
+      </NextIntlClientProvider>
       <VercelMetrics />
     </html>
   );

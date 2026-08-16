@@ -4,14 +4,12 @@ import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import z from "zod";
-import {
-  CHOOSE_DISPLAY_NAME_PARAM,
-  SOMETHING_WENT_WRONG,
-} from "@/utils/constants";
+import { CHOOSE_DISPLAY_NAME_PARAM } from "@/constants";
 import BaseModal from "../baseModal";
 import { usernameSchema } from "@/utils/validationSchemas";
 import { Button, Input } from "@barrelrolla/react-components-library";
 import { PiUserBold } from "react-icons/pi";
+import { useTranslations } from "next-intl";
 
 export default function UsernameModal() {
   const session = authClient.useSession();
@@ -21,6 +19,9 @@ export default function UsernameModal() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const path = usePathname();
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("AuthModal");
+
   if (!session.data) {
     return null;
   }
@@ -45,7 +46,7 @@ export default function UsernameModal() {
       if (parsedName.error.issues.length > 0) {
         setError(parsedName.error.issues[0].message);
       } else {
-        setError(SOMETHING_WENT_WRONG);
+        setError(tGlobal("something-went-wrong"));
       }
       setLoading(false);
       return;
@@ -65,7 +66,7 @@ export default function UsernameModal() {
         },
         onError(ctx) {
           setLoading(false);
-          setError(ctx.error.message || SOMETHING_WENT_WRONG);
+          setError(ctx.error.message || tGlobal("something-went-wrong"));
         },
       },
     });
@@ -73,7 +74,7 @@ export default function UsernameModal() {
 
   return (
     <BaseModal
-      title="Choose your username"
+      title={t("choose-username-label")}
       formAction={action}
       isOpen={isOpen}
       setIsOpen={close}
@@ -82,9 +83,9 @@ export default function UsernameModal() {
         required
         disabled={loading}
         startIcon={<PiUserBold />}
-        aria-label="username"
+        aria-label={t("username-input-label")}
+        placeholder={t("username-input-label")}
         type="text"
-        placeholder="username"
         id="username"
         name="username"
         autoComplete="username"
@@ -92,7 +93,7 @@ export default function UsernameModal() {
         defaultValue={name}
       />
       <Button type="submit" disabled={loading} className="w-full" size="sm">
-        Confirm username
+        {t("confirm-username")}
       </Button>
     </BaseModal>
   );

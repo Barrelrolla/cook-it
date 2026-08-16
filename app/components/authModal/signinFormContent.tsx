@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import z from "zod";
 import { $ZodIssue } from "zod/v4/core";
 import { authClient } from "@/auth/authClient";
-import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
+import { RESET_PASSWORD_PARAM } from "@/constants";
 import SocialSigninButton from "./socialSigninButton";
 import {
   Anchor,
@@ -13,6 +13,7 @@ import {
   Spinner,
 } from "@barrelrolla/react-components-library";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
+import { useTranslations } from "next-intl";
 
 export default function SigninFormContent({
   emailNotVerified,
@@ -46,6 +47,8 @@ export default function SigninFormContent({
   const [verificationReqested, setVerificationRequested] = useState(false);
   const [verificationError, setVerificationError] = useState("");
   const emailRef = useRef<HTMLInputElement | null>(null);
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("AuthModal");
 
   function resetPass() {
     const currentEmail = emailRef.current?.value || "";
@@ -55,7 +58,7 @@ export default function SigninFormContent({
       if (parsedEmail.error.issues.length > 0) {
         setResetError(parsedEmail.error.issues[0].message);
       } else {
-        setResetError(SOMETHING_WENT_WRONG);
+        setResetError(tGlobal("something-went-wrong"));
       }
       return;
     }
@@ -76,7 +79,7 @@ export default function SigninFormContent({
         },
         onError: (ctx) => {
           setResetLoading(false);
-          setResetError(ctx.error.message || SOMETHING_WENT_WRONG);
+          setResetError(ctx.error.message || tGlobal("something-went-wrong"));
         },
       },
     );
@@ -90,7 +93,7 @@ export default function SigninFormContent({
       if (parsedEmail.error.issues.length > 0) {
         setVerificationError(parsedEmail.error.issues[0].message);
       } else {
-        setVerificationError(SOMETHING_WENT_WRONG);
+        setVerificationError(tGlobal("something-went-wrong"));
       }
       return;
     }
@@ -110,7 +113,9 @@ export default function SigninFormContent({
         },
         onError: (ctx) => {
           setVerificationLoading(false);
-          setVerificationError(ctx.error.message || SOMETHING_WENT_WRONG);
+          setVerificationError(
+            ctx.error.message || tGlobal("something-went-wrong"),
+          );
         },
       },
     );
@@ -124,9 +129,13 @@ export default function SigninFormContent({
         ref={emailRef}
         as="input"
         startIcon={<PiUserBold />}
-        aria-label={signup ? "username" : "username or email"}
+        aria-label={
+          signup ? t("username-input-label") : t("username-email-input-label")
+        }
+        placeholder={
+          signup ? t("username-input-label") : t("username-email-input-label")
+        }
         type="text"
-        placeholder={signup ? "username" : "username or email"}
         id="username"
         autoComplete="username"
         name="username"
@@ -142,9 +151,9 @@ export default function SigninFormContent({
           wrapperClassName="w-full"
           required
           startIcon={<PiEnvelopeBold />}
-          aria-label="email"
+          aria-label={t("email-input-label")}
+          placeholder={t("email-input-label")}
           type="email"
-          placeholder="email"
           id="email"
           autoComplete="email"
           name="email"
@@ -160,9 +169,9 @@ export default function SigninFormContent({
         wrapperClassName="w-full"
         required
         startIcon={<PiKeyBold />}
-        aria-label="password"
+        aria-label={t("password-input-label")}
+        placeholder={t("password-input-label")}
         type="password"
-        placeholder="password"
         id="password"
         name="password"
         autoComplete={signup ? "new-password" : "current-password"}
@@ -178,9 +187,9 @@ export default function SigninFormContent({
           wrapperClassName="w-full"
           required
           startIcon={<PiKeyBold />}
-          aria-label="repeat password"
+          aria-label={t("repeat-password-input-label")}
+          placeholder={t("repeat-password-input-label")}
           type="password"
-          placeholder="repeat password"
           id="repeat-password"
           name="repeat-password"
           autoComplete={signup ? "new-password" : "current-password"}
@@ -201,7 +210,7 @@ export default function SigninFormContent({
           name="remember"
           defaultChecked={rememberMe}
         >
-          Remember me?
+          {t("remember-me")}
         </Checkbox>
       )}
       <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
@@ -213,14 +222,14 @@ export default function SigninFormContent({
           type="submit"
           loading={loading}
         >
-          {signup ? "Sign up" : "Sign in"}
+          {signup ? t("sign-up") : t("sign-in")}
         </Button>
         {error && !issue && (
           <p className="mt-1 text-center text-error">{error}</p>
         )}
         {!emailNotVerified && !signup && error && !resetReqested && (
           <p className="text-xs text-center flex items-center justify-center">
-            Forgotten password?{" "}
+            {t("forgotten-password")}
             {!resetLoading && (
               <Anchor
                 className="cursor-pointer ml-1"
@@ -228,7 +237,7 @@ export default function SigninFormContent({
                 type="button"
                 onClick={resetPass}
               >
-                Send reset email.
+                {t("request-reset-email")}
               </Anchor>
             )}
             {resetLoading && <Spinner className="ml-1" />}
@@ -236,7 +245,7 @@ export default function SigninFormContent({
         )}
         {emailNotVerified && !verificationReqested && (
           <p className="text-xs text-center flex items-center justify-center">
-            Verification expired?
+            {t("verification-expired")}
             {!verificationLoading && (
               <Anchor
                 className="cursor-pointer ml-1"
@@ -244,17 +253,17 @@ export default function SigninFormContent({
                 type="button"
                 onClick={requestVerification}
               >
-                Send new verification.
+                {t("request-verification")}
               </Anchor>
             )}
             {verificationLoading && <Spinner className="ml-1" />}
           </p>
         )}
         {!signup && error && resetReqested && (
-          <p className="text-xs text-center">Email sent.</p>
+          <p className="text-xs text-center">{t("email-sent")}</p>
         )}
         {emailNotVerified && verificationReqested && (
-          <p className="text-xs text-center">Email sent.</p>
+          <p className="text-xs text-center">{t("email-sent")}</p>
         )}
         {resetError && (
           <p className="text-xs text-error text-center">{resetError}</p>
@@ -267,27 +276,27 @@ export default function SigninFormContent({
       </CardActions>
       {!signup && (
         <p className="text-center">
-          Don&apos;t have an account?{" "}
+          {t("dont-have-account")}
           <Anchor
             className="cursor-pointer"
             type="button"
             as={"button"}
             onClick={() => toggleSingin(true)}
           >
-            Sign up
+            {t("sign-up")}
           </Anchor>
         </p>
       )}
       {signup && (
         <p className="text-center">
-          Already have an account?{" "}
+          {t("already-have-account")}
           <Anchor
             className="cursor-pointer"
             type="button"
             as={"button"}
             onClick={() => toggleSingin()}
           >
-            Sign in
+            {t("sign-in")}
           </Anchor>
         </p>
       )}

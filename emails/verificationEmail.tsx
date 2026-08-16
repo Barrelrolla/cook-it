@@ -1,4 +1,4 @@
-import { BRAND_NAME } from "@/utils/constants";
+import { useTranslations } from "next-intl";
 import EmailBase, { EmailButton } from "./emailBase";
 
 type Props = {
@@ -7,14 +7,15 @@ type Props = {
 };
 
 export default function VerificationEmail({ name, url }: Props) {
+  const tGlobal = useTranslations("Global");
+  const brand = tGlobal("brand-name");
+  const t = useTranslations("Emails");
+  const title = t("welcome-title", { brand, name });
   return (
-    <EmailBase>
-      <h1 className="font-heading">{`Welcome to ${BRAND_NAME}, ${name}`}</h1>
-      <p>
-        Thanks for joining the {BRAND_NAME} community! Just click the button
-        below to verify your email and you can start saving and sharing recipes!
-      </p>
-      <EmailButton url={url}>Verify email</EmailButton>
+    <EmailBase preview={title}>
+      <h1 className="font-heading">{title}</h1>
+      <p>{t("welcome-message", { brand })}</p>
+      <EmailButton url={url}>{t("verify-button")}</EmailButton>
     </EmailBase>
   );
 }

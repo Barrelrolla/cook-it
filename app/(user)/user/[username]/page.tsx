@@ -6,16 +6,21 @@ import { getUserByUsername } from "@/app/actions/userActions";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
+import { getTranslations } from "next-intl/server";
 
 type Props = { params: Promise<{ username: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
   const user = await getUserByUsername(username);
+  const tGlobal = await getTranslations("Global");
+  const t = await getTranslations("UserPage");
 
   return {
     metadataBase: new URL(process.env.BASE_URL!),
-    title: user ? `${user.name}'s profile ` : "User not found " + "| Garndish",
+    title: user
+      ? `${t("metadata-title")} | ${tGlobal("brand-name")}`
+      : `${t("user-not-found")} | ${tGlobal("brand-name")}`,
     openGraph: { images: user?.image || undefined },
   };
 }
@@ -29,6 +34,7 @@ export default async function UserPage({ params }: Props) {
   const session = await getSession();
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
+  const t = await getTranslations("UserPage");
 
   return (
     <main className="pt-4">
@@ -49,7 +55,7 @@ export default async function UserPage({ params }: Props) {
       </section>
       <section>
         <h2 className="text-2xl mx-4">
-          {current ? "My recipes" : "Uploaded recipes"}
+          {current ? t("my-recipes") : t("uploaded-recipes")}
         </h2>
         <Suspense fallback={<RecipeListLoading />}>
           <RecipeList />

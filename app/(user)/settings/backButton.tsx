@@ -1,11 +1,13 @@
 "use client";
 
 import { Button } from "@barrelrolla/react-components-library";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { PiArrowLeft } from "react-icons/pi";
 
 export default function BackButton() {
   const router = useRouter();
+  const t = useTranslations("Settings");
   return (
     <Button
       color="main"
@@ -15,7 +17,7 @@ export default function BackButton() {
       startIcon={<PiArrowLeft />}
       onClick={() => router.back()}
     >
-      Back
+      {t("back")}
     </Button>
   );
 }

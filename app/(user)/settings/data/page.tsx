@@ -1,20 +1,23 @@
 import { getSession } from "@/app/actions/authActions";
 import SettingsBase from "../settingsBase";
 import { redirect } from "next/navigation";
-import { SIGNIN_PARAM } from "@/utils/constants";
 import SettingsLink from "../settingsLink";
+import { formatSettingsCategory, SIGNIN_PARAM } from "@/constants";
+import { getTranslations } from "next-intl/server";
 
 export default async function DataSettingsPage() {
   const session = await getSession();
+  const label = await formatSettingsCategory("data");
+  const t = await getTranslations("Settings.Data");
 
   if (!session) {
     redirect(`/?${SIGNIN_PARAM}`);
   }
 
   return (
-    <SettingsBase label="Data">
-      <SettingsLink label="Download your data" href="/settings/data/download" />
-      <SettingsLink label="Delete your account" href="/settings/data/delete" />
+    <SettingsBase label={label}>
+      <SettingsLink label={t("download-data")} href="/settings/data/download" />
+      <SettingsLink label={t("delete-account")} href="/settings/data/delete" />
     </SettingsBase>
   );
 }

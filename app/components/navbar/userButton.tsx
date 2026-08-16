@@ -17,10 +17,10 @@ import { PiCaretDownBold, PiGear, PiSignOut, PiUser } from "react-icons/pi";
 import placeholderImage from "@/public/user-placeholder.png";
 import Link from "next/link";
 import { useState } from "react";
-import { SIGNOUT } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import DestructiveModal from "../destructiveModal";
+import { useTranslations } from "next-intl";
 
 export default function UserButton({
   user,
@@ -33,6 +33,8 @@ export default function UserButton({
   const [error, setError] = useState("");
   const router = useRouter();
   const navbar = useNavbarContext();
+  const tAuth = useTranslations("AuthModal");
+  const t = useTranslations("Navbar");
 
   async function signout() {
     {
@@ -60,7 +62,7 @@ export default function UserButton({
       <DestructiveModal
         isOpen={isConfirmationOpen}
         setIsOpen={setIsConfirmationOpen}
-        title={SIGNOUT}
+        title={tAuth("sign-out")}
         action={signout}
       />
       <Dropdown
@@ -99,13 +101,13 @@ export default function UserButton({
             <DropdownListItem as={Link} href={`/user/${user.username}`}>
               <span>
                 <PiUser className="inline mr-4 sm:mr-2" />
-                Profile
+                {t("profile-button-label")}
               </span>
             </DropdownListItem>
             <DropdownListItem as={Link} href={`/settings`}>
               <span>
                 <PiGear className="inline mr-4 sm:mr-2" />
-                Settings
+                {t("settings-button-label")}
               </span>
             </DropdownListItem>
             <Divider className="opacity-10 my-2" />
@@ -119,11 +121,11 @@ export default function UserButton({
               {error ? (
                 error
               ) : isLoading ? (
-                "working..."
+                "..."
               ) : (
                 <span>
                   <PiSignOut className="inline mr-4 sm:mr-2" />
-                  {SIGNOUT}
+                  {tAuth("sign-out")}
                 </span>
               )}
             </DropdownListItem>

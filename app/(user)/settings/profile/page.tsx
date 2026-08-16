@@ -2,19 +2,22 @@ import { getSession } from "@/app/actions/authActions";
 import SettingsBase from "../settingsBase";
 import SettingsLink from "../settingsLink";
 import { redirect } from "next/navigation";
-import { SIGNIN_PARAM } from "@/utils/constants";
+import { formatSettingsCategory, SIGNIN_PARAM } from "@/constants";
+import { getTranslations } from "next-intl/server";
 
 export default async function ProfileSettings() {
   const session = await getSession();
+  const label = await formatSettingsCategory("profile");
+  const t = await getTranslations("Settings.Profile");
 
   if (!session) {
     redirect(`/?${SIGNIN_PARAM}`);
   }
 
   return (
-    <SettingsBase label="Profile">
-      <SettingsLink label="Profile picture" href="/settings/profile/picture" />
-      <SettingsLink label="Name" href="/settings/profile/name" />
+    <SettingsBase label={label}>
+      <SettingsLink label={t("picture")} href="/settings/profile/picture" />
+      <SettingsLink label={t("name")} href="/settings/profile/name" />
     </SettingsBase>
   );
 }

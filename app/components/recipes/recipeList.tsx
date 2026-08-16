@@ -1,8 +1,10 @@
 import { getAllRecipes } from "@/app/actions/recipeActions";
 import RecipeItem from "./recipeItem";
+import { getTranslations } from "next-intl/server";
 
 export default async function RecipeList() {
   const recipes = await getAllRecipes();
+  const t = await getTranslations("RecipePage");
   return (
     <div className="m-4">
       {recipes && (
@@ -12,7 +14,7 @@ export default async function RecipeList() {
           })}
         </ul>
       )}
-      {(!recipes || recipes.length === 0) && <p>No recipes</p>}
+      {(!recipes || recipes.length === 0) && <p>{t("no-recipes-found")}</p>}
     </div>
   );
 }

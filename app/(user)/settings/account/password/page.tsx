@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
-import { SIGNIN_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
 import { getSession, getUserAuthMethods } from "@/app/actions/authActions";
 import PasswordForm from "./passwordForm";
+import { SIGNIN_PARAM } from "@/constants";
+import { getTranslations } from "next-intl/server";
 
 export default async function PasswordSettingsPage() {
+  const t = await getTranslations("Global");
   const session = await getSession();
   const authMethods = await getUserAuthMethods();
 
@@ -12,7 +14,7 @@ export default async function PasswordSettingsPage() {
   }
 
   if (!authMethods) {
-    throw new Error(SOMETHING_WENT_WRONG);
+    throw new Error(t("something-went-wrong"));
   }
 
   return <PasswordForm hasPassword={authMethods.hasPassword} />;

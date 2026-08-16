@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/auth/authClient";
-import { RESET_PASSWORD_PARAM, SOMETHING_WENT_WRONG } from "@/utils/constants";
+import { RESET_PASSWORD_PARAM } from "@/constants";
 import { PasswordInputSchema } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@barrelrolla/react-components-library";
 import { PiCheckBold, PiKeyBold } from "react-icons/pi";
 import { $ZodIssue } from "zod/v4/core";
+import { useTranslations } from "next-intl";
 
 export default function ResetPasswordModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +27,8 @@ export default function ResetPasswordModal() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const showResetPass = searchParams.has(RESET_PASSWORD_PARAM);
+  const tGlobal = useTranslations("Global");
+  const t = useTranslations("AuthModal");
 
   function formAction(formData: FormData) {
     const pass = formData.get("password")?.toString() || "";
@@ -42,7 +45,7 @@ export default function ResetPasswordModal() {
       if (parsedPass.error.issues.length > 0) {
         setIssue(parsedPass.error.issues[0]);
       } else {
-        setError(SOMETHING_WENT_WRONG);
+        setError(tGlobal("something-went-wrong"));
       }
       return;
     }
@@ -64,7 +67,7 @@ export default function ResetPasswordModal() {
         },
         onError: (ctx) => {
           setIsLoading(false);
-          setError(ctx.error.message || SOMETHING_WENT_WRONG);
+          setError(ctx.error.message || tGlobal("something-went-wrong"));
         },
       },
     );
@@ -91,7 +94,7 @@ export default function ResetPasswordModal() {
 
   return (
     <BaseModal
-      title="Reset Password"
+      title={t("reset-password-title")}
       formRef={passwordResetFormRef}
       formAction={formAction}
       isOpen={showResetPass}
@@ -102,12 +105,12 @@ export default function ResetPasswordModal() {
         required
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
-        aria-label="password"
+        aria-label={t("new-password-input-label")}
         type="password"
-        placeholder="new password"
+        placeholder={t("new-password-input-label")}
         id="password"
         name="password"
-        autoComplete={"new-password"}
+        autoComplete="new-password"
         defaultValue={password}
         error={
           issue && issue.path.length > 0 && issue.path[0] === "password"
@@ -120,12 +123,11 @@ export default function ResetPasswordModal() {
         required
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
-        aria-label="repeat password"
+        aria-label={t("repeat-password-input-label")}
         type="password"
-        placeholder="repeat password"
+        placeholder={t("repeat-password-input-label")}
         id="repeat-password"
         name="repeat-password"
-        autoComplete={"new-password"}
         defaultValue={repeatPassword}
         error={
           issue && issue.path.length > 0 && issue.path[0] === "repeat-password"
@@ -136,7 +138,8 @@ export default function ResetPasswordModal() {
       {error && <p className="mt-1 text-center text-error">{error}</p>}
       {passwordReset && (
         <p className="flex place-self-center mt-1 items-center text-success">
-          Password changed! <PiCheckBold className="ml-2" />
+          {t("password-changed-message")}
+          <PiCheckBold className="ml-2" />
         </p>
       )}
       <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
@@ -148,7 +151,7 @@ export default function ResetPasswordModal() {
           loading={isLoading}
           disabled={passwordReset}
         >
-          Update password
+          {t("update-password-button")}
         </Button>
       </CardActions>
     </BaseModal>
