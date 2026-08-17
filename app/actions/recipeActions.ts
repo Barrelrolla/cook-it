@@ -6,6 +6,10 @@ export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
 >[number];
 
+export type RecipeWithRelationsPromise = NonNullable<
+  ReturnType<typeof getAllRecipes>
+>;
+
 export async function getAllRecipes() {
   try {
     return await db.query.recipeTable.findMany({
@@ -45,6 +49,19 @@ export async function getRecipeBySlug(slug: string) {
     });
 
     return recipe ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getRecipesByUserId(userid: string) {
+  try {
+    return await db.query.recipeTable.findMany({
+      where: (recipe, { eq }) => eq(recipe.authorId, userid),
+      with: {
+        author: true,
+      },
+    });
   } catch {
     return null;
   }

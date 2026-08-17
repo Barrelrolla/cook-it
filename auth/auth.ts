@@ -8,6 +8,8 @@ import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
 import {
   createSignupValidation,
+  USERNAME_MAX_LENGTH,
+  USERNAME_MIN_LENGTH,
   usernameRegex,
 } from "@/utils/validationSchemas";
 import PasswordReset from "@/emails/passwordReset";
@@ -24,8 +26,8 @@ export const auth = betterAuth({
     username({
       usernameValidator(username) {
         return (
-          username.length > 3 &&
-          username.length < 30 &&
+          username.length > USERNAME_MIN_LENGTH &&
+          username.length < USERNAME_MAX_LENGTH &&
           usernameRegex.test(username)
         );
       },
@@ -59,12 +61,18 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
       sendDeleteAccountVerification: async ({ user, url }) => {
+        const cookieStore = await cookies();
+        const locale = cookieStore.get("locale")?.value ?? "en";
+        const t = await getTranslations({
+          locale,
+        });
+        const brand = t("Global.brand-name");
         try {
           await resend.emails.send({
             from: "Garndish <noreply@resend.dev>",
             to: "chetkara@gmail.com",
-            subject: "Delete account confirmation",
-            react: DeleteAccount({ user: user.name, url }),
+            subject: t("Emails.delete-subject", { brand }),
+            react: DeleteAccount({ t, user: user.name, url }),
           });
         } catch {}
       },
@@ -76,11 +84,17 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ url }) => {
       try {
+        const cookieStore = await cookies();
+        const locale = cookieStore.get("locale")?.value ?? "en";
+        const t = await getTranslations({
+          locale,
+        });
+        const brand = t("Global.brand-name");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
-          subject: "Reset your Garndish password",
-          react: PasswordReset({ url }),
+          subject: t("Emails.password-reset-subject", { brand }),
+          react: PasswordReset({ t, url }),
         });
       } catch {}
     },
@@ -88,11 +102,17 @@ export const auth = betterAuth({
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
       try {
+        const cookieStore = await cookies();
+        const locale = cookieStore.get("locale")?.value ?? "en";
+        const t = await getTranslations({
+          locale,
+        });
+        const brand = t("Global.brand-name");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
           to: "chetkara@gmail.com",
-          subject: "Verify your Garndish account",
-          react: VerificationEmail({ name: user.name, url }),
+          subject: t("Emails.verify-subject", { brand }),
+          react: VerificationEmail({ t, name: user.name, url }),
         });
       } catch {}
     },

@@ -1,15 +1,21 @@
-import { useTranslations } from "next-intl";
 import EmailBase, { EmailButton } from "./emailBase";
+import { TranslatorType } from "@/constants";
 
-export default function PasswordReset({ url }: { url: string }) {
-  const tGlobal = useTranslations("Global");
-  const t = useTranslations("Emails");
-  const title = t("password-reset-title", { name: tGlobal("brand-name") });
+export default function PasswordReset({
+  t,
+  url,
+}: {
+  t: TranslatorType;
+  url: string;
+}) {
+  const title = t("Emails.password-reset-title", {
+    name: t("Global.brand-name"),
+  });
   return (
     <EmailBase preview={title}>
       <h1 className="font-heading">{title}</h1>
-      <p>{t("password-reset-message")}</p>
-      <EmailButton url={url}>{t("password-reset-button")}</EmailButton>
+      <p>{t("Emails.password-reset-message")}</p>
+      <EmailButton url={url}>{t("Emails.password-reset-button")}</EmailButton>
     </EmailBase>
   );
 }

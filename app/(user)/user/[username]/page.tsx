@@ -7,6 +7,7 @@ import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
 import { getTranslations } from "next-intl/server";
+import { getRecipesByUserId } from "@/app/actions/recipeActions";
 
 type Props = { params: Promise<{ username: string }> };
 
@@ -35,6 +36,7 @@ export default async function UserPage({ params }: Props) {
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
   const t = await getTranslations("UserPage");
+  const recipesPromise = getRecipesByUserId(user.id);
 
   return (
     <main className="pt-4">
@@ -58,7 +60,7 @@ export default async function UserPage({ params }: Props) {
           {current ? t("my-recipes") : t("uploaded-recipes")}
         </h2>
         <Suspense fallback={<RecipeListLoading />}>
-          <RecipeList />
+          <RecipeList recipesPromise={recipesPromise} />
         </Suspense>
       </section>
     </main>

@@ -1,21 +1,20 @@
-import { useTranslations } from "next-intl";
 import EmailBase, { EmailButton } from "./emailBase";
+import { TranslatorType } from "@/constants";
 
 type Props = {
+  t: TranslatorType;
   name: string;
   url: string;
 };
 
-export default function VerificationEmail({ name, url }: Props) {
-  const tGlobal = useTranslations("Global");
-  const brand = tGlobal("brand-name");
-  const t = useTranslations("Emails");
-  const title = t("welcome-title", { brand, name });
+export default function VerificationEmail({ t, name, url }: Props) {
+  const brand = t("Global.brand-name");
+  const title = t("Emails.welcome-title", { brand, name });
   return (
     <EmailBase preview={title}>
       <h1 className="font-heading">{title}</h1>
-      <p>{t("welcome-message", { brand })}</p>
-      <EmailButton url={url}>{t("verify-button")}</EmailButton>
+      <p>{t("Emails.welcome-message", { brand })}</p>
+      <EmailButton url={url}>{t("Emails.verify-button")}</EmailButton>
     </EmailBase>
   );
 }

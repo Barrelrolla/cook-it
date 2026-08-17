@@ -188,12 +188,15 @@
     "no": "NO"
   },
   "Emails": {
+    "delete-subject": "Delete {brand} account confirmation",
     "delete-title": "Delete your {brand} account?",
     "delete-message": "Sorry to see you go, {name}! If you're certain you want to proceed with deleting your account, click the button below:",
     "delete-button": "Delete account",
+    "password-reset-subject": "Reset your {brand} password",
     "password-reset-title": "Forgotten your {brand} password?",
     "password-reset-message": "A password reset was requested for this account. If you didn't request one,  ignore this email. If you did, click the button below to choose a new password.",
     "password-reset-button": "Reset Password",
+    "verify-subject": "Verify your {brand} account",
     "welcome-title": "Welcome to {brand}, {name}",
     "welcome-message": "Thanks for joining the {brand} community! Just click the button below to verify your email and you can start saving and sharing recipes!",
     "verify-button": "Verify email"

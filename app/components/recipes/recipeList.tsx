@@ -1,10 +1,15 @@
-import { getAllRecipes } from "@/app/actions/recipeActions";
+import { RecipeWithRelationsPromise } from "@/app/actions/recipeActions";
 import RecipeItem from "./recipeItem";
 import { getTranslations } from "next-intl/server";
 
-export default async function RecipeList() {
-  const recipes = await getAllRecipes();
+export default async function RecipeList({
+  recipesPromise,
+}: {
+  recipesPromise: RecipeWithRelationsPromise;
+}) {
   const t = await getTranslations("RecipePage");
+  const recipes = await recipesPromise;
+
   return (
     <div className="m-4">
       {recipes && (

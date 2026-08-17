@@ -17,6 +17,8 @@ type SettingsCategoryTranslation = Awaited<
   ReturnType<typeof getTranslations<"Settings.Categories">>
 >;
 
+export type TranslatorType = Awaited<ReturnType<typeof getTranslations<never>>>;
+
 export function formatSettingsCategory(
   t: SettingsCategoryTranslation,
   category: SettingsCategory,

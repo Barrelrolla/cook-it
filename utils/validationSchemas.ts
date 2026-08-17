@@ -6,6 +6,8 @@ type ValidationTranslator = Awaited<
   ReturnType<typeof getTranslations<"Validation">>
 >;
 export const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]*(?:-[a-zA-Z0-9]+)*$/;
+export const USERNAME_MIN_LENGTH = 3;
+export const USERNAME_MAX_LENGTH = 30;
 
 export function createPasswordValidation(t: ValidationTranslator) {
   const MIN_LENGTH = 8;
@@ -29,13 +31,17 @@ export function createPasswordValidation(t: ValidationTranslator) {
 }
 
 export function createUsernameValidation(t: ValidationTranslator) {
-  const MIN_LENGTH = 3;
-  const MAX_LENGTH = 30;
   return z
     .string()
     .trim()
-    .min(MIN_LENGTH, t("username-min-length", { min: MIN_LENGTH }))
-    .max(MAX_LENGTH, t("username-max-length", { max: MAX_LENGTH }))
+    .min(
+      USERNAME_MIN_LENGTH,
+      t("username-min-length", { min: USERNAME_MIN_LENGTH }),
+    )
+    .max(
+      USERNAME_MAX_LENGTH,
+      t("username-max-length", { max: USERNAME_MAX_LENGTH }),
+    )
     .regex(usernameRegex, t("username-characters"));
 }
 
