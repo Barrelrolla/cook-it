@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     metadataBase: new URL(process.env.BASE_URL!),
-    title: user
-      ? `${t("metadata-title")} | ${tGlobal("brand-name")}`
+    title: user?.displayUsername
+      ? `${t("metadata-title", { name: user.displayUsername })} | ${tGlobal("brand-name")}`
       : `${t("user-not-found")} | ${tGlobal("brand-name")}`,
     openGraph: { images: user?.image || undefined },
   };

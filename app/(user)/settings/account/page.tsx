@@ -7,7 +7,8 @@ import { getTranslations } from "next-intl/server";
 
 export default async function AccountSettings() {
   const session = await getSession();
-  const label = await formatSettingsCategory("account");
+  const tSettings = await getTranslations("Settings.Categories");
+  const label = formatSettingsCategory(tSettings, "account");
   const t = await getTranslations("Settings.Account");
 
   if (!session) {

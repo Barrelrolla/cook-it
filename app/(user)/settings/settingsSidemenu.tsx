@@ -10,10 +10,12 @@ import { usePathname } from "next/navigation";
 import { CSSProperties } from "react";
 import Link from "next/link";
 import { formatSettingsCategory, SETTINGS_CATEGORIES } from "@/constants";
+import { useTranslations } from "next-intl";
 
 export default function SettingsSideMenu() {
   const isMobile = useIsMobile();
   const path = usePathname();
+  const t = useTranslations("Settings.Categories");
 
   const foundIndex = SETTINGS_CATEGORIES.findIndex((item) => {
     return path.includes(`${item}`);
@@ -36,7 +38,7 @@ export default function SettingsSideMenu() {
                 as={Link}
                 href={`/settings/${cat}`}
               >
-                {formatSettingsCategory(cat)}
+                {formatSettingsCategory(t, cat)}
               </SidemenuItem>
             );
           })}

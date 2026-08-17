@@ -7,7 +7,8 @@ import { getTranslations } from "next-intl/server";
 
 export default async function ProfileSettings() {
   const session = await getSession();
-  const label = await formatSettingsCategory("profile");
+  const tSettings = await getTranslations("Settings.Categories");
+  const label = formatSettingsCategory(tSettings, "profile");
   const t = await getTranslations("Settings.Profile");
 
   if (!session) {

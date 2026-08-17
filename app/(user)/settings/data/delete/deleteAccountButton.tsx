@@ -62,13 +62,15 @@ export default function DeleteAccountButton() {
           <CardActions className="w-full">
             <form className="w-full flex flex-col gap-4" action={deleteAccount}>
               <Input
-                inputContainerClassName="w-full"
+                wrapperClassName="w-full"
                 type="password"
                 name="password"
               />
               <div className="flex justify-between">
                 <Button
                   type="button"
+                  color="main"
+                  variant="outline"
                   onClick={() => {
                     setIsPasswordOpen(false);
                   }}

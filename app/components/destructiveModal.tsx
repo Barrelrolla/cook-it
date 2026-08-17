@@ -6,7 +6,7 @@ import {
   CardTitle,
   Dialog,
 } from "@barrelrolla/react-components-library";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { PiWarning } from "react-icons/pi";
 
 export type DestructiveModalProps = {
@@ -16,13 +16,13 @@ export type DestructiveModalProps = {
   title: string;
 };
 
-export default async function DestructiveModal({
+export default function DestructiveModal({
   isOpen,
   setIsOpen,
   action,
   title,
 }: DestructiveModalProps) {
-  const t = await getTranslations("DestructiveModal");
+  const t = useTranslations("DestructiveModal");
   return (
     <Dialog isOpen={isOpen} setIsOpen={setIsOpen}>
       <Card className="w-[90vw] max-w-70">

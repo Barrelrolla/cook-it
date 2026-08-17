@@ -13,10 +13,14 @@ export const SETTINGS_CATEGORIES: SettingsCategory[] = [
 export type NavLink = "recipes" | "categories";
 export const NAV_LINKS: NavLink[] = ["recipes", "categories"];
 
-export async function formatSettingsCategory(
+type SettingsCategoryTranslation = Awaited<
+  ReturnType<typeof getTranslations<"Settings.Categories">>
+>;
+
+export function formatSettingsCategory(
+  t: SettingsCategoryTranslation,
   category: SettingsCategory,
-): Promise<string> {
-  const t = await getTranslations("Settings.Categories");
+): string {
   return t(category) ?? category;
 }
 

@@ -8,7 +8,8 @@ import { getTranslations } from "next-intl/server";
 
 export default async function ConnectionsSettingsPage() {
   const session = await getSession();
-  const label = await formatSettingsCategory("connections");
+  const tSettings = await getTranslations("Settings.Categories");
+  const label = formatSettingsCategory(tSettings, "connections");
   const tGlobal = await getTranslations("Global");
   const t = await getTranslations("Settings.Connections");
 

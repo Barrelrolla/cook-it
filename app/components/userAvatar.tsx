@@ -1,7 +1,7 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-export default async function UserAvatar({
+export default function UserAvatar({
   className,
   avatarUrl,
   name,
@@ -10,7 +10,7 @@ export default async function UserAvatar({
   avatarUrl: string;
   name: string;
 }) {
-  const t = await getTranslations("Navbar");
+  const t = useTranslations("Navbar");
   return (
     <div
       className={
