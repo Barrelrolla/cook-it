@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Checkbox, Input } from "@barrelrolla/react-components-library";
 import SettingsForm from "../../settingsForm";
-import { PasswordInputSchema } from "@/utils/validationSchemas";
+import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";
 import { setPassword } from "@/app/actions/authActions";
 import { $ZodIssue } from "zod/v4/core";
@@ -27,6 +27,7 @@ export default function PasswordForm({
   const tGlobal = useTranslations("Global");
   const tAcc = useTranslations("Settings.Account");
   const t = useTranslations("Settings.Account.Password");
+  const tValidation = useTranslations("Validation");
 
   async function saveData(formData: FormData) {
     const enteredOldPass = formData.get("old-password")?.toString() || "";
@@ -40,7 +41,7 @@ export default function PasswordForm({
     setIssue(undefined);
     setError("");
 
-    const pass = PasswordInputSchema.safeParse({
+    const pass = createPasswordInputValidation(tValidation).safeParse({
       password: enteredNewPass,
       repeatPassword: enteredRepeatPass,
     });

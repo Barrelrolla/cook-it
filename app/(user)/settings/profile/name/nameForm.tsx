@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Input } from "@barrelrolla/react-components-library";
 import { user as userSchema } from "@/db/schemas/auth-schema";
-import { permissiveDisplayNameSchema } from "@/utils/validationSchemas";
+import { createPermissiveNameValidation } from "@/utils/validationSchemas";
 import z from "zod";
 import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
@@ -23,6 +23,7 @@ export default function NameForm({
   const tGlobal = useTranslations("Global");
   const tProfile = useTranslations("Settings.Profile");
   const t = useTranslations("Settings.Profile.Name");
+  const tValdiation = useTranslations("Validation");
 
   async function saveData(formData: FormData) {
     const enteredName = formData.get("name")?.toString() || "";
@@ -30,7 +31,9 @@ export default function NameForm({
     setName(enteredName);
 
     try {
-      const Name = z.object({ name: permissiveDisplayNameSchema });
+      const Name = z.object({
+        name: createPermissiveNameValidation(tValdiation),
+      });
       const name = Name.safeParse({
         name: enteredName,
       });

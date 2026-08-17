@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM } from "@/constants";
-import { PasswordInputSchema } from "@/utils/validationSchemas";
+import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import {
   Button,
@@ -29,6 +29,7 @@ export default function ResetPasswordModal() {
   const showResetPass = searchParams.has(RESET_PASSWORD_PARAM);
   const tGlobal = useTranslations("Global");
   const t = useTranslations("AuthModal");
+  const tValidation = useTranslations("Validation");
 
   function formAction(formData: FormData) {
     const pass = formData.get("password")?.toString() || "";
@@ -36,7 +37,7 @@ export default function ResetPasswordModal() {
     const repeatPass = formData.get("repeat-password")?.toString() || "";
     setRepeatPassword(repeatPass);
 
-    const parsedPass = PasswordInputSchema.safeParse({
+    const parsedPass = createPasswordInputValidation(tValidation).safeParse({
       password: pass,
       repeatPassword: repeatPass,
     });

@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ErrorContext } from "better-auth/react";
 import { authClient } from "@/auth/authClient";
 import z from "zod";
-import { SignUpSchema } from "@/utils/validationSchemas";
+import { createSignupValidation } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
 import { Button } from "@barrelrolla/react-components-library";
@@ -34,6 +34,7 @@ export default function SigninModal() {
   const showSignin = searchParams.has(SIGNIN_PARAM);
   const showSignup = searchParams.has(SIGNUP_PARAM);
   const tGlobal = useTranslations("Global");
+  const tValidation = useTranslations("Validation");
   const t = useTranslations("AuthModal");
 
   function onRequest() {
@@ -113,13 +114,12 @@ export default function SigninModal() {
     const enteredRepeatPass = formData.get("repeat-password")?.toString() || "";
     setRepeatPassword(enteredRepeatPass);
 
-    const User = SignUpSchema.extend({ repeatPassword: z.string() }).refine(
-      (data) => data.password === data.repeatPassword,
-      {
+    const User = createSignupValidation(tValidation)
+      .extend({ repeatPassword: z.string() })
+      .refine((data) => data.password === data.repeatPassword, {
         path: ["repeat-password"],
-        message: "Passwords do not match.",
-      },
-    );
+        error: tValidation("passwords-not-matching"),
+      });
 
     const user = await User.safeParseAsync({
       username: enteredUsername,

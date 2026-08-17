@@ -6,7 +6,7 @@ import { authClient } from "@/auth/authClient";
 import z from "zod";
 import { CHOOSE_DISPLAY_NAME_PARAM } from "@/constants";
 import BaseModal from "../baseModal";
-import { usernameSchema } from "@/utils/validationSchemas";
+import { createUsernameValidation } from "@/utils/validationSchemas";
 import { Button, Input } from "@barrelrolla/react-components-library";
 import { PiUserBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
@@ -21,6 +21,7 @@ export default function UsernameModal() {
   const path = usePathname();
   const tGlobal = useTranslations("Global");
   const t = useTranslations("AuthModal");
+  const tValidation = useTranslations("Validation");
 
   if (!session.data) {
     return null;
@@ -40,7 +41,7 @@ export default function UsernameModal() {
     setName(enteredName);
     setLoading(true);
 
-    const Name = z.object({ username: usernameSchema });
+    const Name = z.object({ username: createUsernameValidation(tValidation) });
     const parsedName = await Name.safeParseAsync({ username: enteredName });
     if (!parsedName.data) {
       if (parsedName.error.issues.length > 0) {

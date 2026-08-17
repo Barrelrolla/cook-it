@@ -197,5 +197,27 @@
     "welcome-title": "Welcome to {brand}, {name}",
     "welcome-message": "Thanks for joining the {brand} community! Just click the button below to verify your email and you can start saving and sharing recipes!",
     "verify-button": "Verify email"
+  },
+  "Validation": {
+    "email": "Please enter a valid email address.",
+    "username-used": "That username is already in use.",
+    "password-min-length": "Password should be at least {min} symbols.",
+    "password-max-length": "Password should be maximum {max} symbols.",
+    "password-uppercase": "Password should include at least one uppercase letter.",
+    "password-lowercase": "Password should include at least one lowercase letter.",
+    "password-number": "Password should inlude at least one number.",
+    "password-special-character": "Password should include at least one special character.",
+    "passwords-not-matching": "Passwords do not match.",
+    "username-min-length": "Username must be at least {min} characters.",
+    "username-max-length": "Username cannot exceed {max} characters.",
+    "username-characters": "Username must start with a letter and can only contain letters, numbers, and single hyphens.",
+    "name-min-length": "Display name is required.",
+    "name-max-length": "Display name is too long.",
+    "name-only-spaces": "Display name cannot consist only of spaces",
+    "name-invalid-characters": "Display name contains invalid characters",
+    "name-tabs": "Display name cannot contain line breaks or tabs",
+    "image-file-required": "An image file is required.",
+    "max-image-file-size": "Max file size is {max}MB.",
+    "unsupported-image-file": "Only .jpg, .png, and .webp formats are supported."
   }
 }

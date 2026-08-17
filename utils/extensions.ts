@@ -1,4 +1,3 @@
-// lib/stringExtensions.ts
 if (!String.prototype.capitalize) {
   Object.defineProperty(String.prototype, "capitalize", {
     value: function (this: string): string {

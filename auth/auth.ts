@@ -6,10 +6,14 @@ import { admin } from "better-auth/plugins/admin";
 import { Resend } from "resend";
 import { db } from "@/db";
 import { authSchema } from "@/db/schemas/auth-schema";
-import { SignUpSchema, usernameRegex } from "@/utils/validationSchemas";
+import {
+  createSignupValidation,
+  usernameRegex,
+} from "@/utils/validationSchemas";
 import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
 import DeleteAccount from "@/emails/deleteAccount";
+import { useTranslations } from "next-intl";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -30,9 +34,10 @@ export const auth = betterAuth({
   trustedOrigins: ["http://192.168.100.72:3000", "http://192.168.0.133:3000"],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      const t = useTranslations("Validation");
       switch (ctx.path) {
         case "/sign-up/email":
-          const res = await SignUpSchema.safeParseAsync(ctx.body);
+          const res = await createSignupValidation(t).safeParseAsync(ctx.body);
           if (!res.success) {
             throw new APIError("BAD_REQUEST", {
               message: res.error.issues[0].message,

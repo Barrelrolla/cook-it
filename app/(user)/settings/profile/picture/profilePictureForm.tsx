@@ -9,7 +9,7 @@ import {
 } from "@barrelrolla/react-components-library";
 import Image from "next/image";
 import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
-import { ImageFileSchema } from "@/utils/validationSchemas";
+import { createImageFileValidation } from "@/utils/validationSchemas";
 import { uploadUserAvatar } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
@@ -30,6 +30,7 @@ export default function ProfilePictureForm({
   const tGlobal = useTranslations("Global");
   const tProfile = useTranslations("Settings.Profile");
   const t = useTranslations("Settings.Profile.Picture");
+  const tValidation = useTranslations("Validation");
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
     const selectedImage = e.target.files?.[0];
@@ -43,7 +44,8 @@ export default function ProfilePictureForm({
       return;
     }
 
-    const data = ImageFileSchema.safeParse(selectedImage);
+    const data =
+      createImageFileValidation(tValidation).safeParse(selectedImage);
 
     if (data.error) {
       if (data.error.issues.length > 0) {
