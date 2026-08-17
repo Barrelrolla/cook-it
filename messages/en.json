@@ -19,7 +19,7 @@
     }
   },
   "HomeHero": {
-    "title": "Discover. Cook. <highlight>Share.</highlight>",
+    "title": "Discover. Cook.",
     "title-highlight": "Share.",
     "text": "Join a community of food lovers. Share your recipes and find something amazing to cook.",
     "img-alt": "A bowl of pasta",
@@ -178,7 +178,7 @@
     "account-created": "Account created.",
     "verification-sent": "We've sent you an email with a verification link.",
     "close-button": "Close",
-    "social-signin": "Sign in with {socialName}",
+    "social-signin": "Sign in with {social}",
     "choose-username-label": "Choose your username",
     "confirm-username": "Confirm username"
   },

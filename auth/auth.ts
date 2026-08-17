@@ -13,7 +13,8 @@ import {
 import PasswordReset from "@/emails/passwordReset";
 import VerificationEmail from "@/emails/verificationEmail";
 import DeleteAccount from "@/emails/deleteAccount";
-import { useTranslations } from "next-intl";
+import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -34,7 +35,13 @@ export const auth = betterAuth({
   trustedOrigins: ["http://192.168.100.72:3000", "http://192.168.0.133:3000"],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
-      const t = useTranslations("Validation");
+      const cookieStore = await cookies();
+      const locale = cookieStore.get("locale")?.value ?? "en";
+
+      const t = await getTranslations({
+        locale,
+        namespace: "Validation",
+      });
       switch (ctx.path) {
         case "/sign-up/email":
           const res = await createSignupValidation(t).safeParseAsync(ctx.body);

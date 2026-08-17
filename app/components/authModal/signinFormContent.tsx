@@ -276,7 +276,7 @@ export default function SigninFormContent({
       </CardActions>
       {!signup && (
         <p className="text-center">
-          {t("dont-have-account")}
+          {t("dont-have-account")}{" "}
           <Anchor
             className="cursor-pointer"
             type="button"
@@ -289,7 +289,7 @@ export default function SigninFormContent({
       )}
       {signup && (
         <p className="text-center">
-          {t("already-have-account")}
+          {t("already-have-account")}{" "}
           <Anchor
             className="cursor-pointer"
             type="button"
