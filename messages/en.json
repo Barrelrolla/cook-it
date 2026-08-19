@@ -31,7 +31,19 @@
     "recipe-not-found": "We couldn't find that recipe. Please visit the <recipeList>recipe list</recipeList> or go back to the <home>Home page</home>.",
     "img-alt": "the end result of the recipe",
     "author": "by {name}",
-    "no-recipes-found": "No recipes found."
+    "no-recipes-found": "No recipes found.",
+    "preparation-time": "Preparation",
+    "cook-time": "Cooking",
+    "servings": "Servings",
+    "days": "{count, plural, =0 {} =1 {# day} other {# days}}",
+    "hours": "{count, plural, =0 {} =1 {# hour} other {# hours}}",
+    "minutes": "{count, plural, =0 {# mins} =1 {# min} other {# mins}}",
+    "like-button": "Like",
+    "save-button": "Save",
+    "share-button": "Share",
+    "see-more-button": "View more recipes",
+    "ingredient-label": "Ingredients",
+    "instructions-label": "Instructions"
   },
   "Recipes": {
     "Categories": {

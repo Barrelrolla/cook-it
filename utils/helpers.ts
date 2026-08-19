@@ -1,9 +1,14 @@
 import slug from "slug";
 import { nanoid } from "nanoid";
 import { generateSignature } from "@/app/actions/imageActions";
+import { getTranslations } from "next-intl/server";
 
 export const IS_DEV = process.env.NODE_ENV === "development";
 export const IS_PROD = process.env.NODE_ENV === "production";
+
+export async function delay(s: number) {
+  return new Promise((resolve) => setTimeout(resolve, s * 1000));
+}
 
 export function getUniqueRecipeSlug(baseSlug: string) {
   return `${slug(baseSlug)}-${nanoid(6)}`;
@@ -42,4 +47,30 @@ async function uploadImage(name: string, folder: string, file: File) {
     },
   );
   return await res.json();
+}
+
+type TimeTranslator = Awaited<ReturnType<typeof getTranslations<"RecipePage">>>;
+
+export function formatCookTime(
+  t: TimeTranslator,
+  totalMinutes: number,
+): string {
+  if (!totalMinutes || totalMinutes <= 0) return t("minutes", { count: 0 });
+
+  const MINUTES_IN_HOUR = 60;
+  const MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR;
+
+  const days = Math.floor(totalMinutes / MINUTES_IN_DAY);
+  const remainingAfterDays = totalMinutes % MINUTES_IN_DAY;
+
+  const hours = Math.floor(remainingAfterDays / MINUTES_IN_HOUR);
+  const minutes = remainingAfterDays % MINUTES_IN_HOUR;
+
+  const parts: string[] = [];
+
+  if (days > 0) parts.push(t("days", { count: days }));
+  if (hours > 0) parts.push(t("hours", { count: hours }));
+  if (minutes > 0) parts.push(t("minutes", { count: minutes }));
+
+  return parts.join(" ");
 }

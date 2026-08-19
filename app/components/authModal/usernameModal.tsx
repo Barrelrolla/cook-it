@@ -81,6 +81,7 @@ export default function UsernameModal() {
       setIsOpen={close}
     >
       <Input
+        wrapperClassName="w-full"
         required
         disabled={loading}
         startIcon={<PiUserBold />}

@@ -1,5 +1,5 @@
 import { PropsWithChildren, Ref } from "react";
-import { Card, CardTitle, Dialog } from "@barrelrolla/react-components-library";
+import { CardTitle, Dialog } from "@barrelrolla/react-components-library";
 
 type BaseModalProps = {
   formRef?: Ref<HTMLFormElement> | null;
@@ -20,20 +20,18 @@ export default function BaseModal({
   return (
     <Dialog
       backdropClassName="items-start md:items-center backdrop-blur-[2px]"
-      className="mt-22 md:mt-0"
+      containerClassName="w-[80vw] max-w-80 mt-22 md:mt-0"
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      <Card containerClassName="w-[80vw] max-w-80">
-        <CardTitle className="font-heading">{title}</CardTitle>
-        <form
-          action={formAction}
-          ref={formRef}
-          className="flex flex-col p-4 pt-0 gap-2 text-sm"
-        >
-          {children}
-        </form>
-      </Card>
+      <CardTitle className="font-heading">{title}</CardTitle>
+      <form
+        action={formAction}
+        ref={formRef}
+        className="flex flex-col p-4 gap-4 text-sm"
+      >
+        {children}
+      </form>
     </Dialog>
   );
 }

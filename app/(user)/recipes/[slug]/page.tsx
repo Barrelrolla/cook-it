@@ -1,11 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getRecipeBySlug } from "@/app/actions/recipeActions";
-import { Badge } from "@barrelrolla/react-components-library";
-import { PiClock, PiForkKnife } from "react-icons/pi";
-import { formatCategory, formatDiet } from "@/constants/recipeHelpers";
 import { getTranslations } from "next-intl/server";
 import RecipePageHero from "./recipePageHero";
+import { Card } from "@barrelrolla/react-components-library";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -22,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: recipe
       ? `${recipe?.title} | ${tGlobal("brand-name")}`
       : `${t("metadata-not-found")} | ${tGlobal("brand-name")}`,
+    description: recipe?.description || tGlobal("metadata-description"),
     openGraph: { images: recipe?.imageUrl },
   };
 }
@@ -32,63 +31,34 @@ export default async function RecipeItemPage({ params }: Props) {
   if (!recipe) {
     notFound();
   }
-  const {
-    category,
-    cuisine,
-    diet,
-    servings,
-    prepTime,
-    cookTime,
-    ingredients,
-    instructions,
-  } = recipe;
+  const { ingredients, instructions } = recipe;
+  const t = await getTranslations("RecipePage");
+
   return (
     <>
       <RecipePageHero recipe={recipe} />
-      <main className="p-4">
-        <Badge className="w-fit inline">{formatCategory(category)}</Badge>
-        {cuisine && (
-          <Badge color="secondary" className="w-fit inline">
-            {cuisine.name}
-          </Badge>
-        )}
-        {diet && (
-          <div>
-            {diet.map((diet) => (
-              <Badge color="accent" className="w-fit inline" key={diet}>
-                {formatDiet(diet)}
-              </Badge>
-            ))}
-          </div>
-        )}
-        {prepTime && (
-          <div>
-            <PiClock className="inline" />
-            {prepTime}
-          </div>
-        )}
-        {cookTime && (
-          <div>
-            <PiClock className="inline" />
-            {cookTime}
-          </div>
-        )}
-        {servings && (
-          <div>
-            <PiForkKnife className="inline" />
-            {`${servings} serving${servings > 1 ? "s" : ""}`}
-          </div>
-        )}
-        <ul>
-          {ingredients.map((ingredient) => (
-            <li key={ingredient}>{ingredient}</li>
-          ))}
-        </ul>
-        <ul>
-          {instructions.map((step, index) => (
-            <li key={"step " + index}>{step}</li>
-          ))}
-        </ul>
+      <main className="p-4 max-md:pt-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card containerClassName="h-fit" className="p-4">
+            <span className="mb-2">{t("ingredient-label")}</span>
+            <ol className="list-disc list-inside">
+              {ingredients.map((ingredient) => (
+                <li key={ingredient}>{ingredient}</li>
+              ))}
+            </ol>
+          </Card>
+          <Card
+            containerClassName="md:col-span-2 max-w-full h-fit"
+            className="p-4"
+          >
+            <span className="mb-2">{t("instructions-label")}</span>
+            <ul className="list-decimal list-inside">
+              {instructions.map((step, index) => (
+                <li key={"step " + index}>{step}</li>
+              ))}
+            </ul>
+          </Card>
+        </div>
       </main>
     </>
   );

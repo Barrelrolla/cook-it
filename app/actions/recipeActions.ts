@@ -15,6 +15,7 @@ export async function getAllRecipes() {
     return await db.query.recipeTable.findMany({
       with: {
         author: true,
+        cuisine: true,
       },
     });
   } catch {
@@ -60,6 +61,7 @@ export async function getRecipesByUserId(userid: string) {
       where: (recipe, { eq }) => eq(recipe.authorId, userid),
       with: {
         author: true,
+        cuisine: true,
       },
     });
   } catch {

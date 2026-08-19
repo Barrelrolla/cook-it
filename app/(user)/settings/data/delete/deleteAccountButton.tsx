@@ -1,15 +1,8 @@
 "use client";
+import BaseModal from "@/app/components/baseModal";
 import DestructiveModal from "@/app/components/destructiveModal";
 import { authClient } from "@/auth/authClient";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardText,
-  CardTitle,
-  Dialog,
-  Input,
-} from "@barrelrolla/react-components-library";
+import { Button, Input } from "@barrelrolla/react-components-library";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -55,37 +48,31 @@ export default function DeleteAccountButton() {
           setIsPasswordOpen(true);
         }}
       />
-      <Dialog isOpen={isPasswordOpen} setIsOpen={setIsPasswordOpen}>
-        <Card>
-          <CardTitle>{t("delete-account")}</CardTitle>
-          <CardText className="text-sm">{t("warning-message")}</CardText>
-          <CardActions className="w-full">
-            <form className="w-full flex flex-col gap-4" action={deleteAccount}>
-              <Input
-                wrapperClassName="w-full"
-                type="password"
-                name="password"
-              />
-              <div className="flex justify-between">
-                <Button
-                  type="button"
-                  color="main"
-                  variant="outline"
-                  onClick={() => {
-                    setIsPasswordOpen(false);
-                  }}
-                  size="sm"
-                >
-                  {t("cancel")}
-                </Button>
-                <Button size="sm" color="error">
-                  {t("delete")}
-                </Button>
-              </div>
-            </form>
-          </CardActions>
-        </Card>
-      </Dialog>
+      <BaseModal
+        isOpen={isPasswordOpen}
+        setIsOpen={setIsPasswordOpen}
+        formAction={deleteAccount}
+        title={t("delete-account")}
+      >
+        <p className="text-sm">{t("warning-message")}</p>
+        <Input wrapperClassName="w-full" type="password" name="password" />
+        <div className="w-full flex flex-row justify-between">
+          <Button
+            type="button"
+            color="main"
+            variant="outline"
+            onClick={() => {
+              setIsPasswordOpen(false);
+            }}
+            size="sm"
+          >
+            {t("cancel")}
+          </Button>
+          <Button size="sm" color="error">
+            {t("delete")}
+          </Button>
+        </div>
+      </BaseModal>
       <Button
         size="sm"
         loading={isLoading}

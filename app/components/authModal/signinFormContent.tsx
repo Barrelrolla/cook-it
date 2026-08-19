@@ -123,97 +123,99 @@ export default function SigninFormContent({
 
   return (
     <>
-      <Input
-        wrapperClassName="w-full"
-        required
-        ref={emailRef}
-        as="input"
-        startIcon={<PiUserBold />}
-        aria-label={
-          signup ? t("username-input-label") : t("username-email-input-label")
-        }
-        placeholder={
-          signup ? t("username-input-label") : t("username-email-input-label")
-        }
-        type="text"
-        id="username"
-        autoComplete="username"
-        name="username"
-        defaultValue={username}
-        error={
-          issue && issue.path.length > 0 && issue.path[0] === "username"
-            ? issue.message
-            : undefined
-        }
-      />
-      {signup && (
+      <div className="flex flex-col gap-2">
         <Input
           wrapperClassName="w-full"
           required
-          startIcon={<PiEnvelopeBold />}
-          aria-label={t("email-input-label")}
-          placeholder={t("email-input-label")}
-          type="email"
-          id="email"
-          autoComplete="email"
-          name="email"
-          defaultValue={email}
+          ref={emailRef}
+          as="input"
+          startIcon={<PiUserBold />}
+          aria-label={
+            signup ? t("username-input-label") : t("username-email-input-label")
+          }
+          placeholder={
+            signup ? t("username-input-label") : t("username-email-input-label")
+          }
+          type="text"
+          id="username"
+          autoComplete="username"
+          name="username"
+          defaultValue={username}
           error={
-            issue && issue.path.length > 0 && issue.path[0] === "email"
+            issue && issue.path.length > 0 && issue.path[0] === "username"
               ? issue.message
               : undefined
           }
         />
-      )}
-      <Input
-        wrapperClassName="w-full"
-        required
-        startIcon={<PiKeyBold />}
-        aria-label={t("password-input-label")}
-        placeholder={t("password-input-label")}
-        type="password"
-        id="password"
-        name="password"
-        autoComplete={signup ? "new-password" : "current-password"}
-        defaultValue={password}
-        error={
-          issue && issue.path.length > 0 && issue.path[0] === "password"
-            ? issue.message
-            : undefined
-        }
-      />
-      {signup && (
+        {signup && (
+          <Input
+            wrapperClassName="w-full"
+            required
+            startIcon={<PiEnvelopeBold />}
+            aria-label={t("email-input-label")}
+            placeholder={t("email-input-label")}
+            type="email"
+            id="email"
+            autoComplete="email"
+            name="email"
+            defaultValue={email}
+            error={
+              issue && issue.path.length > 0 && issue.path[0] === "email"
+                ? issue.message
+                : undefined
+            }
+          />
+        )}
         <Input
           wrapperClassName="w-full"
           required
           startIcon={<PiKeyBold />}
-          aria-label={t("repeat-password-input-label")}
-          placeholder={t("repeat-password-input-label")}
+          aria-label={t("password-input-label")}
+          placeholder={t("password-input-label")}
           type="password"
-          id="repeat-password"
-          name="repeat-password"
+          id="password"
+          name="password"
           autoComplete={signup ? "new-password" : "current-password"}
-          defaultValue={repeatPassword}
+          defaultValue={password}
           error={
-            issue &&
-            issue.path.length > 0 &&
-            issue.path[0] === "repeat-password"
+            issue && issue.path.length > 0 && issue.path[0] === "password"
               ? issue.message
               : undefined
           }
         />
-      )}
+        {signup && (
+          <Input
+            wrapperClassName="w-full"
+            required
+            startIcon={<PiKeyBold />}
+            aria-label={t("repeat-password-input-label")}
+            placeholder={t("repeat-password-input-label")}
+            type="password"
+            id="repeat-password"
+            name="repeat-password"
+            autoComplete={signup ? "new-password" : "current-password"}
+            defaultValue={repeatPassword}
+            error={
+              issue &&
+              issue.path.length > 0 &&
+              issue.path[0] === "repeat-password"
+                ? issue.message
+                : undefined
+            }
+          />
+        )}
+      </div>
       {!signup && (
         <Checkbox
           color="primary"
-          wrapperClassName="mt-2 w-fit"
+          wrapperClassName="w-fit"
           name="remember"
           defaultChecked={rememberMe}
         >
           {t("remember-me")}
         </Checkbox>
       )}
-      <CardActions className="w-full p-0 mt-2 flex flex-col gap-2">
+      <CardActions className="w-full p-0 flex flex-col gap-2">
         <Button
           wrapperClassName="flex-1"
           color="primary"

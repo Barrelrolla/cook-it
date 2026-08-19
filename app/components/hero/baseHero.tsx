@@ -21,22 +21,21 @@ export default function RecipeHero({
   return (
     <Hero
       textAlign="left"
-      className="h-130 md:h-150 overflow-y-hidden relative max-w-[2000px] justify-center"
+      className="h-fit md:h-150 overflow-y-hidden relative max-w-[2560px] justify-center"
     >
-      <div className="absolute h-[80%] md:h-full w-full md:w-[70%] justify-self-end inset-0">
+      <div className="absolute h-[50vh] md:h-full w-full md:w-[60%] justify-self-end inset-0 md:mask-l-from-60% mask-b-from-40% md:mask-b-from-100%">
         {(!darkImageUrl || (darkImageUrl && isDark !== undefined)) && (
           <Image
             src={darkImageUrl && isDark ? darkImageUrl : imageUrl}
             alt={imageAlt}
             fill
-            sizes="70vw"
+            sizes="60vw"
             priority
-            className={"object-cover"}
+            className="object-cover object-right"
           />
         )}
-        <div className="max-md:hero-fade-mobile md:hero-fade" />
       </div>
-      <div className="flex justify-end pb-2 h-full md:w-(--max-content-width) relative">
+      <div className="mt-[30vh] md:mt-0 flex justify-end h-full md:w-(--max-content-width) relative">
         {children}
       </div>
     </Hero>

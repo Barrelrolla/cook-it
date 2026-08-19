@@ -11,7 +11,7 @@ export default function RecipeListLoading() {
   let i = 0;
   return (
     <div className="m-4">
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-4 gap-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {arr.map(() => {
           return (
             <li key={i++} className="justify-items-center">
