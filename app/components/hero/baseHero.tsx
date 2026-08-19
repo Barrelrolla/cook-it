@@ -35,7 +35,7 @@ export default function RecipeHero({
           />
         )}
       </div>
-      <div className="mt-[30vh] md:mt-0 flex justify-end h-full md:w-(--max-content-width) relative">
+      <div className="mt-[30vh] md:mt-0 flex w-full justify-end h-full md:w-(--max-content-width) relative">
         {children}
       </div>
     </Hero>

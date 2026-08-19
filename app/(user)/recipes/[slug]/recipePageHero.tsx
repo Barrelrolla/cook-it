@@ -97,7 +97,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
               <MoreRecipesButton href={`/user/${author.username}`} />
             </div>
           )}
-          <div className="flex flex-row flex-wrap gap-2">
+          <div className="flex justify-center flex-row flex-wrap gap-2">
             <Badge className="w-fit">{formatCategory(category)}</Badge>
             {cuisine && (
               <Badge color="secondary" className="w-fit">
@@ -134,7 +134,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
               <RecipeMetadata
                 label={t("servings")}
                 icon={<PiForkKnife />}
-                text={formatCookTime(t, servings)}
+                text={servings.toString()}
               />
             )}
             <RecipeActionButtons />

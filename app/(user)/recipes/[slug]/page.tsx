@@ -39,7 +39,7 @@ export default async function RecipeItemPage({ params }: Props) {
       <RecipePageHero recipe={recipe} />
       <main className="p-4 max-md:pt-0">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card containerClassName="h-fit" className="p-4">
+          <Card containerClassName="max-w-full h-fit" className="p-4">
             <span className="mb-2">{t("ingredient-label")}</span>
             <ol className="list-disc list-inside">
               {ingredients.map((ingredient) => (

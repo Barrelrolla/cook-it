@@ -15,7 +15,6 @@ export default function RecipeActionButtons() {
       try {
         await navigator.share(shareData);
       } catch (error) {
-        // User cancelled the share dialog.
         if (error instanceof DOMException && error.name === "AbortError") {
           return;
         }
