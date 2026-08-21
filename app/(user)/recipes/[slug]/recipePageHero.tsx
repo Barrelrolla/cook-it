@@ -67,7 +67,6 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
   }
 
   const t = await getTranslations("RecipePage");
-
   return (
     <RecipeHero imageUrl={imageUrl} imageAlt={t("img-alt")}>
       <HeroSection className="justify-end">
@@ -114,7 +113,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
           </div>
           <Card
             containerClassName="max-w-full w-fit py-2 px-4"
-            className="flex-row flex-wrap gap-8 items-center"
+            className="flex-row flex-wrap gap-8 items-center text-primary"
           >
             {prepTime && (
               <RecipeMetadata

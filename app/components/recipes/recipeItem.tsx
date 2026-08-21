@@ -11,15 +11,18 @@ import {
 } from "@barrelrolla/react-components-library";
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
 import { getTranslations } from "next-intl/server";
-import { formatDifficulty } from "@/constants/recipeHelpers";
+import { formatCategory, formatDifficulty } from "@/constants/recipeHelpers";
+import { user as userSchema } from "@/db/schemas/auth-schema";
+import MoreOptionsButton from "./moreOptionsButton";
 
 export default async function RecipeItem({
+  user,
   recipe,
 }: {
   recipe: RecipeWithRelations;
+  user: typeof userSchema.$inferSelect | null;
 }) {
-  const { difficulty } = recipe;
-  const name = recipe.author?.name || "Deleted user";
+  const { id, slug, title, imageUrl, difficulty, authorId, category } = recipe;
   let color: ColorType = "success";
   if (difficulty === "medium") {
     color = "warning";
@@ -27,37 +30,53 @@ export default async function RecipeItem({
     color = "error";
   }
   const t = await getTranslations("RecipePage");
+  // const name = recipe.author?.name || t("deleted-user");
 
   return (
     <li className="justify-items-center">
       <Card
         size="xl"
-        className="h-60"
+        className="h-60 relative"
         containerClassName=" shadow-sm shadow-main-content/20 w-full"
         containerStyle={{ "--bg-color": "var(--color-muted)" } as CSSProperties}
       >
-        <RecipeInteract recipeSlug={recipe.slug}>
+        <RecipeInteract recipeSlug={slug}>
           <CardImageContainer className="relative">
             <Image
               sizes="320px"
               className="card-image relative"
               fill
-              src={recipe.imageUrl}
+              src={imageUrl}
               alt={t("img-alt")}
             />
           </CardImageContainer>
           <CardSection>
-            <CardTitle>{recipe.title}</CardTitle>
+            <div className="py-2 px-4">
+              <CardTitle className="line-clamp-1 py-0 px-0">{title}</CardTitle>
+            </div>
             <div className="flex justify-between px-4 pb-2 text-sm">
-              <p className="flex items-center">{t("author", { name })}</p>
-              {recipe.difficulty && (
-                <Badge color={color}>
-                  {formatDifficulty(recipe.difficulty)}
+              {category && (
+                <Badge color={color}>{formatCategory(category)}</Badge>
+              )}
+              {difficulty && (
+                <Badge className="absolute top-0 left-0 m-1" color={color}>
+                  {formatDifficulty(difficulty)}
                 </Badge>
               )}
             </div>
+            {/* <p className="flex items-center text-sm px-4 pb-1">
+              {t("author", { name })}
+            </p> */}
           </CardSection>
         </RecipeInteract>
+        {user && authorId && user.id === authorId && (
+          <MoreOptionsButton
+            editLabel={t("edit-button")}
+            deleteLabel={t("delete-button")}
+            deleteTitle={t("delete-title", { name: title })}
+            recipeId={id}
+          />
+        )}
       </Card>
     </li>
   );

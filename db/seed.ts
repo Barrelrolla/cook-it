@@ -26,15 +26,68 @@ export async function seed() {
   const cuisines = await db
     .insert(cuisineTable)
     .values([
+      { name: "Albanian" },
+      { name: "Austrian" },
+      { name: "Belgian" },
+      { name: "British" },
+      { name: "Bulgarian" },
+      { name: "Croatian" },
+      { name: "Czech" },
+      { name: "Danish" },
+      { name: "Dutch" },
+      { name: "Finnish" },
+      { name: "French" },
+      { name: "German" },
+      { name: "Greek" },
+      { name: "Hungarian" },
+      { name: "Irish" },
       { name: "Italian" },
-      { name: "American" },
+      { name: "Norwegian" },
+      { name: "Polish" },
+      { name: "Portugese" },
+      { name: "Romanian" },
+      { name: "Serbian" },
+      { name: "Spanish" },
+      { name: "Swedish" },
+      { name: "Swiss" },
+      { name: "Ukrainian" },
+      { name: "Egyptean" },
+      { name: "Israeli" },
+      { name: "Lebanese" },
+      { name: "Moroccan" },
+      { name: "Palestinian" },
+      { name: "Persian" },
+      { name: "Syrian" },
+      { name: "Turkish" },
+      { name: "Indian" },
+      { name: "Pakistani" },
+      { name: "Bangladeshi" },
+      { name: "Sri Lankan" },
+      { name: "Nepalese" },
+      { name: "Chinese" },
       { name: "Japanese" },
-      { name: "Mediterranean" },
+      { name: "Korean" },
+      { name: "Mongolian" },
+      { name: "Filipino" },
+      { name: "Indonesian" },
+      { name: "Malaysian" },
+      { name: "Singaporean" },
+      { name: "Thai" },
+      { name: "Vietnamese" },
+      { name: "American" },
+      { name: "Canadian" },
+      { name: "Caribbean" },
+      { name: "Cuban" },
+      { name: "Mexican" },
+      { name: "Peruvian" },
+      { name: "Ehiopian" },
+      { name: "South African" },
+      { name: "Nigerian" },
+      { name: "Tunisian" },
     ])
     .returning();
 
-  const [italian, american, mediterranean] = cuisines;
-  console.log("added cuisinges", cuisines);
+  console.log("added cuisinges");
 
   await db.insert(recipeTable).values({
     slug: getUniqueRecipeSlug("Creamy Mushroom Pasta"),
@@ -42,7 +95,7 @@ export async function seed() {
     authorId: user.id,
     imageUrl: "/creamy-mushroom-pasta.png",
     category: "dinner",
-    cuisineId: italian.id,
+    cuisineId: cuisines[15].id,
     description:
       "A rich and comforting pasta dish made with golden mushrooms, garlic, Parmesan, and a silky cream sauce. Ready in under 30 minutes, making it perfect for a cozy weeknight dinner.",
     prepTime: 10,
@@ -79,7 +132,7 @@ export async function seed() {
     authorId: user.id,
     imageUrl: "/rainbow-buddha-bowl.png",
     category: "lunch",
-    cuisineId: mediterranean.id,
+    cuisineId: cuisines[49].id,
     description:
       "A colorful and satisfying grain bowl packed with roasted chickpeas, fresh vegetables, avocado, and a creamy tahini dressing.",
     prepTime: 15,
@@ -113,7 +166,7 @@ export async function seed() {
       "Black pepper to taste",
     ],
     servings: 2,
-    diet: ["Vegan", "Vegetarian"],
+    diet: ["vegan", "vegetarian"],
   });
 
   await db.insert(recipeTable).values({
@@ -122,7 +175,7 @@ export async function seed() {
     authorId: user.id,
     imageUrl: "/honey-garlic-salmon.png",
     category: "dinner",
-    cuisineId: american.id,
+    cuisineId: cuisines[39].id,
     description:
       "Tender salmon fillets glazed with a sweet and savory honey garlic sauce. A quick dinner with crisp edges, a caramelized glaze, and plenty of flavor.",
     prepTime: 10,
@@ -159,7 +212,7 @@ export async function seed() {
     authorId: user.id,
     imageUrl: "/chocolate-lava-cake.png",
     category: "dessert",
-    cuisineId: american.id,
+    cuisineId: cuisines[10].id,
     description:
       "Individual chocolate cakes with a soft, molten center. These decadent desserts are surprisingly simple to prepare and are best served warm with vanilla ice cream.",
     prepTime: 20,

@@ -20,10 +20,21 @@ export default function UnlinkSocialButton({
   const t = useTranslations("Settings.Connections");
   const socialName = social === "google" ? tGlobal("google") : tGlobal("apple");
 
-  function unlink() {
+  async function unlink() {
     setIsOpen(false);
+    const { data: accounts, error } = await authClient.listAccounts();
+    if (error) {
+      setError(error.message || tGlobal("something-went-wrong"));
+      return;
+    }
+    const account = accounts?.find((account) => account.providerId === social);
+    if (!account) {
+      setError(tGlobal("account-not-found"));
+      return;
+    }
+
     authClient.unlinkAccount(
-      { providerId: social },
+      { accountId: account.id },
       {
         onRequest: () => {
           setIsLoading(true);

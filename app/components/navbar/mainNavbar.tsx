@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { user } from "@/db/schemas/auth-schema";
 import { getSession } from "@/app/actions/authActions";
 import { formatNavLink, NAV_LINKS } from "@/constants";
 import Brand from "./brand";
@@ -16,6 +15,7 @@ import {
 
 export default async function MainNavbar() {
   const session = await getSession();
+  const user = JSON.parse(JSON.stringify(session?.user));
   return (
     <Navbar
       backdropClassName="bg-stone-800/30 backdrop-blur-[2px]"
@@ -45,9 +45,7 @@ export default async function MainNavbar() {
             </Suspense>
           </>
         )}
-        {session && (
-          <UserButton user={session.user as typeof user.$inferSelect} />
-        )}
+        {session && <UserButton user={user} />}
         <NavbarToggle
           wrapperClassName="size-10 flex items-center"
           className="h-full w-full"

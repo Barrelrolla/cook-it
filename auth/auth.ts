@@ -38,7 +38,11 @@ export const auth = betterAuth({
     }),
   ],
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
-  trustedOrigins: ["http://192.168.100.72:3000", "http://192.168.0.133:3000"],
+  trustedOrigins: [
+    "http://192.168.100.72:3000",
+    "http://192.168.0.133:3000",
+    "http://192.168.100.50:3000",
+  ],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
       const locale = ctx.headers?.get("x-locale") ?? "en";

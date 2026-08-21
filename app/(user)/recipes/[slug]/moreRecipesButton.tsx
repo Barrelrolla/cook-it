@@ -12,7 +12,6 @@ export function MoreRecipesButton({ href }: MoreRecipesButtonProps) {
     <Button
       size="sm"
       variant="outline"
-      color="main"
       className="min-h-8.5 h-fit"
       href={href}
       as={Link}

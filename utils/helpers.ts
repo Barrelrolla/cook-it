@@ -10,13 +10,19 @@ export async function delay(s: number) {
   return new Promise((resolve) => setTimeout(resolve, s * 1000));
 }
 
-export function getUniqueRecipeSlug(baseSlug: string) {
-  return `${slug(baseSlug)}-${nanoid(6)}`;
+export function getUniqueRecipeSlug(name: string) {
+  return `${slug(name)}-${nanoid(6)}`;
 }
 
 export async function uploadUserAvatar(username: string, image: File) {
   const folderName = IS_DEV ? "cook-it/user-avatars" : "garndish/user-avatars";
-  const imageName = `${username}-avatar`;
+  const imageName = username;
+  return await uploadImage(imageName, folderName, image);
+}
+
+export async function uploadRecipeImage(recipeSlug: string, image: File) {
+  const folderName = IS_DEV ? "cook-it/recipes" : "garndish/recipes";
+  const imageName = recipeSlug;
   return await uploadImage(imageName, folderName, image);
 }
 
@@ -73,4 +79,23 @@ export function formatCookTime(
   if (minutes > 0) parts.push(t("minutes", { count: minutes }));
 
   return parts.join(" ");
+}
+
+export function convertDurationToMinutes(
+  duration: number,
+  unit: "minutes" | "hours" | "days",
+): number {
+  if (duration === 0) return 0;
+
+  const MINUTES_IN_HOUR = 60;
+  const MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR;
+
+  switch (unit) {
+    case "hours":
+      return duration * MINUTES_IN_HOUR;
+    case "days":
+      return duration * MINUTES_IN_DAY;
+    default:
+      return duration;
+  }
 }

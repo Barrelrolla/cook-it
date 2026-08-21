@@ -27,7 +27,7 @@ export default function RecipeActionButtons() {
   }
 
   return (
-    <ButtonGroup color="main" variant="ghost">
+    <ButtonGroup variant="ghost">
       <Button startIcon={<PiHeart />}>{t("like-button")}</Button>
       <Button startIcon={<PiBookmark />}>{t("save-button")}</Button>
       <Button onClick={handleShare} startIcon={<PiShareNetwork />}>

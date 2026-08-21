@@ -1,66 +1,26 @@
 "use client";
-import { ChangeEvent, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { user as userSchema } from "@/db/schemas/auth-schema";
-import {
-  Button,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@barrelrolla/react-components-library";
-import Image from "next/image";
-import { PiPencilFill, PiXCircleFill } from "react-icons/pi";
-import { createImageFileValidation } from "@/utils/validationSchemas";
 import { uploadUserAvatar } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import SettingsForm from "../../settingsForm";
 import { useTranslations } from "next-intl";
+import ImagePicker from "@/app/components/imagePicker";
 
 export default function ProfilePictureForm({
   user,
 }: {
   user: typeof userSchema.$inferSelect;
 }) {
-  const [image, setImage] = useState("");
-  const [imageError, setImageError] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isChanged, setIsChanged] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
   const tGlobal = useTranslations("Global");
   const tProfile = useTranslations("Settings.Profile");
   const t = useTranslations("Settings.Profile.Picture");
-  const tValidation = useTranslations("Validation");
-
-  function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
-    const selectedImage = e.target.files?.[0];
-    if (!selectedImage) {
-      return;
-    }
-
-    setIsChanged(false);
-    setImageError("");
-    if (!selectedImage) {
-      return;
-    }
-
-    const data =
-      createImageFileValidation(tValidation).safeParse(selectedImage);
-
-    if (data.error) {
-      if (data.error.issues.length > 0) {
-        setImageError(data.error.issues[0].message);
-      } else {
-        setImageError(data.error.message);
-      }
-      return;
-    }
-
-    URL.revokeObjectURL(image);
-    const previewUrl = URL.createObjectURL(selectedImage);
-    setImage(previewUrl);
-    setFile(selectedImage);
-  }
 
   async function saveData() {
     try {
@@ -71,11 +31,11 @@ export default function ProfilePictureForm({
           if (uploadedImageData.secure_url) {
             uploadedImageUrl = uploadedImageData.secure_url;
           } else {
-            setImageError(tGlobal("something-went-wrong"));
+            setError(tGlobal("something-went-wrong"));
             return;
           }
         } catch {
-          setImageError(tGlobal("something-went-wrong"));
+          setError(tGlobal("something-went-wrong"));
         }
       }
 
@@ -87,7 +47,6 @@ export default function ProfilePictureForm({
         });
       }
 
-      setImage("");
       setFile(null);
       setIsChanged(true);
       router.refresh();
@@ -111,62 +70,16 @@ export default function ProfilePictureForm({
       showBack
     >
       <p className="text-sm mb-4">{t("choose-picture")}</p>
-      <div className="relative w-fit">
-        <Tooltip isLabel>
-          <TooltipTrigger>
-            <Button
-              disabled={isPending}
-              as="label"
-              aria-label={t("pick-image")}
-              htmlFor="file-select"
-              tabIndex={0}
-              className="absolute -top-2 -right-2"
-              size="sm"
-              radius="pill"
-              color="primary"
-              startIcon={<PiPencilFill />}
-            />
-          </TooltipTrigger>
-          <TooltipContent>{t("pick-image")}</TooltipContent>
-        </Tooltip>
-        <Image
-          className="rounded-containers w-[94vw] max-w-50 h-50 object-cover"
-          src={image || user.image || ""}
-          width={200}
-          height={200}
-          loading="eager"
-          alt={t("user-avatar", { name: user.name })}
-        />
-        <input
-          onChange={handleImageChange}
-          id="file-select"
-          type="file"
-          className="hidden"
-          accept="image/png, image/jpeg, image/webp"
-        />
-        {image && (
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                disabled={isPending}
-                as="label"
-                aria-label={t("cancel")}
-                tabIndex={0}
-                onClick={() => {
-                  setImage("");
-                }}
-                className="absolute -bottom-2 -right-2"
-                size="sm"
-                radius="pill"
-                color="error"
-                startIcon={<PiXCircleFill />}
-              />
-            </TooltipTrigger>
-            <TooltipContent>{t("cancel")}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-      {imageError && <p className="text-error text-sm">{imageError}</p>}
+      <ImagePicker
+        isPending={isPending}
+        pickImageLabel={t("pick-image")}
+        imageUrl={user.image || ""}
+        imageAlt={t("user-avatar", { name: user.name })}
+        cancelLabel={t("cancel")}
+        setIsChanged={setIsChanged}
+        setFile={setFile}
+      />
+      {error && <p className="text-error text-sm">{error}</p>}
       {isChanged && (
         <p className="text-success text-sm">{t("photo-changed")}</p>
       )}

@@ -1,6 +1,8 @@
 "use server";
 
 import { db } from "@/db";
+import { recipeTable } from "@/db/schemas/recipe-schema";
+import { eq } from "drizzle-orm";
 
 export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
@@ -9,6 +11,19 @@ export type RecipeWithRelations = NonNullable<
 export type RecipeWithRelationsPromise = NonNullable<
   ReturnType<typeof getAllRecipes>
 >;
+
+export async function addRecipe(recipe: typeof recipeTable.$inferInsert) {
+  try {
+    const inserted = await db.insert(recipeTable).values(recipe);
+    return JSON.parse(JSON.stringify(inserted));
+  } catch {
+    return null;
+  }
+}
+
+export async function deleteRecipe(recipeId: string) {
+  await db.delete(recipeTable).where(eq(recipeTable.id, recipeId));
+}
 
 export async function getAllRecipes() {
   try {

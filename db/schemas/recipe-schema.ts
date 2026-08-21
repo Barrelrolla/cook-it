@@ -30,17 +30,17 @@ export const recipeCategoryEnum = pgEnum("recipe_category", [
 ]);
 
 export const restrictedDietEnum = pgEnum("restricted_diet", [
-  "Diabetic",
-  "Gluten-Free",
-  "Halal",
-  "Hindu",
-  "Kosher",
-  "Low-Calorie",
-  "Low-Fat",
-  "Low-Lactose",
-  "Low-Salt",
-  "Vegan",
-  "Vegetarian",
+  "diabetic",
+  "gluten-free",
+  "halal",
+  "hindu",
+  "kosher",
+  "low-calorie",
+  "low-fat",
+  "low-lactose",
+  "low-salt",
+  "vegan",
+  "vegetarian",
 ]);
 
 export const cuisineTable = pgTable("cuisines", {

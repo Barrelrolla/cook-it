@@ -1,5 +1,4 @@
 import { getSession } from "@/app/actions/authActions";
-import { user } from "@/db/schemas/auth-schema";
 import ProfilePictureForm from "./profilePictureForm";
 import { redirect } from "next/navigation";
 import { SIGNIN_PARAM } from "@/constants";
@@ -11,5 +10,7 @@ export default async function PictureSettingsPage() {
     redirect(`/?${SIGNIN_PARAM}`);
   }
 
-  return <ProfilePictureForm user={session.user as typeof user.$inferSelect} />;
+  const user = JSON.parse(JSON.stringify(session.user));
+
+  return <ProfilePictureForm user={user} />;
 }

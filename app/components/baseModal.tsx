@@ -24,7 +24,7 @@ export default function BaseModal({
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      <CardTitle className="font-heading">{title}</CardTitle>
+      <CardTitle className="font-heading pr-10">{title}</CardTitle>
       <form
         action={formAction}
         ref={formRef}

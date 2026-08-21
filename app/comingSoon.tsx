@@ -2,6 +2,7 @@ import Image from "next/image";
 import logoLight from "@/public/logo-light.svg";
 import logoDark from "@/public/logo-dark.svg";
 import { getTranslations } from "next-intl/server";
+import ReleaseDate from "./releaseDate";
 
 export default async function ComingSoonPage() {
   const t = await getTranslations("Global");
@@ -23,6 +24,7 @@ export default async function ComingSoonPage() {
       <h1 className="font-heading text-6xl text-center text-primary">
         {t("coming-soon")}
       </h1>
+      <ReleaseDate />
     </main>
   );
 }
