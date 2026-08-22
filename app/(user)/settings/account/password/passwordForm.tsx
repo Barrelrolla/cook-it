@@ -8,6 +8,7 @@ import { authClient } from "@/auth/authClient";
 import { setPassword } from "@/app/actions/authActions";
 import { $ZodIssue } from "zod/v4/core";
 import { useTranslations } from "next-intl";
+import { IS_DEV } from "@/utils/helpers";
 
 export default function PasswordForm({
   hasPassword,
@@ -82,7 +83,10 @@ export default function PasswordForm({
     if (!hasPass && pass.data) {
       try {
         await setPassword(pass.data.password);
-      } catch {
+      } catch (err) {
+        if (IS_DEV) {
+          console.error(err);
+        }
         setError(tGlobal("something-went-wrong"));
         return;
       }

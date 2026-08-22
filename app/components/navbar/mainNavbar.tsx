@@ -15,7 +15,7 @@ import {
 
 export default async function MainNavbar() {
   const session = await getSession();
-  const user = JSON.parse(JSON.stringify(session?.user));
+  const user = session ? JSON.parse(JSON.stringify(session.user)) : null;
   return (
     <Navbar
       backdropClassName="bg-stone-800/30 backdrop-blur-[2px]"

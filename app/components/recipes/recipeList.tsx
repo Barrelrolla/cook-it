@@ -6,7 +6,7 @@ import { getSession } from "@/app/actions/authActions";
 export default async function RecipeList({
   recipesPromise,
 }: {
-  recipesPromise: RecipeWithRelationsPromise;
+  recipesPromise: RecipeWithRelationsPromise | null;
 }) {
   const t = await getTranslations("RecipePage");
   const recipes = await recipesPromise;

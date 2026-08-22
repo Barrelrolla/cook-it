@@ -1,7 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 import { user as userSchema } from "@/db/schemas/auth-schema";
-import { uploadUserAvatar } from "@/utils/helpers";
+import { IS_DEV, uploadUserAvatar } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
 import SettingsForm from "../../settingsForm";
@@ -34,7 +34,10 @@ export default function ProfilePictureForm({
             setError(tGlobal("something-went-wrong"));
             return;
           }
-        } catch {
+        } catch (err) {
+          if (IS_DEV) {
+            console.error(err);
+          }
           setError(tGlobal("something-went-wrong"));
         }
       }
@@ -50,7 +53,10 @@ export default function ProfilePictureForm({
       setFile(null);
       setIsChanged(true);
       router.refresh();
-    } catch {
+    } catch (err) {
+      if (IS_DEV) {
+        console.error(err);
+      }
       throw new Error(tGlobal("something-went-wrong"));
     }
   }

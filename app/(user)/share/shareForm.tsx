@@ -13,6 +13,7 @@ import placeholderImage from "@/public/recipe-placeholder.png";
 import {
   convertDurationToMinutes,
   getUniqueRecipeSlug,
+  IS_DEV,
   uploadRecipeImage,
 } from "@/utils/helpers";
 import { createRecipeValidation } from "@/utils/validationSchemas";
@@ -145,7 +146,10 @@ export default function ShareForm({
             setError(tGlobal("something-went-wrong"));
             return;
           }
-        } catch {
+        } catch (err) {
+          if (IS_DEV) {
+            console.error(err);
+          }
           setError(tGlobal("something-went-wrong"));
         }
       } else {
@@ -179,7 +183,10 @@ export default function ShareForm({
         authorId: user.id,
       });
       router.push(`/recipes/${slug}`);
-    } catch {
+    } catch (err) {
+      if (IS_DEV) {
+        console.error(err);
+      }
       throw new Error(tGlobal("something-went-wrong"));
     }
   }

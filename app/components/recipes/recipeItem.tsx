@@ -52,11 +52,13 @@ export default async function RecipeItem({
           </CardImageContainer>
           <CardSection>
             <div className="py-2 px-4">
-              <CardTitle className="line-clamp-1 py-0 px-0">{title}</CardTitle>
+              <CardTitle className="line-clamp-1 py-0 px-0 font-heading font-medium">
+                {title}
+              </CardTitle>
             </div>
             <div className="flex justify-between px-4 pb-2 text-sm">
               {category && (
-                <Badge color={color}>{formatCategory(category)}</Badge>
+                <Badge color={"primary"}>{formatCategory(category)}</Badge>
               )}
               {difficulty && (
                 <Badge className="absolute top-0 left-0 m-1" color={color}>

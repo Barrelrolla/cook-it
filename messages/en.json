@@ -8,7 +8,9 @@
     "account-not-found": "Account not found.",
     "google": "Google",
     "apple": "Apple",
-    "coming-soon": "Coming soon"
+    "coming-soon": "Coming soon",
+    "metadata-search": "Recipes with {query}",
+    "metadata-no-query": "Recipes"
   },
   "Navbar": {
     "profile-button-label": "Profile",
@@ -18,6 +20,10 @@
       "recipes": "Recipes",
       "categories": "Categories"
     }
+  },
+  "Search": {
+    "search": "Search",
+    "search-placeholder": "What do you want to eat?"
   },
   "HomeHero": {
     "title": "Discover. Cook.",

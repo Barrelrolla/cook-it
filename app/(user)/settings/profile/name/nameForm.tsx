@@ -9,6 +9,7 @@ import { authClient } from "@/auth/authClient";
 import { useRouter } from "next/navigation";
 import SettingsForm from "../../settingsForm";
 import { useTranslations } from "next-intl";
+import { IS_DEV } from "@/utils/helpers";
 
 export default function NameForm({
   user,
@@ -56,7 +57,10 @@ export default function NameForm({
       setName("");
       setIsChanged(true);
       router.refresh();
-    } catch {
+    } catch (err) {
+      if (IS_DEV) {
+        console.error(err);
+      }
       throw new Error(tGlobal("something-went-wrong"));
     }
   }

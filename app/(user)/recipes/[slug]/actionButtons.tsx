@@ -1,4 +1,5 @@
 "use client";
+import { IS_DEV } from "@/utils/helpers";
 import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
 import { useTranslations } from "next-intl";
 import { PiBookmark, PiHeart, PiShareNetwork } from "react-icons/pi";
@@ -15,6 +16,9 @@ export default function RecipeActionButtons() {
       try {
         await navigator.share(shareData);
       } catch (error) {
+        if (IS_DEV) {
+          console.error(error);
+        }
         if (error instanceof DOMException && error.name === "AbortError") {
           return;
         }

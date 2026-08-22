@@ -2,11 +2,15 @@
 
 import { headers } from "next/headers";
 import { auth } from "@/auth/auth";
+import { IS_DEV } from "@/utils/helpers";
 
 export async function getSession() {
   try {
     return await auth.api.getSession({ headers: await headers() });
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return null;
   }
 }
@@ -17,7 +21,10 @@ export async function setPassword(password: string) {
       body: { newPassword: password },
       headers: await headers(),
     });
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return null;
   }
 }
@@ -36,7 +43,10 @@ export async function getUserAuthMethods() {
       hasPassword,
       providers: accounts.map((acc) => acc.providerId),
     };
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return null;
   }
 }
@@ -47,7 +57,10 @@ export async function checkUsernameAvailability(username: string) {
       body: { username },
     });
     return available;
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return false;
   }
 }

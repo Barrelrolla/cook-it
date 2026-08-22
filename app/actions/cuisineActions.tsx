@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import { IS_DEV } from "@/utils/helpers";
 
 export type Cuisine = NonNullable<
   Awaited<ReturnType<typeof getAllCuisines>>
@@ -9,7 +10,10 @@ export type Cuisine = NonNullable<
 export async function getAllCuisines() {
   try {
     return await db.query.cuisineTable.findMany();
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return null;
   }
 }
@@ -19,7 +23,10 @@ export async function getCuisineId(name: string) {
     return await db.query.cuisineTable.findFirst({
       where: (cuisine, { eq }) => eq(cuisine.name, name),
     });
-  } catch {
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
     return null;
   }
 }

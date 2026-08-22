@@ -19,6 +19,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createTranslator } from "next-intl";
 import en from "@/messages/en.json";
+import { IS_DEV } from "@/utils/helpers";
 
 const messages = { en };
 
@@ -83,7 +84,11 @@ export const auth = betterAuth({
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
           });
-        } catch {}
+        } catch (err) {
+          if (IS_DEV) {
+            console.error(err);
+          }
+        }
       },
     },
   },
@@ -105,7 +110,11 @@ export const auth = betterAuth({
           subject: t("Emails.password-reset-subject", { brand }),
           react: PasswordReset({ t, url }),
         });
-      } catch {}
+      } catch (err) {
+        if (IS_DEV) {
+          console.error(err);
+        }
+      }
     },
   },
   emailVerification: {
@@ -123,7 +132,11 @@ export const auth = betterAuth({
           subject: t("Emails.verify-subject", { brand }),
           react: VerificationEmail({ t, name: user.name, url }),
         });
-      } catch {}
+      } catch (err) {
+        if (IS_DEV) {
+          console.error(err);
+        }
+      }
     },
     autoSignInAfterVerification: true,
   },

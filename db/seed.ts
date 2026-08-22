@@ -4,8 +4,10 @@ import { auth } from "@/auth/auth";
 import { db } from ".";
 import { cuisineTable, recipeTable } from "./schemas/recipe-schema";
 import { getUniqueRecipeSlug } from "@/utils/helpers";
+import { sql } from "drizzle-orm";
 
 export async function seed() {
+  await db.execute(sql`CREATE EXTENSION IF NOT EXISTS pg_trgm;`);
   const { user } = await auth.api.createUser({
     body: {
       email: "chetkara@gmail.com",
