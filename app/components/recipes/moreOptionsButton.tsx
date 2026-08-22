@@ -9,7 +9,7 @@ import {
   DropdownTrigger,
 } from "@barrelrolla/react-components-library";
 import {
-  PiDotsThreeVertical,
+  PiDotsThreeVerticalBold,
   PiPencilSimpleLine,
   PiTrash,
 } from "react-icons/pi";
@@ -51,8 +51,10 @@ export default function MoreOptionsButton({
         <DropdownTrigger>
           <Button
             size="sm"
-            className="m-1 absolute top-0 right-0 z-20"
-            startIcon={<PiDotsThreeVertical />}
+            color="main"
+            variant="ghost"
+            className="m-1 absolute bottom-0 right-0 z-20"
+            startIcon={<PiDotsThreeVerticalBold />}
           />
         </DropdownTrigger>
         <DropdownContent>

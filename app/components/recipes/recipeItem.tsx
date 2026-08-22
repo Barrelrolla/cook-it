@@ -57,7 +57,7 @@ export default async function RecipeItem({
                 {title}
               </CardTitle>
             </div>
-            <div className="flex flex-wrap gap-1 px-4 pb-2 text-sm">
+            <div className="flex flex-wrap gap-1 pl-4 pr-10 pb-2 text-sm">
               {category && (
                 <Badge color="primary">{formatCategory(category)}</Badge>
               )}

@@ -64,19 +64,25 @@ export default function RecipeActionButtons({
   }
 
   return (
-    <ButtonGroup variant="ghost">
+    <ButtonGroup variant="ghost" className="md:pr-4">
       <Button
-        className="w-30"
+        wrapperClassName="min-w-26"
+        className="px-0 w-full"
         onClick={handleLikeButton}
         startIcon={optimisticLiked ? <PiHeartFill /> : <PiHeart />}
       >
         {optimisticLiked ? t("liked-button") : t("like-button")}
       </Button>
-      <Button className="w-30" startIcon={<PiBookmark />}>
+      <Button
+        wrapperClassName="min-w-26"
+        className="px-0 w-full"
+        startIcon={<PiBookmark />}
+      >
         {t("save-button")}
       </Button>
       <Button
-        className="w-30"
+        wrapperClassName="min-w-26"
+        className="px-0 w-full"
         onClick={handleShare}
         startIcon={<PiShareNetwork />}
       >
