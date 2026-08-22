@@ -12,7 +12,7 @@
   --color-primary-content: #f7ebdd;
   --color-secondary: #c23b22;
   --color-secondary-content: #f7ebdd;
-  --color-accent: #b33e00;
+  --color-accent: #da5400;
   --color-accent-content: #f7ebdd;
   --color-info: #0f5f8a;
   --color-info-content: #ffffff;
@@ -44,7 +44,7 @@
   --color-primary-content: #1b1b16;
   --color-secondary: #de7463;
   --color-secondary-content: #1b1b16;
-  --color-accent: #ff6b00;
+  --color-accent: #ff810a;
   --color-accent-content: #1b1b16;
   --color-info: #6ea8d8;
   --color-info-content: #161616;
@@ -105,6 +105,11 @@ body {
 
 main {
   @apply max-w-(--max-content-width) mx-auto;
+}
+
+img,
+a {
+  -webkit-user-drag: none;
 }
 
 @theme {

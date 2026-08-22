@@ -14,7 +14,7 @@ export default function UserAvatar({
   return (
     <div
       className={
-        "rounded-full overflow-clip size-10 border border-main-content/(--border-transparency) " +
+        "shrink-0 rounded-full overflow-clip size-10 border border-main-content/(--border-transparency) " +
         className
       }
     >

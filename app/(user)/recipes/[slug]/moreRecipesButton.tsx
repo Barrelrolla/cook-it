@@ -12,12 +12,13 @@ export function MoreRecipesButton({ href }: MoreRecipesButtonProps) {
     <Button
       size="sm"
       variant="outline"
+      wrapperClassName="md:place-self-start"
       className="min-h-8.5 h-fit"
       href={href}
       as={Link}
     >
       {t("see-more-button")}
-      <PiArrowRight />
+      <PiArrowRight className="shrink-0" />
     </Button>
   );
 }

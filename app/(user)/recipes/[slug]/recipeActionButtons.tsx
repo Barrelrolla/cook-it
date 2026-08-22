@@ -7,6 +7,7 @@ import {
 import { IS_DEV } from "@/utils/helpers";
 import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { startTransition, useOptimistic } from "react";
 import {
   PiBookmark,
@@ -17,15 +18,22 @@ import {
 
 export default function RecipeActionButtons({
   recipe,
+  isSignedIn,
   isLiked,
 }: {
   recipe: RecipeWithRelations;
+  isSignedIn: boolean;
   isLiked: boolean;
 }) {
   const [optimisticLiked, setOptimisticLiked] = useOptimistic(isLiked);
+  const router = useRouter();
   const t = useTranslations("RecipePage");
 
   async function handleLikeButton() {
+    if (!isSignedIn) {
+      router.replace(`/recipes/${recipe.slug}/?signin`);
+      return;
+    }
     const nextLiked = !optimisticLiked;
 
     startTransition(async () => {

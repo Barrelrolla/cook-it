@@ -20,6 +20,7 @@ import { PiClock, PiForkKnife } from "react-icons/pi";
 import RecipeActionButtons from "./recipeActionButtons";
 import { MoreRecipesButton } from "./moreRecipesButton";
 import { ReactNode } from "react";
+import { getSession } from "@/app/actions/authActions";
 
 type RecipePageProps = {
   recipe: RecipeWithRelations;
@@ -68,6 +69,9 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
 
   const t = await getTranslations("RecipePage");
   const isLiked = await getIsLiked(recipe.id);
+  const session = await getSession();
+  const isSignedIn = session !== null;
+
   return (
     <RecipeHero imageUrl={imageUrl} imageAlt={t("img-alt")}>
       <HeroSection className="justify-end">
@@ -84,15 +88,17 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
             <HeroText className="px-0">{description}</HeroText>
           </div>
           {author && (
-            <div className="flex items-center gap-4">
-              <UserAvatar
-                className="size-12"
-                avatarUrl={author.image || ""}
-                name={author.name}
-              />
-              <div>
-                <span className="text-sm">{author.name}</span>
-                <span className="block text-xs">@{author.username}</span>
+            <div className="flex-col flex items-center gap-4">
+              <div className="flex gap-4">
+                <UserAvatar
+                  className="size-12"
+                  avatarUrl={author.image || ""}
+                  name={author.name}
+                />
+                <div>
+                  <span className="text-sm">{author.name}</span>
+                  <span className="block text-xs">@{author.username}</span>
+                </div>
               </div>
               <MoreRecipesButton href={`/user/${author.username}`} />
             </div>
@@ -116,30 +122,36 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
             containerClassName="max-w-full w-fit"
             className="text-primary py-2 flex flex-row flex-wrap gap-4 items-center"
           >
-            <div className="flex flex-row flex-wrap gap-8 px-4">
-              {prepTime && (
-                <RecipeMetadata
-                  label={t("preparation-time")}
-                  icon={<PiClock />}
-                  text={formatCookTime(t, prepTime)}
-                />
-              )}
-              {cookTime && (
-                <RecipeMetadata
-                  label={t("cook-time")}
-                  icon={<PiClock />}
-                  text={formatCookTime(t, cookTime)}
-                />
-              )}
-              {servings && (
-                <RecipeMetadata
-                  label={t("servings")}
-                  icon={<PiForkKnife />}
-                  text={servings.toString()}
-                />
-              )}
-            </div>
-            <RecipeActionButtons recipe={recipe} isLiked={isLiked} />
+            {(prepTime || cookTime || servings) && (
+              <div className="flex flex-row flex-wrap gap-8 px-4">
+                {prepTime && (
+                  <RecipeMetadata
+                    label={t("preparation-time")}
+                    icon={<PiClock />}
+                    text={formatCookTime(t, prepTime)}
+                  />
+                )}
+                {cookTime && (
+                  <RecipeMetadata
+                    label={t("cook-time")}
+                    icon={<PiClock />}
+                    text={formatCookTime(t, cookTime)}
+                  />
+                )}
+                {servings && (
+                  <RecipeMetadata
+                    label={t("servings")}
+                    icon={<PiForkKnife />}
+                    text={servings.toString()}
+                  />
+                )}
+              </div>
+            )}
+            <RecipeActionButtons
+              recipe={recipe}
+              isLiked={isLiked}
+              isSignedIn={isSignedIn}
+            />
           </Card>
         </div>
       </HeroSection>
