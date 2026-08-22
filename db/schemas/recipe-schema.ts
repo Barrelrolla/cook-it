@@ -5,6 +5,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -72,6 +73,7 @@ export const recipeTable = pgTable(
     ingredients: text().array().notNull(),
     servings: integer(),
     diet: restrictedDietEnum().array(),
+    likesCount: integer().notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -89,4 +91,19 @@ export const recipeTable = pgTable(
   ],
 );
 
+export const likesTable = pgTable(
+  "likes",
+  {
+    id: uuid().defaultRandom().primaryKey(),
+    userId: text()
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    recipeId: uuid()
+      .notNull()
+      .references(() => recipeTable.id, { onDelete: "cascade" }),
+  },
+  (table) => [unique().on(table.userId, table.recipeId)],
+);
+
 export type RecipeType = typeof recipeTable.$inferSelect;
+export type LikeRelation = typeof likesTable.$inferSelect;

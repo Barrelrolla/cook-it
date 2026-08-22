@@ -1,6 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
-import { user as userSchema } from "@/db/schemas/auth-schema";
+import { User } from "@/db/schemas/auth-schema";
 import { IS_DEV, uploadUserAvatar } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/authClient";
@@ -8,11 +8,7 @@ import SettingsForm from "../../settingsForm";
 import { useTranslations } from "next-intl";
 import ImagePicker from "@/app/components/imagePicker";
 
-export default function ProfilePictureForm({
-  user,
-}: {
-  user: typeof userSchema.$inferSelect;
-}) {
+export default function ProfilePictureForm({ user }: { user: User }) {
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isChanged, setIsChanged] = useState(false);

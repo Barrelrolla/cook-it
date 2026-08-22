@@ -12,7 +12,7 @@ import {
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
 import { getTranslations } from "next-intl/server";
 import { formatCategory, formatDifficulty } from "@/constants/recipeHelpers";
-import { user as userSchema } from "@/db/schemas/auth-schema";
+import { User } from "@/db/schemas/auth-schema";
 import MoreOptionsButton from "./moreOptionsButton";
 
 export default async function RecipeItem({
@@ -20,9 +20,10 @@ export default async function RecipeItem({
   recipe,
 }: {
   recipe: RecipeWithRelations;
-  user: typeof userSchema.$inferSelect | null;
+  user: User | null;
 }) {
-  const { id, slug, title, imageUrl, difficulty, authorId, category } = recipe;
+  const { id, slug, title, imageUrl, difficulty, authorId, category, cuisine } =
+    recipe;
   let color: ColorType = "success";
   if (difficulty === "medium") {
     color = "warning";
@@ -56,10 +57,11 @@ export default async function RecipeItem({
                 {title}
               </CardTitle>
             </div>
-            <div className="flex justify-between px-4 pb-2 text-sm">
+            <div className="flex flex-wrap gap-1 px-4 pb-2 text-sm">
               {category && (
-                <Badge color={"primary"}>{formatCategory(category)}</Badge>
+                <Badge color="primary">{formatCategory(category)}</Badge>
               )}
+              {cuisine && <Badge color="secondary">{cuisine.name}</Badge>}
               {difficulty && (
                 <Badge className="absolute top-0 left-0 m-1" color={color}>
                   {formatDifficulty(difficulty)}

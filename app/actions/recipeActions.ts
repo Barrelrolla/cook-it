@@ -1,9 +1,11 @@
 "use server";
 
 import { db } from "@/db";
-import { recipeTable } from "@/db/schemas/recipe-schema";
+import { likesTable, recipeTable } from "@/db/schemas/recipe-schema";
 import { IS_DEV } from "@/utils/helpers";
-import { eq, ilike, or, sql } from "drizzle-orm";
+import { and, eq, ilike, or, sql } from "drizzle-orm";
+import { getSession } from "./authActions";
+import { revalidatePath } from "next/cache";
 
 export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
@@ -29,6 +31,73 @@ export async function deleteRecipe(recipeId: string) {
   await db.delete(recipeTable).where(eq(recipeTable.id, recipeId));
 }
 
+export async function getIsLiked(recipeId: string) {
+  const session = await getSession();
+  if (!session) return false;
+
+  const like = await db.query.likesTable.findFirst({
+    where: (like, { and, eq }) =>
+      and(eq(like.recipeId, recipeId), eq(like.userId, session.user.id)),
+  });
+  if (like) {
+    return true;
+  }
+  return false;
+}
+
+export async function likeRecipe(recipeId: string, slug: string) {
+  const session = await getSession();
+  if (!session) return;
+
+  await db.transaction(async (tx) => {
+    const inserted = await tx
+      .insert(likesTable)
+      .values({
+        recipeId,
+        userId: session.user.id,
+      })
+      .onConflictDoNothing()
+      .returning({ id: likesTable.id });
+
+    if (inserted.length > 0) {
+      await tx
+        .update(recipeTable)
+        .set({
+          likesCount: sql`${recipeTable.likesCount} + 1`,
+        })
+        .where(eq(recipeTable.id, recipeId));
+    }
+  });
+  revalidatePath(`/recipes/${slug}`);
+}
+
+export async function unlikeRecipe(recipeId: string, slug: string) {
+  const session = await getSession();
+  if (!session) return;
+
+  await db.transaction(async (tx) => {
+    const deleted = await tx
+      .delete(likesTable)
+      .where(
+        and(
+          eq(likesTable.recipeId, recipeId),
+          eq(likesTable.userId, session.user.id),
+        ),
+      )
+      .returning({ id: likesTable.id });
+
+    if (deleted.length > 0) {
+      await tx
+        .update(recipeTable)
+        .set({
+          likesCount: sql`${recipeTable.likesCount} - 1`,
+        })
+        .where(eq(recipeTable.id, recipeId));
+    }
+  });
+  revalidatePath(`/recipes/${slug}`);
+}
+
 export async function getAllRecipes() {
   try {
     return await db.query.recipeTable.findMany({
@@ -38,9 +107,7 @@ export async function getAllRecipes() {
       },
     });
   } catch (err) {
-    if (IS_DEV) {
-      console.error(err);
-    }
+    if (IS_DEV) console.error(err);
     return null;
   }
 }

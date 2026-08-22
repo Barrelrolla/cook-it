@@ -1,6 +1,6 @@
 "use client";
 
-import { user as userSchema } from "@/db/schemas/auth-schema";
+import { User } from "@/db/schemas/auth-schema";
 import UserAvatar from "../userAvatar";
 import {
   Button,
@@ -22,11 +22,7 @@ import { authClient } from "@/auth/authClient";
 import DestructiveModal from "../destructiveModal";
 import { useTranslations } from "next-intl";
 
-export default function UserButton({
-  user,
-}: {
-  user: typeof userSchema.$inferSelect;
-}) {
+export default function UserButton({ user }: { user: User }) {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -39,8 +39,10 @@ export default async function RecipesPage({ searchParams }: RecipePageProps) {
     recipesPromise = getAllRecipes();
   }
   return (
-    <main className="max-w-(--max-content-width) mx-auto mt-26">
-      <SearchButton initialQuery={query} />
+    <main>
+      <div className="px-2 pt-4">
+        <SearchButton initialQuery={query} />
+      </div>
       <Suspense fallback={<RecipeListLoading />}>
         <RecipeList recipesPromise={recipesPromise} />
       </Suspense>

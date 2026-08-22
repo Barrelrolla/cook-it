@@ -14,9 +14,9 @@ import { useState } from "react";
 import { PiMagnifyingGlass } from "react-icons/pi";
 
 export default function SearchButton({
-  initialQuery,
+  initialQuery = "",
 }: {
-  initialQuery?: string | undefined;
+  initialQuery?: string;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const router = useRouter();

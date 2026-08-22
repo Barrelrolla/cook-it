@@ -1,4 +1,4 @@
-import { RecipeWithRelations } from "@/app/actions/recipeActions";
+import { getIsLiked, RecipeWithRelations } from "@/app/actions/recipeActions";
 import RecipeHero from "@/app/components/hero/baseHero";
 import UserAvatar from "@/app/components/userAvatar";
 import {
@@ -17,7 +17,7 @@ import {
 } from "@barrelrolla/react-components-library";
 import { getTranslations } from "next-intl/server";
 import { PiClock, PiForkKnife } from "react-icons/pi";
-import RecipeActionButtons from "./actionButtons";
+import RecipeActionButtons from "./recipeActionButtons";
 import { MoreRecipesButton } from "./moreRecipesButton";
 import { ReactNode } from "react";
 
@@ -67,6 +67,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
   }
 
   const t = await getTranslations("RecipePage");
+  const isLiked = await getIsLiked(recipe.id);
   return (
     <RecipeHero imageUrl={imageUrl} imageAlt={t("img-alt")}>
       <HeroSection className="justify-end">
@@ -112,31 +113,33 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
               ))}
           </div>
           <Card
-            containerClassName="max-w-full w-fit py-2 px-4"
-            className="flex-row flex-wrap gap-8 items-center text-primary"
+            containerClassName="max-w-full w-fit"
+            className="text-primary py-2 flex flex-row flex-wrap gap-4 items-center"
           >
-            {prepTime && (
-              <RecipeMetadata
-                label={t("preparation-time")}
-                icon={<PiClock />}
-                text={formatCookTime(t, prepTime)}
-              />
-            )}
-            {cookTime && (
-              <RecipeMetadata
-                label={t("cook-time")}
-                icon={<PiClock />}
-                text={formatCookTime(t, cookTime)}
-              />
-            )}
-            {servings && (
-              <RecipeMetadata
-                label={t("servings")}
-                icon={<PiForkKnife />}
-                text={servings.toString()}
-              />
-            )}
-            <RecipeActionButtons />
+            <div className="flex flex-row flex-wrap gap-8 px-4">
+              {prepTime && (
+                <RecipeMetadata
+                  label={t("preparation-time")}
+                  icon={<PiClock />}
+                  text={formatCookTime(t, prepTime)}
+                />
+              )}
+              {cookTime && (
+                <RecipeMetadata
+                  label={t("cook-time")}
+                  icon={<PiClock />}
+                  text={formatCookTime(t, cookTime)}
+                />
+              )}
+              {servings && (
+                <RecipeMetadata
+                  label={t("servings")}
+                  icon={<PiForkKnife />}
+                  text={servings.toString()}
+                />
+              )}
+            </div>
+            <RecipeActionButtons recipe={recipe} isLiked={isLiked} />
           </Card>
         </div>
       </HeroSection>

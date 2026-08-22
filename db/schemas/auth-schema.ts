@@ -129,3 +129,5 @@ export const authSchema = {
   sessionRelations,
   accountRelations,
 };
+
+export type User = typeof user.$inferSelect;

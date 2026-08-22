@@ -3,7 +3,7 @@
 import { getCuisineId } from "@/app/actions/cuisineActions";
 import { addRecipe } from "@/app/actions/recipeActions";
 import ImagePicker from "@/app/components/imagePicker";
-import { user as userSchema } from "@/db/schemas/auth-schema";
+import { User } from "@/db/schemas/auth-schema";
 import {
   recipeCategoryEnum,
   recipeDifficultyEnum,
@@ -43,7 +43,7 @@ export default function ShareForm({
   user,
 }: {
   cuisines: string[];
-  user: typeof userSchema.$inferSelect;
+  user: User;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Input } from "@barrelrolla/react-components-library";
-import { user as userSchema } from "@/db/schemas/auth-schema";
+import { User } from "@/db/schemas/auth-schema";
 import { createPermissiveNameValidation } from "@/utils/validationSchemas";
 import z from "zod";
 import { authClient } from "@/auth/authClient";
@@ -11,11 +11,7 @@ import SettingsForm from "../../settingsForm";
 import { useTranslations } from "next-intl";
 import { IS_DEV } from "@/utils/helpers";
 
-export default function NameForm({
-  user,
-}: {
-  user: typeof userSchema.$inferSelect;
-}) {
+export default function NameForm({ user }: { user: User }) {
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [isPending, startTransition] = useTransition();
