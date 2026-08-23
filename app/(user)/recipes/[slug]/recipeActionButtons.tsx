@@ -4,6 +4,7 @@ import {
   RecipeWithRelations,
   unlikeRecipe,
 } from "@/app/actions/recipeActions";
+import { saveRecipe, unsaveRecipe } from "@/app/actions/userActions";
 import { IS_DEV } from "@/utils/helpers";
 import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
 import { useTranslations } from "next-intl";
@@ -11,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { startTransition, useOptimistic } from "react";
 import {
   PiBookmark,
+  PiBookmarkFill,
   PiHeart,
   PiHeartFill,
   PiShareNetwork,
@@ -20,12 +22,15 @@ export default function RecipeActionButtons({
   recipe,
   isSignedIn,
   isLiked,
+  isSaved,
 }: {
   recipe: RecipeWithRelations;
   isSignedIn: boolean;
   isLiked: boolean;
+  isSaved: boolean;
 }) {
   const [optimisticLiked, setOptimisticLiked] = useOptimistic(isLiked);
+  const [optimisticSaved, setOptimisticSaved] = useOptimistic(isSaved);
   const router = useRouter();
   const t = useTranslations("RecipePage");
 
@@ -43,6 +48,24 @@ export default function RecipeActionButtons({
         await likeRecipe(recipe.id, recipe.slug);
       } else {
         await unlikeRecipe(recipe.id, recipe.slug);
+      }
+    });
+  }
+
+  async function handleSaveButton() {
+    if (!isSignedIn) {
+      router.replace(`/recipes/${recipe.slug}/?signin`);
+      return;
+    }
+
+    const nextSaved = !optimisticSaved;
+    startTransition(async () => {
+      setOptimisticSaved(nextSaved);
+
+      if (nextSaved) {
+        await saveRecipe(recipe.id, recipe.slug);
+      } else {
+        await unsaveRecipe(recipe.id, recipe.slug);
       }
     });
   }
@@ -84,9 +107,10 @@ export default function RecipeActionButtons({
       <Button
         wrapperClassName="min-w-26"
         className="px-0 w-full"
-        startIcon={<PiBookmark />}
+        onClick={handleSaveButton}
+        startIcon={optimisticSaved ? <PiBookmarkFill /> : <PiBookmark />}
       >
-        {t("save-button")}
+        {optimisticSaved ? t("saved-button") : t("save-button")}
       </Button>
       <Button
         wrapperClassName="min-w-26"

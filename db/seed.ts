@@ -132,7 +132,7 @@ export async function seed() {
     authorId: user.id,
     imageUrl: "/rainbow-buddha-bowl.png",
     category: "lunch",
-    cuisineId: cuisines[49].id,
+    cuisineId: cuisines[47].id,
     description:
       "A colorful and satisfying grain bowl packed with roasted chickpeas, fresh vegetables, avocado, and a creamy tahini dressing.",
     prepTime: 15,

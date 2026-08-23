@@ -7,9 +7,16 @@ import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
 import { getTranslations } from "next-intl/server";
-import { getRecipesByUserId } from "@/app/actions/recipeActions";
+import {
+  getRecipesByUserId,
+  getRecipesSavedByUser,
+} from "@/app/actions/recipeActions";
+import { UserRecipeBar } from "./userRecipeBar";
 
-type Props = { params: Promise<{ username: string }> };
+type Props = {
+  params: Promise<{ username: string }>;
+  searchParams: Promise<{ saved?: string }>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
@@ -26,8 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function UserPage({ params }: Props) {
+export default async function UserPage({ params, searchParams }: Props) {
   const { username } = await params;
+  const { saved } = await searchParams;
   const user = await getUserByUsername(username);
   if (!user) {
     notFound();
@@ -35,8 +43,8 @@ export default async function UserPage({ params }: Props) {
   const session = await getSession();
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
-  const t = await getTranslations("UserPage");
-  const recipesPromise = getRecipesByUserId(user.id);
+  const recipesPromise =
+    saved !== undefined ? getRecipesSavedByUser() : getRecipesByUserId(user.id);
 
   return (
     <main className="pt-4">
@@ -56,9 +64,10 @@ export default async function UserPage({ params }: Props) {
         </div>
       </section>
       <section>
-        <h2 className="text-2xl mx-4">
+        {/* <h2 className="text-2xl mx-4">
           {current ? t("my-recipes") : t("uploaded-recipes")}
-        </h2>
+        </h2> */}
+        <UserRecipeBar isCurrentUser={current} />
         <Suspense fallback={<RecipeListLoading />}>
           <RecipeList recipesPromise={recipesPromise} />
         </Suspense>

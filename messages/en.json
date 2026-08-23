@@ -216,7 +216,8 @@
     "metadata-title": "{name}'s profile",
     "user-not-found": "User not found",
     "my-recipes": "My recipes",
-    "uploaded-recipes": "Uploaded recipes"
+    "uploaded-recipes": "Uploaded recipes",
+    "saved-recipes": "Saved recipes"
   },
   "AuthModal": {
     "reset-password-title": "Reset password",

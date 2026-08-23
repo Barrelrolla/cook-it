@@ -21,6 +21,7 @@ import RecipeActionButtons from "./recipeActionButtons";
 import { MoreRecipesButton } from "./moreRecipesButton";
 import { ReactNode } from "react";
 import { getSession } from "@/app/actions/authActions";
+import { getIsSaved } from "@/app/actions/userActions";
 
 type RecipePageProps = {
   recipe: RecipeWithRelations;
@@ -69,6 +70,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
 
   const t = await getTranslations("RecipePage");
   const isLiked = await getIsLiked(recipe.id);
+  const isSaved = await getIsSaved(recipe.id);
   const session = await getSession();
   const isSignedIn = session !== null;
 
@@ -149,8 +151,9 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
             )}
             <RecipeActionButtons
               recipe={recipe}
-              isLiked={isLiked}
               isSignedIn={isSignedIn}
+              isLiked={isLiked}
+              isSaved={isSaved}
             />
           </Card>
         </div>

@@ -95,12 +95,27 @@ export const likesTable = pgTable(
   "likes",
   {
     id: uuid().defaultRandom().primaryKey(),
-    userId: text()
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    recipeId: uuid()
+    recipeId: uuid("recipe_id")
       .notNull()
       .references(() => recipeTable.id, { onDelete: "cascade" }),
+  },
+  (table) => [unique().on(table.userId, table.recipeId)],
+);
+
+export const savedTable = pgTable(
+  "saved_recipes",
+  {
+    id: uuid().defaultRandom().primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    recipeId: uuid("recipe_id")
+      .notNull()
+      .references(() => recipeTable.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [unique().on(table.userId, table.recipeId)],
 );
