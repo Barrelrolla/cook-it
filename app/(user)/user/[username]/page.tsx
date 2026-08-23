@@ -58,7 +58,7 @@ export default async function UserPage({ params, searchParams }: Props) {
             />
           )}
         </div>
-        <div className="w-full md:w-2/3 md:pt-8 text-center md:text-left">
+        <div className="w-full md:w-2/3 text-center md:text-left flex flex-col justify-center">
           <h1 className="text-4xl font-heading">{user.name}</h1>
           <p className="my-4">@{user.displayUsername}</p>
         </div>

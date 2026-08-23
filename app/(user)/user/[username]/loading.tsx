@@ -8,13 +8,13 @@ export default function UserLoading() {
         <div className="w-1/3 p-4 lg:p-8 mx-auto justify-items-center">
           <Skeleton className="size-50 rounded-full" />
         </div>
-        <div className="w-full md:w-2/3 md:pt-8 text-center md:text-left">
-          <Skeleton className="h-9 w-50" />
+        <div className="w-full md:w-2/3 text-center md:text-left flex flex-col justify-center">
+          <Skeleton className="h-10 w-50" />
           <Skeleton className="h-6 w-34 mt-4" />
         </div>
       </section>
       <section>
-        <Skeleton className="h-8 w-20 mx-4" />
+        <Skeleton className="h-12 w-54 mx-4" />
         <RecipeListLoading />
       </section>
     </main>
