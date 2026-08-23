@@ -25,6 +25,7 @@
   --color-green: #5a7302;
   --color-red: #c23b22;
   --color-orange: #ff6b00;
+  --muted-h: 0.05;
   --radius-inputs: 0.5rem;
   --default-font-weight: 500;
   --radius-navigation: 0;
@@ -57,6 +58,7 @@
   --color-green: #739120;
   --color-red: #de7463;
   --color-orange: #ff6b00;
+  --muted-h: -0.05;
 }
 
 [data-theme="red"] {

@@ -51,7 +51,12 @@ export default async function RecipeItem({
         size="xl"
         className="h-64 relative"
         containerClassName=" shadow-sm shadow-main-content/20 w-full"
-        containerStyle={{ "--bg-color": "var(--color-muted)" } as CSSProperties}
+        containerStyle={
+          {
+            "--bg-color": "var(--color-muted)",
+            "--h": "var(--muted-h)",
+          } as CSSProperties
+        }
       >
         <RecipeInteract recipeSlug={slug}>
           <CardImageContainer className="relative">
@@ -105,9 +110,9 @@ export default async function RecipeItem({
                 </Badge>
               )}
             </div>
-            <p className="flex items-center text-xs px-4 pb-1">
-              {t("author", { name })}
-            </p>
+            <div className="pl-4 pr-10 pb-1">
+              <p className="text-xs line-clamp-1">{t("author", { name })}</p>
+            </div>
           </CardSection>
         </RecipeInteract>
         {user && authorId && user.id === authorId && (
