@@ -43,13 +43,13 @@ export default async function RecipeItem({
   }
   const t = await getTranslations("RecipePage");
   const maxDiets = 3;
-  // const name = recipe.author?.name || t("deleted-user");
+  const name = recipe.author?.name || t("deleted-user");
 
   return (
     <li className="justify-items-center">
       <Card
         size="xl"
-        className="h-60 relative"
+        className="h-64 relative"
         containerClassName=" shadow-sm shadow-main-content/20 w-full"
         containerStyle={{ "--bg-color": "var(--color-muted)" } as CSSProperties}
       >
@@ -105,9 +105,9 @@ export default async function RecipeItem({
                 </Badge>
               )}
             </div>
-            {/* <p className="flex items-center text-sm px-4 pb-1">
+            <p className="flex items-center text-xs px-4 pb-1">
               {t("author", { name })}
-            </p> */}
+            </p>
           </CardSection>
         </RecipeInteract>
         {user && authorId && user.id === authorId && (

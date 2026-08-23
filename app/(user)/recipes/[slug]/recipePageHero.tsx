@@ -88,7 +88,7 @@ export default async function RecipePageHero({ recipe }: RecipePageProps) {
             <HeroText className="px-0">{description}</HeroText>
           </div>
           {author && (
-            <div className="flex-col flex items-center gap-4">
+            <div className="flex-wrap flex items-center gap-4 md:max-w-[50%]">
               <div className="flex gap-4">
                 <UserAvatar
                   className="size-12"

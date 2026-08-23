@@ -17,7 +17,7 @@ export default function RecipeListLoading() {
             <li key={i++} className="justify-items-center">
               <Card
                 size="xl"
-                className="h-60"
+                className="h-64"
                 containerClassName=" shadow-sm shadow-main-content/20 w-full"
               >
                 <CardImageContainer className="relative">
@@ -25,11 +25,13 @@ export default function RecipeListLoading() {
                 </CardImageContainer>
                 <CardSection>
                   <CardTitle>
-                    <Skeleton className="w-full h-7" />
+                    <Skeleton className="w-full h-6" />
                   </CardTitle>
-                  <div className="flex justify-between text-sm">
-                    <Skeleton className="w-[70%] mx-4 h-6 mb-2" />
+                  <div className="flex gap-1 px-4">
+                    <Skeleton className="rounded-full h-6 w-24" />
+                    <Skeleton className="rounded-full h-6 w-24" />
                   </div>
+                  <Skeleton className="w-[40%] mx-4 h-4 my-2" />
                 </CardSection>
               </Card>
             </li>
