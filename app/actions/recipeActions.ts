@@ -15,10 +15,40 @@ export type RecipeWithRelationsPromise = NonNullable<
   ReturnType<typeof getAllRecipes>
 >;
 
+type RecipeUpdate = Partial<
+  Omit<
+    typeof recipeTable.$inferInsert,
+    "id" | "authorId" | "likesCount" | "createdAt"
+  >
+>;
+
 export async function addRecipe(recipe: typeof recipeTable.$inferInsert) {
   try {
     const inserted = await db.insert(recipeTable).values(recipe).returning();
     return JSON.parse(JSON.stringify(inserted));
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
+  }
+
+  return null;
+}
+
+export async function updateRecipe(recipeId: string, recipe: RecipeUpdate) {
+  try {
+    const session = await getSession();
+    if (!session) return;
+
+    await db
+      .update(recipeTable)
+      .set(recipe)
+      .where(
+        and(
+          eq(recipeTable.id, recipeId),
+          eq(recipeTable.authorId, session.user.id),
+        ),
+      );
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
@@ -127,6 +157,7 @@ export async function unlikeRecipe(recipeId: string, slug: string) {
 export async function getAllRecipes() {
   try {
     return await db.query.recipeTable.findMany({
+      orderBy: (recipe, { desc }) => desc(recipe.createdAt),
       with: {
         author: true,
         cuisine: true,
@@ -218,6 +249,7 @@ export async function getRecipesByUserId(userId: string) {
   try {
     return await db.query.recipeTable.findMany({
       where: (recipe, { eq }) => eq(recipe.authorId, userId),
+      orderBy: (recipe, { desc }) => desc(recipe.createdAt),
       with: {
         author: true,
         cuisine: true,

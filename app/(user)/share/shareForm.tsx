@@ -1,7 +1,11 @@
 "use client";
 
 import { getCuisineId } from "@/app/actions/cuisineActions";
-import { addRecipe } from "@/app/actions/recipeActions";
+import {
+  addRecipe,
+  RecipeWithRelations,
+  updateRecipe,
+} from "@/app/actions/recipeActions";
 import ImagePicker from "@/app/components/imagePicker";
 import { User } from "@/db/schemas/auth-schema";
 import {
@@ -32,6 +36,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import {
   PiClock,
+  PiFloppyDisk,
   PiForkKnife,
   PiPaperPlaneTiltBold,
   PiTrash,
@@ -39,21 +44,27 @@ import {
 import { $ZodIssue } from "zod/v4/core";
 
 export default function ShareForm({
+  recipe,
   cuisines,
   user,
 }: {
+  recipe?: RecipeWithRelations;
   cuisines: string[];
   user: User;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [ingredients, setIngredients] = useState(["", ""]);
-  const [instructions, setInstructions] = useState(["", ""]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [prepTime, setPrepTime] = useState("");
-  const [cookTime, setCookTime] = useState("");
-  const [servings, setServings] = useState("");
+  const [ingredients, setIngredients] = useState(
+    recipe?.ingredients ?? ["", ""],
+  );
+  const [instructions, setInstructions] = useState(
+    recipe?.instructions ?? ["", ""],
+  );
+  const [title, setTitle] = useState(recipe?.title ?? "");
+  const [description, setDescription] = useState(recipe?.description ?? "");
+  const [prepTime, setPrepTime] = useState(recipe?.prepTime ?? "");
+  const [cookTime, setCookTime] = useState(recipe?.cookTime ?? "");
+  const [servings, setServings] = useState(recipe?.servings ?? "");
   const [error, setError] = useState("");
   const [issues, setIssues] = useState<$ZodIssue[]>([]);
   const router = useRouter();
@@ -105,6 +116,7 @@ export default function ShareForm({
     const servingsInput = formData.get("servings")?.toString() || "";
     const diets = formData.getAll("diet") || [];
     const cuisine = await getCuisineId(cuisineInput);
+
     setTitle(titleInput);
     setDescription(descriptionInput);
     setPrepTime(prepTimeInput);
@@ -118,7 +130,7 @@ export default function ShareForm({
         title: titleInput,
         description: descriptionInput,
         category,
-        cuisine: cuisine?.id,
+        cuisineId: cuisine?.id,
         difficulty: difficulty || null,
         prepTime: prepTimeInput,
         cookTime: cookTimeInput,
@@ -135,7 +147,7 @@ export default function ShareForm({
         return;
       }
 
-      const slug = getUniqueRecipeSlug(data.title);
+      const slug = recipe?.slug ?? getUniqueRecipeSlug(data.title);
       let uploadedImageUrl = "";
       if (file) {
         try {
@@ -153,10 +165,10 @@ export default function ShareForm({
           setError(tGlobal("something-went-wrong"));
         }
       } else {
-        uploadedImageUrl = placeholderImage.src;
+        uploadedImageUrl = recipe?.imageUrl ?? placeholderImage.src;
       }
 
-      await addRecipe({
+      const recipeData = {
         title: data.title,
         slug,
         imageUrl: uploadedImageUrl,
@@ -181,7 +193,14 @@ export default function ShareForm({
         servings: data.servings || null,
         diet: data.diets,
         authorId: user.id,
-      });
+      };
+
+      if (recipe) {
+        await updateRecipe(recipe.id, recipeData);
+      } else {
+        await addRecipe(recipeData);
+      }
+
       router.push(`/recipes/${slug}`);
     } catch (err) {
       if (IS_DEV) {
@@ -208,7 +227,7 @@ export default function ShareForm({
           height={260}
           isPending={isPending}
           pickImageLabel={t("pick-image")}
-          imageUrl={placeholderImage.src}
+          imageUrl={recipe?.imageUrl || placeholderImage.src}
           imageAlt={"alt"}
           cancelLabel={t("cancel")}
           setFile={setFile}
@@ -246,6 +265,11 @@ export default function ShareForm({
         label={`${t("category-label")}*`}
         items={categories}
         placeholder={t("category-placeholder")}
+        initialSelectedIndex={
+          recipe
+            ? recipeCategoryEnum.enumValues.indexOf(recipe?.category)
+            : undefined
+        }
         wrapperClassName="w-full"
         aria-required
         name="category"
@@ -267,6 +291,7 @@ export default function ShareForm({
       </Select>
       <Combobox
         disabled={isPending}
+        defaultValue={recipe?.cuisine?.name}
         wrapperClassName="w-full"
         items={cuisineItems || []}
         label={t("cuisine-label")}
@@ -280,6 +305,11 @@ export default function ShareForm({
       />
       <Select
         disabled={isPending}
+        initialSelectedIndex={
+          recipe?.difficulty
+            ? recipeDifficultyEnum.enumValues.indexOf(recipe.difficulty)
+            : undefined
+        }
         label={t("difficulty-label")}
         items={difficulties}
         placeholder={t("difficulty-placeholder")}
@@ -403,6 +433,11 @@ export default function ShareForm({
         }
       />
       <Select
+        initialSelectedIndices={
+          recipe && recipe.diet
+            ? recipe.diet.map((d) => restrictedDietEnum.enumValues.indexOf(d))
+            : undefined
+        }
         disabled={isPending}
         items={diets}
         label={t("diet-label")}
@@ -559,9 +594,9 @@ export default function ShareForm({
           loading={isPending}
           size="xl"
           className="place-self-end"
-          startIcon={<PiPaperPlaneTiltBold />}
+          startIcon={recipe ? <PiFloppyDisk /> : <PiPaperPlaneTiltBold />}
         >
-          {t("share-button")}
+          {recipe ? t("save-button") : t("share-button")}
         </Button>
       </div>
     </form>

@@ -23,6 +23,7 @@ type MoreOptionsButtonProps = {
   deleteLabel: string;
   deleteTitle: string;
   recipeId: string;
+  recipeSlug: string;
 };
 
 export default function MoreOptionsButton({
@@ -30,6 +31,7 @@ export default function MoreOptionsButton({
   deleteLabel,
   deleteTitle,
   recipeId,
+  recipeSlug,
 }: MoreOptionsButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -59,7 +61,12 @@ export default function MoreOptionsButton({
         </DropdownTrigger>
         <DropdownContent>
           <DropdownList>
-            <DropdownListItem className="justify-start">
+            <DropdownListItem
+              className="justify-start"
+              onClick={() => {
+                router.push(`/recipes/${recipeSlug}/edit`);
+              }}
+            >
               <PiPencilSimpleLine />
               {editLabel}
             </DropdownListItem>

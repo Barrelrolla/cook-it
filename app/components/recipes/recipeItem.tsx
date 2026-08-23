@@ -116,6 +116,7 @@ export default async function RecipeItem({
             deleteLabel={t("delete-button")}
             deleteTitle={t("delete-title", { name: title })}
             recipeId={id}
+            recipeSlug={slug}
           />
         )}
       </Card>

@@ -96,6 +96,7 @@
   },
   "SharePage": {
     "title": "Add new recipe",
+    "edit-title": "Edit recipe",
     "pick-image": "Pick a new image",
     "cancel": "Cancel",
     "title-label": "Title",
@@ -128,6 +129,7 @@
     "add-instruction-label": "Add new step",
     "remove-instruction-label": "Remove step {index}",
     "share-button": "Share",
+    "save-button": "Save",
     "time-unit-aria-label": "Time unit",
     "minutes": "minutes",
     "hours": "hours",
