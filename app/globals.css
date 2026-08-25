@@ -25,6 +25,8 @@
   --color-green: #5a7302;
   --color-red: #c23b22;
   --color-orange: #ff6b00;
+  --color-neutral: #fff;
+  --color-neutral-content: #000;
   --muted-h: 0.05;
   --radius-inputs: 0.5rem;
   --default-font-weight: 500;

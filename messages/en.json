@@ -10,7 +10,8 @@
     "apple": "Apple",
     "coming-soon": "Coming soon",
     "metadata-search": "Recipes with {query}",
-    "metadata-no-query": "Recipes"
+    "metadata-no-query": "Recipes",
+    "all-rights-reserved": "{year} © Julian Teofilov. All rights reserved."
   },
   "Navbar": {
     "profile-button-label": "Profile",

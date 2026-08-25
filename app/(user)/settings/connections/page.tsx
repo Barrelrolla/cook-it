@@ -32,7 +32,7 @@ export default async function ConnectionsSettingsPage() {
           </div>
         )}
         {!hasGoogle && <SocialSigninButton social="google" />}
-        <p className="mt-6">{tGlobal("apple")}</p>
+        {/* <p className="mt-6">{tGlobal("apple")}</p> */}
         {/* {hasApple && (
           <div>
             <p className="text-sm text-success">{t("connected")}</p>
