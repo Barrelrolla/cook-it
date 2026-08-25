@@ -55,7 +55,12 @@ export default function DeleteAccountButton() {
         title={t("delete-account")}
       >
         <p className="text-sm">{t("warning-message")}</p>
-        <Input wrapperClassName="w-full" type="password" name="password" />
+        <Input
+          revealPasswordToggleAriaLabel={t("reveal-password")}
+          wrapperClassName="w-full"
+          type="password"
+          name="password"
+        />
         <div className="w-full flex flex-row justify-between">
           <Button
             type="button"

@@ -19,6 +19,7 @@ export default function BaseModal({
 }: BaseModalProps) {
   return (
     <Dialog
+      aria-label={title}
       backdropClassName="items-start md:items-center backdrop-blur-[2px]"
       containerClassName="w-[80vw] max-w-80 mt-22 md:mt-0"
       isOpen={isOpen}

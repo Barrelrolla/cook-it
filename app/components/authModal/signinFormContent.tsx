@@ -172,6 +172,7 @@ export default function SigninFormContent({
           startIcon={<PiKeyBold />}
           aria-label={t("password-input-label")}
           placeholder={t("password-input-label")}
+          revealPasswordToggleAriaLabel={t("reveal-password")}
           type="password"
           id="password"
           name="password"
@@ -190,6 +191,7 @@ export default function SigninFormContent({
             startIcon={<PiKeyBold />}
             aria-label={t("repeat-password-input-label")}
             placeholder={t("repeat-password-input-label")}
+            revealPasswordToggleAriaLabel={t("reveal-password")}
             type="password"
             id="repeat-password"
             name="repeat-password"

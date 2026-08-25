@@ -10,8 +10,7 @@
     "apple": "Apple",
     "coming-soon": "Coming soon",
     "metadata-search": "Recipes with {query}",
-    "metadata-no-query": "Recipes",
-    "all-rights-reserved": "{year} © Julian Teofilov. All rights reserved."
+    "metadata-no-query": "Recipes"
   },
   "Navbar": {
     "profile-button-label": "Profile",
@@ -21,6 +20,10 @@
       "recipes": "Recipes",
       "categories": "Categories"
     }
+  },
+  "Footer": {
+    "logo-alt": "Home page",
+    "all-rights-reserved": "{year} © Julian Teofilov. All rights reserved."
   },
   "Search": {
     "search": "Search",
@@ -159,6 +162,7 @@
         "old-password": "Old password",
         "new-password": "New password",
         "repeat-password": "Repeat password",
+        "reveal-password": "Reveal password",
         "revoke-sessions": "Revoke other sessions?",
         "password-changed": "Password changed",
         "password-set": "Password set"
@@ -194,6 +198,7 @@
         "cancel": "Cancel",
         "delete": "Delete",
         "delete-button": "Delete account",
+        "reveal-password": "Reveal password",
         "email-sent": "We've sent you a confirmation email. Click the link inside to complete the deletion."
       },
       "download-data": "Download your data",
@@ -228,6 +233,7 @@
     "reset-password-title": "Reset password",
     "new-password-input-label": "new password",
     "repeat-password-input-label": "repeat password",
+    "reveal-password": "Reveal password",
     "password-changed-message": "Password changed!",
     "update-password-button": "Update password",
     "username-input-label": "username",
