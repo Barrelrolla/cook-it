@@ -77,9 +77,10 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         try {
           await resend.emails.send({
-            from: "Garndish <noreply@resend.dev>",
+            from,
             to: user.email,
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
@@ -104,8 +105,9 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
-          from: "Garndish <noreply@resend.dev>",
+          from,
           to: user.email,
           subject: t("Emails.password-reset-subject", { brand }),
           react: PasswordReset({ t, url }),
@@ -126,8 +128,9 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
-          from: "Garndish <noreply@resend.dev>",
+          from,
           to: user.email,
           subject: t("Emails.verify-subject", { brand }),
           react: VerificationEmail({ t, name: user.name, url }),

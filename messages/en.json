@@ -255,6 +255,7 @@
     "no": "NO"
   },
   "Emails": {
+    "auth-email": "{brand} '<'noreply@users.garndish.com'>'",
     "delete-subject": "Delete {brand} account confirmation",
     "delete-title": "Delete your {brand} account?",
     "delete-message": "Sorry to see you go, {name}! If you're certain you want to proceed with deleting your account, click the button below:",

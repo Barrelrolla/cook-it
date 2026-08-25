@@ -9,7 +9,7 @@ export default function PasswordReset({
   url: string;
 }) {
   const title = t("Emails.password-reset-title", {
-    name: t("Global.brand-name"),
+    brand: t("Global.brand-name"),
   });
   return (
     <EmailBase preview={title}>
