@@ -95,6 +95,7 @@ export default function ResetPasswordModal() {
 
   return (
     <BaseModal
+      closeLabel={t("close")}
       title={t("reset-password-title")}
       formRef={passwordResetFormRef}
       formAction={formAction}

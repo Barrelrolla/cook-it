@@ -19,6 +19,7 @@ export default function DestructiveModal({
   const t = useTranslations("DestructiveModal");
   return (
     <BaseModal
+      closeLabel={t("close")}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       formAction={action}

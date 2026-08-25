@@ -12,9 +12,11 @@ import {
   NavbarMenu,
   NavbarToggle,
 } from "@barrelrolla/react-components-library";
+import { getTranslations } from "next-intl/server";
 
 export default async function MainNavbar() {
   const session = await getSession();
+  const t = await getTranslations("Navbar");
   const user = session ? JSON.parse(JSON.stringify(session.user)) : null;
   return (
     <Navbar
@@ -37,7 +39,12 @@ export default async function MainNavbar() {
         </NavbarMenu>
       </NavbarCollapse>
       <div className="flex flex-row justify-end items-center gap-1 min-w-48 min-h-14 md:min-h-18">
-        <DarkModeToggle color="main" variant="ghost" className="size-10" />
+        <DarkModeToggle
+          aria-label={t("toggle-dark-mode")}
+          color="main"
+          variant="ghost"
+          className="size-10"
+        />
         {!session && (
           <>
             <Suspense>

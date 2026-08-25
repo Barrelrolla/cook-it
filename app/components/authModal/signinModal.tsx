@@ -209,6 +209,7 @@ export default function SigninModal() {
   return (
     <>
       <BaseModal
+        closeLabel={t("close")}
         title={t("sign-in")}
         formRef={signinFormRef}
         formAction={signin}
@@ -226,6 +227,7 @@ export default function SigninModal() {
         />
       </BaseModal>
       <BaseModal
+        closeLabel={t("close")}
         title={t("sign-up")}
         formRef={signupFormRef}
         formAction={signUp}

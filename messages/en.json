@@ -16,6 +16,7 @@
     "profile-button-label": "Profile",
     "settings-button-label": "Settings",
     "user-avatar": "{name}'s avatar",
+    "toggle-dark-mode": "Toggle dark mode",
     "Links": {
       "recipes": "Recipes",
       "categories": "Categories"
@@ -193,6 +194,7 @@
         "coming-soon": "Coming soon"
       },
       "Delete": {
+        "close": "Close",
         "delete-account": "Delete account",
         "warning-message": "This action is irrevirsible. This will permanently delete your account. Recipes you've shared will remain as published by 'Deleted user'. If you're certain you want to continue, please enter your password.",
         "cancel": "Cancel",
@@ -230,6 +232,7 @@
     "saved-recipes": "Saved recipes"
   },
   "AuthModal": {
+    "close": "Close",
     "reset-password-title": "Reset password",
     "new-password-input-label": "new password",
     "repeat-password-input-label": "repeat password",
@@ -259,6 +262,7 @@
     "confirm-username": "Confirm username"
   },
   "DestructiveModal": {
+    "close": "Close",
     "are-you-sure": "Are you sure?",
     "yes": "YES",
     "no": "NO"

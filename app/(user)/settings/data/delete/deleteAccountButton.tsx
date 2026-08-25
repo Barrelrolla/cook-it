@@ -49,6 +49,7 @@ export default function DeleteAccountButton() {
         }}
       />
       <BaseModal
+        closeLabel={t("close")}
         isOpen={isPasswordOpen}
         setIsOpen={setIsPasswordOpen}
         formAction={deleteAccount}

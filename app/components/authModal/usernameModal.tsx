@@ -75,6 +75,7 @@ export default function UsernameModal() {
 
   return (
     <BaseModal
+      closeLabel={t("close")}
       title={t("choose-username-label")}
       formAction={action}
       isOpen={isOpen}
