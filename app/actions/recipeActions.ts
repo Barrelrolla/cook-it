@@ -1,7 +1,11 @@
 "use server";
 
 import { db } from "@/db";
-import { likesTable, recipeTable } from "@/db/schemas/recipe-schema";
+import {
+  likesTable,
+  recipeCategoryEnum,
+  recipeTable,
+} from "@/db/schemas/recipe-schema";
 import { IS_DEV } from "@/utils/helpers";
 import { and, eq, ilike, or, sql } from "drizzle-orm";
 import { getSession } from "./authActions";
@@ -158,6 +162,26 @@ export async function getAllRecipes() {
   try {
     return await db.query.recipeTable.findMany({
       orderBy: (recipe, { desc }) => desc(recipe.createdAt),
+      with: {
+        author: true,
+        cuisine: true,
+      },
+    });
+  } catch (err) {
+    if (IS_DEV) {
+      console.error(err);
+    }
+  }
+
+  return null;
+}
+
+export async function getRecipesByCategory(
+  category: (typeof recipeCategoryEnum.enumValues)[number],
+) {
+  try {
+    return await db.query.recipeTable.findMany({
+      where: (recipe, { eq }) => eq(recipe.category, category),
       with: {
         author: true,
         cuisine: true,

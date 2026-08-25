@@ -56,7 +56,8 @@
     "edit-button": "Edit",
     "delete-button": "Delete",
     "delete-title": "Delete {name} recipe?",
-    "deleted-user": "Deleted user"
+    "deleted-user": "Deleted user",
+    "share-title": "Checkout this cool recipe on {brand}!"
   },
   "Recipes": {
     "Categories": {
@@ -70,7 +71,8 @@
       "soup": "Soups & Stews",
       "salad": "Salads",
       "sauce": "Sauces & Condiments",
-      "bread": "Breads & Baking"
+      "bread": "Breads & Baking",
+      "img-alt": "An image representing the {category} category"
     },
     "Difficulty": {
       "easy": "Easy",
