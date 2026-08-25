@@ -80,7 +80,7 @@ export const auth = betterAuth({
         try {
           await resend.emails.send({
             from: "Garndish <noreply@resend.dev>",
-            to: "chetkara@gmail.com",
+            to: user.email,
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
           });
@@ -96,7 +96,7 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
-    sendResetPassword: async ({ url }) => {
+    sendResetPassword: async ({ user, url }) => {
       try {
         const cookieStore = await cookies();
         const locale = cookieStore.get("locale")?.value ?? "en";
@@ -106,7 +106,7 @@ export const auth = betterAuth({
         const brand = t("Global.brand-name");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
-          to: "chetkara@gmail.com",
+          to: user.email,
           subject: t("Emails.password-reset-subject", { brand }),
           react: PasswordReset({ t, url }),
         });
@@ -128,7 +128,7 @@ export const auth = betterAuth({
         const brand = t("Global.brand-name");
         await resend.emails.send({
           from: "Garndish <noreply@resend.dev>",
-          to: "chetkara@gmail.com",
+          to: user.email,
           subject: t("Emails.verify-subject", { brand }),
           react: VerificationEmail({ t, name: user.name, url }),
         });

@@ -274,7 +274,7 @@ export default function SigninFormContent({
           <p className="text-xs text-error text-center">{verificationError}</p>
         )}
         <SocialSigninButton social="google" />
-        <SocialSigninButton social="apple" />
+        {/* <SocialSigninButton social="apple" /> */}
       </CardActions>
       {!signup && (
         <p className="text-center">
