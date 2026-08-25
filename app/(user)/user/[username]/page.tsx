@@ -32,11 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function UserPage({ params, searchParams }: Props) {
   const { username } = await params;
   const { saved } = await searchParams;
-  const user = await getUserByUsername(username);
+
+  const [user, session] = await Promise.all([
+    getUserByUsername(username),
+    getSession(),
+  ]);
   if (!user) {
     notFound();
   }
-  const session = await getSession();
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
 

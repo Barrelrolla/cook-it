@@ -6,8 +6,9 @@ import { IS_DEV } from "@/utils/helpers";
 import { getSession } from "./authActions";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
-export async function getUserById(id: string) {
+export const getUserById = cache(async (id: string) => {
   try {
     return await db.query.user.findFirst({
       where: (user, { eq }) => eq(user.id, id),
@@ -19,9 +20,9 @@ export async function getUserById(id: string) {
   }
 
   return null;
-}
+});
 
-export async function getUserByUsername(username: string) {
+export const getUserByUsername = cache(async (username: string) => {
   const lower = username.toLowerCase();
   try {
     return await db.query.user.findFirst({
@@ -34,7 +35,7 @@ export async function getUserByUsername(username: string) {
   }
 
   return null;
-}
+});
 
 export async function saveRecipe(recipeId: string, slug: string) {
   try {

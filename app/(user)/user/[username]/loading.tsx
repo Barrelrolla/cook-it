@@ -8,9 +8,9 @@ export default function UserLoading() {
         <div className="w-1/3 p-4 lg:p-8 mx-auto justify-items-center">
           <Skeleton className="size-50 rounded-full" />
         </div>
-        <div className="w-full md:w-2/3 text-center md:text-left flex flex-col justify-center">
+        <div className=" w-full md:w-2/3 text-center md:text-left flex flex-col items-center md:items-start justify-center">
           <Skeleton className="h-10 w-50" />
-          <Skeleton className="h-6 w-34 mt-4" />
+          <Skeleton className="h-6 w-34 my-4" />
         </div>
       </section>
       <section>

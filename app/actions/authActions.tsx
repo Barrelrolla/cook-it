@@ -3,8 +3,9 @@
 import { headers } from "next/headers";
 import { auth } from "@/auth/auth";
 import { IS_DEV } from "@/utils/helpers";
+import { cache } from "react";
 
-export async function getSession() {
+export const getSession = cache(async () => {
   try {
     return await auth.api.getSession({ headers: await headers() });
   } catch (err) {
@@ -13,7 +14,7 @@ export async function getSession() {
     }
     return null;
   }
-}
+});
 
 export async function setPassword(password: string) {
   try {
