@@ -3,15 +3,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getSession } from "@/app/actions/authActions";
 import { getUserByUsername } from "@/app/actions/userActions";
-import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
 import { getTranslations } from "next-intl/server";
-import {
-  getRecipesByUserId,
-  getRecipesSavedByUser,
-} from "@/app/actions/recipeActions";
 import { UserRecipeBar } from "./userRecipeBar";
+import UserRecipes from "./userRecipes";
 
 type Props = {
   params: Promise<{ username: string }>;
@@ -43,8 +39,6 @@ export default async function UserPage({ params, searchParams }: Props) {
   const session = await getSession();
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
-  const recipesPromise =
-    saved !== undefined ? getRecipesSavedByUser() : getRecipesByUserId(user.id);
 
   return (
     <main className="pt-4">
@@ -64,12 +58,12 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       </section>
       <section>
-        {/* <h2 className="text-2xl mx-4">
-          {current ? t("my-recipes") : t("uploaded-recipes")}
-        </h2> */}
         <UserRecipeBar isCurrentUser={current} />
-        <Suspense fallback={<RecipeListLoading />}>
-          <RecipeList recipesPromise={recipesPromise} />
+        <Suspense
+          key={saved !== undefined ? "saved" : "published"}
+          fallback={<RecipeListLoading />}
+        >
+          <UserRecipes userId={user.id} saved={saved} />
         </Suspense>
       </section>
     </main>
