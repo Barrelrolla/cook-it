@@ -326,7 +326,13 @@
     "recipe-instruction-list-min": "Please include at least {min, plural, =1 {one instruction step} other {# instruction steps}}.",
     "recipe-instruction-list-max": "You cannot have more than {max} instruction steps.",
     "recipe-instruction-item-min": "Instruction step cannot be empty.",
-    "recipe-instruction-item-max": "Instruction step cannot be longer than {max} characters."
+    "recipe-instruction-item-max": "Instruction step cannot be longer than {max} characters.",
+    "contact-subject-min": "Subject is required.",
+    "contact-subject-max": "Subject cannot be longer than {max} characters.",
+    "contact-message-min": "Message must be at least {min} characters long",
+    "contact-message-max": "Message is too long.",
+    "spam-detected": "Spam detected",
+    "email-fail": "Message could not be send. Please try again later."
   },
   "AboutPage": {
     "title": "About {brand}",
@@ -487,5 +493,17 @@
       "text": "If you have questions about this Privacy Policy, want to exercise your privacy rights, or have concerns about how your information is handled, please contact:",
       "name": "Julian Teofilov"
     }
+  },
+  "ContactPage": {
+    "email": "support@garndish.com",
+    "title": "Contact",
+    "text": "Contact us at",
+    "form": "or using the form below:",
+    "your-email": "Your email",
+    "subject": "Subject",
+    "message": "Message",
+    "honeypot": "Do not fill this out if you are human",
+    "send": "Send",
+    "email-sent": "Your message has been sent!"
   }
 }
