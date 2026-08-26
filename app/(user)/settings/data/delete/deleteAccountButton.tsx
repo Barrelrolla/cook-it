@@ -54,6 +54,7 @@ export default function DeleteAccountButton() {
         setIsOpen={setIsPasswordOpen}
         formAction={deleteAccount}
         title={t("delete-account")}
+        initialFocus={0}
       >
         <p className="text-sm">{t("warning-message")}</p>
         <Input

@@ -24,6 +24,7 @@ export default function DestructiveModal({
       setIsOpen={setIsOpen}
       formAction={action}
       title={title}
+      initialFocus={0}
     >
       <p className="text-4xl flex justify-center w-full">
         <PiWarning className="text-error" />

@@ -17,24 +17,22 @@ import DestructiveModal from "../destructiveModal";
 import { useState } from "react";
 import { deleteRecipe } from "@/app/actions/recipeActions";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type MoreOptionsButtonProps = {
-  editLabel: string;
-  deleteLabel: string;
-  deleteTitle: string;
   recipeId: string;
   recipeSlug: string;
+  title: string;
 };
 
 export default function MoreOptionsButton({
-  editLabel,
-  deleteLabel,
-  deleteTitle,
+  title,
   recipeId,
   recipeSlug,
 }: MoreOptionsButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const t = useTranslations("RecipePage");
 
   function onDeleteConfirm() {
     deleteRecipe(recipeId);
@@ -47,11 +45,12 @@ export default function MoreOptionsButton({
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         action={onDeleteConfirm}
-        title={deleteTitle}
+        title={t("delete-title", { name: title })}
       />
       <Dropdown>
         <DropdownTrigger>
           <Button
+            aria-label={t("more-options")}
             size="sm"
             color="main"
             variant="ghost"
@@ -68,7 +67,7 @@ export default function MoreOptionsButton({
               }}
             >
               <PiPencilSimpleLine />
-              {editLabel}
+              {t("edit-button")}
             </DropdownListItem>
             <DropdownListItem
               onClick={() => setIsModalOpen(true)}
@@ -76,7 +75,7 @@ export default function MoreOptionsButton({
               className="justify-start text-error"
             >
               <PiTrash />
-              {deleteLabel}
+              {t("delete-button")}
             </DropdownListItem>
           </DropdownList>
         </DropdownContent>

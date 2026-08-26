@@ -116,13 +116,7 @@ export default async function RecipeItem({
           </CardSection>
         </RecipeInteract>
         {user && authorId && user.id === authorId && (
-          <MoreOptionsButton
-            editLabel={t("edit-button")}
-            deleteLabel={t("delete-button")}
-            deleteTitle={t("delete-title", { name: title })}
-            recipeId={id}
-            recipeSlug={slug}
-          />
+          <MoreOptionsButton recipeId={id} recipeSlug={slug} title={title} />
         )}
       </Card>
     </li>

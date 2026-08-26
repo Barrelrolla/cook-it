@@ -24,7 +24,11 @@
   },
   "Footer": {
     "logo-alt": "Home page",
-    "all-rights-reserved": "{year} © Julian Teofilov. All rights reserved."
+    "all-rights-reserved": "{year} © Julian Teofilov. All rights reserved.",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms & Conditions",
+    "contact": "Contact"
   },
   "Search": {
     "search": "Search",
@@ -62,7 +66,8 @@
     "delete-button": "Delete",
     "delete-title": "Delete {name} recipe?",
     "deleted-user": "Deleted user",
-    "share-title": "Checkout this cool recipe on {brand}!"
+    "share-title": "Checkout this cool recipe on {brand}!",
+    "more-options": "More options"
   },
   "Recipes": {
     "Categories": {
@@ -322,5 +327,165 @@
     "recipe-instruction-list-max": "You cannot have more than {max} instruction steps.",
     "recipe-instruction-item-min": "Instruction step cannot be empty.",
     "recipe-instruction-item-max": "Instruction step cannot be longer than {max} characters."
+  },
+  "AboutPage": {
+    "title": "About {brand}",
+    "intro": "{brand} is an independent personal project created by Julian Teofilov.",
+    "description": "I built {brand} as a place to discover, save, and share recipes, while also creating something I genuinely enjoy using. It started as a personal project and gradually grew into a full-fledged recipe platform.",
+    "continuation": "I'm continuing to improve {brand} and add new features, so things may change and evolve over time. If you find something that doesn't work quite right, have a suggestion, or simply want to say hello, I'd love to hear from you.",
+    "BuiltWith": {
+      "title": "Built with",
+      "text": "{brand} is built using modern web technologies, including Next.js, React, TypeScript, PostgreSQL, and Drizzle ORM, along with a number of open-source libraries and services."
+    },
+    "Images": {
+      "title": "Images & illustrations",
+      "tools": "Some of the images and illustrations used throughout {brand} were generated with the assistance of AI tools.",
+      "terms": "Recipe images uploaded by users belong to their respective creators and are handled in accordance with our <link>Terms of Service.</link>"
+    },
+    "GetInTouch": {
+      "title": "Get in touch",
+      "text": "Have a question, found a bug, or have an idea for {brand}?",
+      "email": "support@garndish.com"
+    }
+  },
+  "PrivacyPage": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: {date}",
+    "text": "{brand} (\"{brand}\", \"we\", \"us\", or \"our\") respects your privacy. This Privacy Policy explains what information we collect when you use {brand}, how we use it, and your rights regarding your personal data.",
+    "email-label": "Email",
+    "email": "support@garndish.com",
+    "WhoWeAre": {
+      "title": "Who We Are",
+      "intro": "{brand} is operated by Julian Teofilov, an individual based in Bulgaria.",
+      "gdpr": "For the purposes of applicable data protection law, including the General Data Protection Regulation (GDPR), Julian Teofilov is the data controller for the personal data described in this Privacy Policy.",
+      "questions": "If you have any questions about this Privacy Policy or how your personal data is handled, you can contact us at:"
+    },
+    "Information": {
+      "title": "Information We Collect",
+      "text": "We collect only the information necessary to provide and operate {brand}.",
+      "Account": {
+        "title": "Account information",
+        "text": "When you create a {brand} account, we may collect:",
+        "email": "Your email address",
+        "username": "Your name or username, if you provide one",
+        "session": "Authentication and session information necessary to keep you signed in",
+        "google": "You may also choose to sign in using your Google account. If you use Google Sign-In, Google provides {brand} with information necessary to authenticate your account, such as your name, email address, and Google account identifier.",
+        "google-pass": "{brand} does not receive your Google password."
+      },
+      "Activity": {
+        "title": "Recipe and account activity",
+        "text": "If you create recipes, save recipes, like recipes, or otherwise interact with {brand}, we store the information necessary to provide those features. This information may be associated with your {brand} account."
+      },
+      "Images": {
+        "title": "Uploaded images",
+        "intro": "{brand} allows users to upload images associated with recipes.",
+        "text": "Images uploaded to {brand} are stored and delivered using Cloudinary, a third-party image hosting and delivery service. Cloudinary may process the uploaded images and associated technical metadata as necessary to provide its services.",
+        "public": "Recipe images may be publicly accessible when they are displayed as part of publicly available recipes. Users should therefore avoid uploading images containing sensitive personal information or information about other people without their permission."
+      },
+      "Analytics": {
+        "title": "Analytics and technical information",
+        "intro": "{brand} uses Vercel Analytics to understand how the website is used and to help us monitor and improve its performance and reliability.",
+        "text": "Analytics and technical information may include information such as pages visited, device and browser information, usage information, timestamps, and technical information associated with requests to the website.",
+        "advertising": "We do not use this information for targeted advertising."
+      }
+    },
+    "Cookies": {
+      "title": "Cookies and Similar Technologies",
+      "text": "{brand} uses a limited number of cookies and browser storage mechanisms.",
+      "Authentication": {
+        "title": "Authentication",
+        "text": "{brand} uses cookies managed by its authentication system to maintain your signed-in session and authenticate requests. These cookies are necessary for account functionality."
+      },
+      "Theme": {
+        "title": "Theme preference",
+        "text": "{brand} stores your light/dark mode preference so that the website can remember your chosen appearance."
+      },
+      "tracking": "We do not use cookies for advertising or cross-site behavioral tracking."
+    },
+    "Usage": {
+      "title": "How We Use Your Information",
+      "text": "We use personal information only as necessary to:",
+      "account": "Create and manage your account",
+      "auth": "Authenticate you and maintain your session",
+      "features": "Provide {brand}'s features",
+      "content": "Store and display recipes and other content",
+      "saved": "Save your recipes and likes",
+      "preferences": "Remember your preferences",
+      "images": "Store and deliver uploaded images",
+      "performance": "Monitor and improve the performance and reliability of {brand}",
+      "security": "Protect {brand} against abuse, fraud, and security threats",
+      "communication": "Communicate with you about the service when necessary",
+      "legal": "Comply with applicable legal obligations",
+      "selling": "We do not sell your personal information.",
+      "advertising": "We do not use your information for targeted advertising."
+    },
+    "LegalBases": {
+      "title": "Legal Bases for Processing",
+      "intro": "Where the GDPR applies, we process personal data on the following legal bases:",
+      "contract-title": "Performance of a contract",
+      "contract": "We process information where it is necessary to provide the {brand} services you request, such as creating and maintaining your account.",
+      "interests-title": "Legitimate interests",
+      "interests": "We may process information where it is necessary to operate, secure, maintain, and improve {brand}, provided that our interests do not override your rights and freedoms.",
+      "legal-title": "Legal obligation",
+      "legal": "We may process or retain information where required to comply with applicable laws or legal obligations.",
+      "consent-title": "Consent",
+      "consent": "Where we rely on your consent for a particular processing activity, you may withdraw that consent at any time."
+    },
+    "ThirdParties": {
+      "title": "Third-Party Services",
+      "intro": "{brand} uses a limited number of third-party services to operate the website. These may include:",
+      "vercel": "Vercel — website hosting and analytics",
+      "neon": "Neon — database hosting",
+      "better-auth": "Better Auth — authentication and session management",
+      "google": "Google — optional Google Sign-In authentication",
+      "cloudinary": "Cloudinary — image storage, processing, and delivery",
+      "resend": "Resend — transactional email",
+      "text": "These providers may process information on our behalf as necessary to provide their respective services. They may also process certain information independently in accordance with their own privacy policies and applicable terms."
+    },
+    "Retention": {
+      "title": "Data Retention",
+      "account": "We retain account and other personal information for as long as necessary to provide {brand} and maintain your account.",
+      "deletion": "If you delete your account, we will delete or anonymize personal information associated with your account within a reasonable period, except where we are required to retain certain information by law or where retention is necessary to establish, exercise, or defend legal claims.",
+      "technical": "Technical and analytics information may be retained according to the retention practices of the services we use."
+    },
+    "Rights": {
+      "title": "Your Rights",
+      "intro": "If the GDPR applies to you, you may have the following rights regarding your personal data:",
+      "access": "Right of access — to request a copy of the personal data we hold about you.",
+      "rectification": "Right to rectification — to request correction of inaccurate or incomplete information.",
+      "erasure": "Right to erasure — to request deletion of your personal data, subject to applicable legal exceptions.",
+      "restriction": "Right to restriction — to request restriction of processing in certain circumstances.",
+      "portability": "Right to data portability — to receive certain personal data in a structured, commonly used, and machine-readable format.",
+      "object": "Right to object — to object to certain processing based on legitimate interests.",
+      "withdraw": "Right to withdraw consent — where processing is based on consent.",
+      "exercise": "To exercise these rights, contact us at",
+      "verification": "We may need to verify your identity before fulfilling certain requests.",
+      "complaint": "You also have the right to lodge a complaint with the relevant data protection supervisory authority."
+    },
+    "Security": {
+      "title": "Data Security",
+      "text": "We take reasonable technical and organizational measures to protect personal information against unauthorized access, alteration, disclosure, or destruction.",
+      "disclaimer": "However, no internet-based service can be guaranteed to be completely secure."
+    },
+    "Children": {
+      "title": "Children's Privacy",
+      "text": "{brand} is not intended for children under the age of 13.",
+      "collection": "We do not knowingly collect personal information from children under 13. If you believe that a child has provided personal information through {brand}, please contact us so that we can take appropriate action."
+    },
+    "Transfers": {
+      "title": "International Data Transfers",
+      "text": "Some of the third-party services used by {brand} may process information in countries outside the European Economic Area (EEA).",
+      "safeguards": "Where personal data is transferred outside the EEA, we rely on appropriate safeguards required by applicable data protection law, such as an adequacy decision or appropriate contractual safeguards where applicable."
+    },
+    "Changes": {
+      "title": "Changes to This Privacy Policy",
+      "text": "We may update this Privacy Policy from time to time to reflect changes to {brand}, the services we use, or applicable legal requirements.",
+      "date": "When we make changes, we will update the \"Last updated\" date at the top of this page."
+    },
+    "Contact": {
+      "title": "Contact Us",
+      "text": "If you have questions about this Privacy Policy, want to exercise your privacy rights, or have concerns about how your information is handled, please contact:",
+      "name": "Julian Teofilov"
+    }
   }
 }
