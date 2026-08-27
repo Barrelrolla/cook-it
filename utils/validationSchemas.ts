@@ -181,7 +181,7 @@ export function createRecipeValidation(t: ValidationTranslator) {
       .number()
       .int({ error: t("recipe-servings") })
       .optional(),
-    diets: z.array(z.enum(restrictedDietEnum.enumValues), {
+    diet: z.array(z.enum(restrictedDietEnum.enumValues), {
       error: t("recipe-diet"),
     }),
     ingredients: z

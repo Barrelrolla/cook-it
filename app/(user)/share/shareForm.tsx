@@ -114,7 +114,7 @@ export default function ShareForm({
     const cookTimeInput = formData.get("cook-time")?.toString() || "";
     const cookUnit = formData.get("cook-unit")?.toString() || "";
     const servingsInput = formData.get("servings")?.toString() || "";
-    const diets = formData.getAll("diet") || [];
+    const diet = formData.getAll("diet") || [];
     const cuisine = await getCuisineId(cuisineInput);
 
     setTitle(titleInput);
@@ -135,7 +135,7 @@ export default function ShareForm({
         prepTime: prepTimeInput,
         cookTime: cookTimeInput,
         servings: servingsInput,
-        diets,
+        diet,
         ingredients,
         instructions,
       });
@@ -191,7 +191,7 @@ export default function ShareForm({
             )
           : null,
         servings: data.servings || null,
-        diet: data.diets,
+        diet: data.diet,
         authorId: user.id,
       };
 

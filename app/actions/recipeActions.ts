@@ -10,6 +10,8 @@ import { IS_DEV } from "@/utils/helpers";
 import { and, eq, ilike, or, sql } from "drizzle-orm";
 import { getSession } from "./authActions";
 import { revalidatePath } from "next/cache";
+import { createRecipeValidation } from "@/utils/validationSchemas";
+import { getTranslations } from "next-intl/server";
 
 export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
@@ -28,7 +30,49 @@ type RecipeUpdate = Partial<
 
 export async function addRecipe(recipe: typeof recipeTable.$inferInsert) {
   try {
-    const inserted = await db.insert(recipeTable).values(recipe).returning();
+    const session = await getSession();
+    if (!session) {
+      return null;
+    }
+    const t = await getTranslations("Validation");
+    const {
+      title,
+      description,
+      category,
+      cuisineId,
+      difficulty,
+      prepTime,
+      cookTime,
+      servings,
+      diet,
+      ingredients,
+      instructions,
+    } = recipe;
+    const verified = createRecipeValidation(t).safeParse({
+      title,
+      description,
+      category,
+      cuisineId,
+      difficulty,
+      prepTime,
+      cookTime,
+      servings,
+      diet,
+      ingredients,
+      instructions,
+    });
+    if (!verified.success) {
+      return null;
+    }
+    const inserted = await db
+      .insert(recipeTable)
+      .values({
+        ...verified.data,
+        slug: recipe.slug,
+        imageUrl: recipe.imageUrl,
+        authorId: session.user.id,
+      })
+      .returning();
     return JSON.parse(JSON.stringify(inserted));
   } catch (err) {
     if (IS_DEV) {
@@ -42,11 +86,42 @@ export async function addRecipe(recipe: typeof recipeTable.$inferInsert) {
 export async function updateRecipe(recipeId: string, recipe: RecipeUpdate) {
   try {
     const session = await getSession();
-    if (!session) return;
-
+    if (!session) {
+      return null;
+    }
+    const t = await getTranslations("Validation");
+    const {
+      title,
+      description,
+      category,
+      cuisineId,
+      difficulty,
+      prepTime,
+      cookTime,
+      servings,
+      diet,
+      ingredients,
+      instructions,
+    } = recipe;
+    const verified = createRecipeValidation(t).safeParse({
+      title,
+      description,
+      category,
+      cuisineId,
+      difficulty,
+      prepTime,
+      cookTime,
+      servings,
+      diet,
+      ingredients,
+      instructions,
+    });
+    if (!verified.success) {
+      return null;
+    }
     await db
       .update(recipeTable)
-      .set(recipe)
+      .set({ ...verified.data, imageUrl: recipe.imageUrl })
       .where(
         and(
           eq(recipeTable.id, recipeId),
@@ -64,6 +139,9 @@ export async function updateRecipe(recipeId: string, recipe: RecipeUpdate) {
 
 export async function deleteRecipe(recipeId: string) {
   try {
+    const session = await getSession();
+    if (!session) return;
+
     await db.delete(recipeTable).where(eq(recipeTable.id, recipeId));
   } catch (err) {
     if (IS_DEV) {
