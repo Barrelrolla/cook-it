@@ -264,7 +264,8 @@
     "close-button": "Close",
     "social-signin": "Sign in with {social}",
     "choose-username-label": "Choose your username",
-    "confirm-username": "Confirm username"
+    "confirm-username": "Confirm username",
+    "terms-privacy": "By signing up you agree to the <privacy>Privacy Policy</privacy> and <terms>Terms & Conditions</terms>."
   },
   "DestructiveModal": {
     "close": "Close",
@@ -492,6 +493,116 @@
       "title": "Contact Us",
       "text": "If you have questions about this Privacy Policy, want to exercise your privacy rights, or have concerns about how your information is handled, please contact:",
       "name": "Julian Teofilov"
+    }
+  },
+  "TermsPage": {
+    "title": "Terms of Service",
+    "updated": "Last updated: {date}",
+    "intro": "Welcome to {brand}. These Terms of Service (\"Terms\") govern your use of the {brand} website and services.",
+    "text": "By creating an account or using {brand}, you agree to these Terms. If you do not agree with them, please do not use {brand}.",
+    "About": {
+      "title": "About {brand}",
+      "operated": "{brand} is operated by Julian Teofilov, an individual based in Bulgaria.",
+      "text": "{brand} is a platform for discovering, creating, saving, and sharing recipes and related content."
+    },
+    "YourAccount": {
+      "title": "Your Account",
+      "features": "Some {brand} features require an account.",
+      "responsible": "You are responsible for:",
+      "information": "Providing accurate information when creating your account.",
+      "credentials": "Keeping your account credentials secure.",
+      "activity": "All activity carried out through your account.",
+      "sharing": "Not sharing access to your account with other people.",
+      "google": "You may sign in using supported third-party authentication providers, such as Google. Your use of those services is also subject to their respective terms and policies.",
+      "deletion": "You may delete your account at any time through the available account settings or by contacting us."
+    },
+    "UserContent": {
+      "title": "User Content",
+      "intro": "{brand} allows users to create recipes, upload images, and submit other content (\"User Content\").",
+      "ownership": "You retain ownership of the content you create and upload.",
+      "license": "By submitting User Content to {brand}, you grant {brand} a non-exclusive, worldwide, royalty-free license to host, store, reproduce, display, and distribute that content as necessary to operate and provide the {brand} service.",
+      "transfer": "This license does not transfer ownership of your content to {brand}.",
+      "responsible": "You are responsible for the content you submit and must have the necessary rights and permissions to use and upload it.",
+      "must-not": "You must not upload content that:",
+      "infringe": "Infringes another person's intellectual property or other rights.",
+      "personal": "Contains personal information about another person without appropriate permission.",
+      "illegal": "Is illegal, fraudulent, threatening, abusive, or harmful.",
+      "malicious": "Contains malicious code or attempts to compromise {brand} or its users.",
+      "laws": "Otherwise violates applicable laws.",
+      "public": "Recipes and other User Content may be publicly visible to other {brand} users and visitors."
+    },
+    "ContentRemoval": {
+      "title": "Content Removal",
+      "text": "We reserve the right to remove or restrict access to User Content that we reasonably believe violates these Terms, applicable law, or the proper operation of {brand}.",
+      "termination": "We may suspend or terminate accounts in cases of serious or repeated violations, abuse of the service, fraud, or activity that may harm {brand} or its users.",
+      "monitor": "We are not obligated to monitor all User Content."
+    },
+    "RecipeSafety": {
+      "title": "Recipe Information and Safety",
+      "intro": "{brand} contains recipes and cooking information submitted by users and other content sources.",
+      "accuracy": "{brand} does not guarantee that recipes are accurate, complete, tested, safe, or suitable for every person or situation.",
+      "risks": "Cooking involves inherent risks, including but not limited to burns, cuts, fires, foodborne illness, allergic reactions, and other injuries.",
+      "responsibility": "You are responsible for using your own judgment when preparing food and for checking ingredients, allergens, cooking temperatures, preparation methods, and food-safety requirements.",
+      "health": "If you have allergies, dietary restrictions, medical conditions, or other health concerns, consult an appropriate professional and independently verify that recipes and ingredients are suitable for you.",
+      "advice": "{brand} should not be relied upon as medical, nutritional, or professional advice."
+    },
+    "IntellectualProperty": {
+      "title": "Intellectual Property",
+      "platform": "The {brand} website, including its software, design, branding, logos, and original content provided by {brand}, is owned by or licensed to {brand} unless otherwise stated.",
+      "use": "You may use {brand} for its intended purpose, but you may not copy, reproduce, modify, distribute, sell, or exploit {brand} or its proprietary components without permission, except where permitted by applicable law.",
+      "user-content": "User Content remains subject to the ownership and license terms described in these Terms."
+    },
+    "ThirdParties": {
+      "title": "Third-Party Services",
+      "text": "{brand} relies on third-party services to provide certain functionality, including hosting, authentication, email, analytics, database services, and image storage.",
+      "availability": "Third-party services may become unavailable or change their functionality independently of {brand}.",
+      "terms": "Your use of third-party services may also be subject to their own terms and policies."
+    },
+    "Availability": {
+      "title": "Availability and Changes",
+      "availability": "We aim to keep {brand} available and reliable, but we do not guarantee that the service will always be available, uninterrupted, or error-free.",
+      "modify": "We may modify, suspend, discontinue, or restrict parts of {brand} at any time.",
+      "features": "We may also add, remove, or change features as {brand} develops."
+    },
+    "Disclaimer": {
+      "title": "Disclaimer",
+      "text": "{brand} is provided on an \"as is\" and \"as available\" basis.",
+      "warranties": "To the extent permitted by applicable law, we make no warranties regarding the availability, accuracy, reliability, completeness, or suitability of {brand} or its content.",
+      "content": "This includes User Content, recipes, nutritional information, cooking times, ingredient information, and other information available through the service."
+    },
+    "Liability": {
+      "title": "Limitation of Liability",
+      "text": "To the maximum extent permitted by applicable law, Julian Teofilov and {brand} shall not be liable for indirect, incidental, special, consequential, or similar damages arising from or related to your use of {brand}.",
+      "examples": "This includes, without limitation, damages arising from reliance on recipes or other content, loss of data, interruption of service, or inability to use {brand}.",
+      "legal": "Nothing in these Terms excludes or limits liability where such exclusion or limitation is prohibited by applicable law."
+    },
+    "Indemnification": {
+      "title": "Indemnification",
+      "text": "To the extent permitted by applicable law, you agree to be responsible for claims, damages, liabilities, and expenses arising from your violation of these Terms or your User Content, including claims that your User Content infringes another person's rights."
+    },
+    "Termination": {
+      "title": "Account Termination",
+      "user": "You may stop using {brand} and delete your account at any time.",
+      "us": "We may suspend or terminate your access to {brand} if you materially violate these Terms, misuse the service, engage in fraudulent or harmful activity, or where termination is reasonably necessary to protect {brand} or its users.",
+      "notice": "Where appropriate, we may provide notice before terminating an account.",
+      "survival": "Sections of these Terms that by their nature should continue to apply after termination will remain in effect."
+    },
+    "Changes": {
+      "title": "Changes to These Terms",
+      "text": "We may update these Terms from time to time.",
+      "material": "If we make material changes, we will update the \"Last updated\" date and, where appropriate, provide additional notice.",
+      "acceptance": "Your continued use of {brand} after updated Terms become effective constitutes acceptance of the updated Terms, where permitted by applicable law."
+    },
+    "GoverningLaw": {
+      "title": "Governing Law",
+      "text": "These Terms are governed by the laws of Bulgaria, without regard to conflict-of-law principles.",
+      "rights": "Nothing in these Terms limits any mandatory rights or protections you may have under the laws applicable to you, including applicable consumer protection and data protection laws."
+    },
+    "Contact": {
+      "title": "Contact",
+      "text": "If you have questions about these Terms, please contact:",
+      "name": "Julian Teofilov",
+      "email": "support@garndish.com"
     }
   },
   "ContactPage": {

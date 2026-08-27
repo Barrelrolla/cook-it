@@ -14,6 +14,7 @@ import {
 } from "@barrelrolla/react-components-library";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function SigninFormContent({
   emailNotVerified,
@@ -216,6 +217,22 @@ export default function SigninFormContent({
         >
           {t("remember-me")}
         </Checkbox>
+      )}
+      {signup && (
+        <p className="w-full text-center">
+          {t.rich("terms-privacy", {
+            privacy: (chunks) => (
+              <Anchor as={Link} href={"/privacy"}>
+                {chunks}
+              </Anchor>
+            ),
+            terms: (chunks) => (
+              <Anchor as={Link} href={"/terms"}>
+                {chunks}
+              </Anchor>
+            ),
+          })}
+        </p>
       )}
       <CardActions className="w-full p-0 flex flex-col gap-2">
         <Button
