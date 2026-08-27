@@ -81,6 +81,7 @@ export const auth = betterAuth({
         try {
           await resend.emails.send({
             from,
+            replyTo: t("Emails.reply-email"),
             to: user.email,
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
@@ -108,6 +109,7 @@ export const auth = betterAuth({
         const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
           from,
+          replyTo: t("Emails.reply-email"),
           to: user.email,
           subject: t("Emails.password-reset-subject", { brand }),
           react: PasswordReset({ t, url }),
@@ -131,6 +133,7 @@ export const auth = betterAuth({
         const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
           from,
+          replyTo: t("Emails.reply-email"),
           to: user.email,
           subject: t("Emails.verify-subject", { brand }),
           react: VerificationEmail({ t, name: user.name, url }),
