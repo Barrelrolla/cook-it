@@ -140,7 +140,7 @@ export default function SearchButton({
           >
             <PopoverTrigger>
               <div>
-                <Tooltip disabled={true}>
+                <Tooltip disabled={isOpen}>
                   <TooltipContent>filters</TooltipContent>
                   <TooltipTrigger>
                     <Button

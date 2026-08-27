@@ -15,12 +15,7 @@ export default function FooterLinks() {
     <FooterLinkGroup className="flex flex-col md:flex-row h-full items-center gap-1 md:gap-4">
       {links.map((link) => {
         return (
-          <FooterLink
-            className="text-main-content"
-            as={Link}
-            key={link}
-            href={`/${link}`}
-          >
+          <FooterLink color="main" as={Link} key={link} href={`/${link}`}>
             {t(link)}
           </FooterLink>
         );
