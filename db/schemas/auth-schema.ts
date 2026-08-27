@@ -23,6 +23,7 @@ export const user = pgTable(
     banned: boolean("banned").default(false),
     banReason: text("ban-reason"),
     banExpires: timestamp("ban-expires"),
+    termsAcceptedAt: timestamp("terms_accepted_at").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
