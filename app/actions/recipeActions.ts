@@ -4,11 +4,13 @@ import { db } from "@/db";
 import {
   likesTable,
   recipeCategoryEnum,
+  recipeDifficultyEnum,
   recipeTable,
+  restrictedDietEnum,
   savedTable,
 } from "@/db/schemas/recipe-schema";
 import { IS_DEV } from "@/utils/helpers";
-import { and, eq, ilike, or, sql } from "drizzle-orm";
+import { and, arrayContains, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { getSession } from "./authActions";
 import { revalidatePath } from "next/cache";
 import { createRecipeValidation } from "@/utils/validationSchemas";
@@ -301,22 +303,44 @@ export async function getRecipesByCategory(
 }
 
 export async function getRecipesWithQuery(
-  query: string,
+  params: {
+    query?: string;
+    category?: (typeof recipeCategoryEnum.enumValues)[number];
+    difficulty?: (typeof recipeDifficultyEnum.enumValues)[number];
+    cuisine?: string | undefined;
+    diet?: (typeof restrictedDietEnum.enumValues)[number][];
+  },
   limit: number,
   offset: number,
 ) {
   try {
-    const similarity = 0.5;
-    const cleanQuery = query.trim();
-    if (!cleanQuery) return { recipes: [], count: 0 };
-    const safeIlike = `%${cleanQuery.replace(/[%_]/g, "\\$&")}%`;
-    const condition = or(
-      ilike(recipeTable.title, safeIlike),
-      ilike(recipeTable.description, safeIlike),
-      sql`${recipeTable.ingredients}::text ILIKE ${safeIlike}`,
-      sql`word_similarity(${cleanQuery}, ${recipeTable.title}) > ${similarity}`,
-      sql`word_similarity(${cleanQuery}, ${recipeTable.description}) > ${similarity}`,
-      sql`word_similarity(${cleanQuery}, ${recipeTable.ingredients}::text) > ${similarity}`,
+    const { query, category, difficulty, cuisine, diet } = params;
+    console.log(diet);
+    const cleanQuery = query?.trim();
+
+    const searchCondition = cleanQuery
+      ? (() => {
+          const similarity = 0.5;
+          const safeIlike = `%${cleanQuery.replace(/[%_]/g, "\\$&")}%`;
+
+          return or(
+            ilike(recipeTable.title, safeIlike),
+            ilike(recipeTable.description, safeIlike),
+            sql`${recipeTable.ingredients}::text ILIKE ${safeIlike}`,
+            sql`word_similarity(${cleanQuery}, ${recipeTable.title}) > ${similarity}`,
+            sql`word_similarity(${cleanQuery}, ${recipeTable.description}) > ${similarity}`,
+            sql`word_similarity(${cleanQuery}, ${recipeTable.ingredients}::text) > ${similarity}`,
+          );
+        })()
+      : undefined;
+
+    const condition = and(
+      category ? eq(recipeTable.category, category) : undefined,
+      difficulty ? eq(recipeTable.difficulty, difficulty) : undefined,
+      cuisine ? eq(recipeTable.cuisineId, cuisine) : undefined,
+      diet?.length ? arrayContains(recipeTable.diet, diet) : undefined,
+      diet?.length ? arrayContains(recipeTable.diet, diet) : undefined,
+      searchCondition,
     );
 
     const [recipes, [{ count }]] = await Promise.all([
@@ -324,13 +348,15 @@ export async function getRecipesWithQuery(
         where: condition,
         limit,
         offset,
-        orderBy: (recipe) => [
-          sql`GREATEST(
-            word_similarity(${recipe.title}, ${cleanQuery}),
-            word_similarity(${recipe.description}, ${cleanQuery}),
-            word_similarity(${recipe.ingredients}::text, ${cleanQuery})
-            ) DESC`,
-        ],
+        orderBy: cleanQuery
+          ? (recipe) => [
+              sql`GREATEST(
+        word_similarity(${recipe.title}, ${cleanQuery}),
+        word_similarity(${recipe.description}, ${cleanQuery}),
+        word_similarity(${recipe.ingredients}::text, ${cleanQuery})
+      ) DESC`,
+            ]
+          : desc(recipeTable.createdAt),
         with: {
           author: true,
           cuisine: true,

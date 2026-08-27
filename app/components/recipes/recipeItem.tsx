@@ -41,6 +41,7 @@ export default async function RecipeItem({
   } else if (difficulty === "hard") {
     color = "error";
   }
+  const tDiet = await getTranslations("Recipes.Diet");
   const t = await getTranslations("RecipePage");
   const maxDiets = 3;
   const name = recipe.author?.name || t("deleted-user");
@@ -86,7 +87,7 @@ export default async function RecipeItem({
                       className="w-fit"
                       key={d + recipe.slug}
                     >
-                      {d}
+                      {tDiet(d)}
                     </Badge>
                   );
                 })}

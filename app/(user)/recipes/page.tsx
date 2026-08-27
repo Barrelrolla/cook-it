@@ -1,18 +1,25 @@
 import { Suspense } from "react";
 import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
-import {
-  getAllRecipes,
-  getRecipesWithQuery,
-} from "@/app/actions/recipeActions";
+import { getRecipesWithQuery } from "@/app/actions/recipeActions";
 import SearchButton from "@/app/components/searchButton";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getPaginationParams } from "@/utils/helpers";
+import {
+  recipeCategoryEnum,
+  recipeDifficultyEnum,
+  restrictedDietEnum,
+} from "@/db/schemas/recipe-schema";
+import { getAllCuisines, getCuisineId } from "@/app/actions/cuisineActions";
 
 type RecipePageProps = {
   searchParams: Promise<{
     query?: string;
+    category?: string;
+    difficulty?: string;
+    cuisine?: string;
+    diet: string[];
     page?: string;
   }>;
 };
@@ -32,22 +39,36 @@ export async function generateMetadata({
 }
 
 export default async function RecipesPage({ searchParams }: RecipePageProps) {
-  const { query, page } = await searchParams;
+  const params = await searchParams;
+  const cuisines = await getAllCuisines();
+  const { query, page, category, difficulty, cuisine, diet } = params;
   const pageSize = 12;
   const { offset } = getPaginationParams(pageSize, page);
+  const foundCuisine = cuisine ? await getCuisineId(cuisine) : undefined;
+  const diets = Array.isArray(diet) ? diet : diet ? [diet] : [];
 
-  let recipesPromise;
-  if (query) {
-    recipesPromise = getRecipesWithQuery(query, pageSize, offset);
-  } else {
-    recipesPromise = getAllRecipes(pageSize, offset);
-  }
+  const recipesPromise = getRecipesWithQuery(
+    {
+      query,
+      category: category as (typeof recipeCategoryEnum.enumValues)[number],
+      difficulty:
+        difficulty as (typeof recipeDifficultyEnum.enumValues)[number],
+      cuisine: foundCuisine ? foundCuisine.id : undefined,
+      diet: diets as typeof restrictedDietEnum.enumValues,
+    },
+    pageSize,
+    offset,
+  );
+
   return (
     <main>
       <div className="px-2 pt-4">
-        <SearchButton initialQuery={query} />
+        <SearchButton
+          initialQuery={query}
+          cuisines={cuisines?.map((cuisine) => cuisine.name)}
+        />
       </div>
-      <Suspense fallback={<RecipeListLoading />}>
+      <Suspense key={JSON.stringify(params)} fallback={<RecipeListLoading />}>
         <RecipeList
           recipesPromise={recipesPromise}
           showPagination
