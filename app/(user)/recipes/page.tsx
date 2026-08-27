@@ -8,17 +8,19 @@ import {
 import SearchButton from "@/app/components/searchButton";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { getPaginationParams } from "@/utils/helpers";
 
 type RecipePageProps = {
   searchParams: Promise<{
-    [key: string]: string | string[] | undefined;
+    query?: string;
+    page?: string;
   }>;
 };
 
 export async function generateMetadata({
   searchParams,
 }: RecipePageProps): Promise<Metadata> {
-  const query = (await searchParams).query?.toString();
+  const { query } = await searchParams;
   const tGlobal = await getTranslations("Global");
 
   return {
@@ -30,13 +32,15 @@ export async function generateMetadata({
 }
 
 export default async function RecipesPage({ searchParams }: RecipePageProps) {
-  const query = (await searchParams).query?.toString();
+  const { query, page } = await searchParams;
+  const pageSize = 12;
+  const { offset } = getPaginationParams(pageSize, page);
 
   let recipesPromise;
   if (query) {
-    recipesPromise = getRecipesWithQuery(query);
+    recipesPromise = getRecipesWithQuery(query, pageSize, offset);
   } else {
-    recipesPromise = getAllRecipes();
+    recipesPromise = getAllRecipes(pageSize, offset);
   }
   return (
     <main>
@@ -44,7 +48,11 @@ export default async function RecipesPage({ searchParams }: RecipePageProps) {
         <SearchButton initialQuery={query} />
       </div>
       <Suspense fallback={<RecipeListLoading />}>
-        <RecipeList recipesPromise={recipesPromise} />
+        <RecipeList
+          recipesPromise={recipesPromise}
+          showPagination
+          pageSize={pageSize}
+        />
       </Suspense>
     </main>
   );

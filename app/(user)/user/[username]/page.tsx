@@ -11,7 +11,7 @@ import UserRecipes from "./userRecipes";
 
 type Props = {
   params: Promise<{ username: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; page?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function UserPage({ params, searchParams }: Props) {
   const { username } = await params;
-  const { saved } = await searchParams;
+  const { saved, page } = await searchParams;
 
   const [user, session] = await Promise.all([
     getUserByUsername(username),
@@ -66,7 +66,7 @@ export default async function UserPage({ params, searchParams }: Props) {
           key={saved !== undefined ? "saved" : "published"}
           fallback={<RecipeListLoading />}
         >
-          <UserRecipes userId={user.id} saved={saved} />
+          <UserRecipes userId={user.id} saved={saved} page={page} />
         </Suspense>
       </section>
     </main>

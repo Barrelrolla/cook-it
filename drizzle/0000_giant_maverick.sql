@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE TYPE "public"."recipe_category" AS ENUM('breakfast', 'lunch', 'dinner', 'snack', 'side', 'dessert', 'drink', 'soup', 'salad', 'sauce', 'bread');--> statement-breakpoint
 CREATE TYPE "public"."recipe_difficulty" AS ENUM('easy', 'medium', 'hard');--> statement-breakpoint
 CREATE TYPE "public"."restricted_diet" AS ENUM('diabetic', 'gluten-free', 'halal', 'hindu', 'kosher', 'low-calorie', 'low-fat', 'low-lactose', 'low-salt', 'vegan', 'vegetarian');--> statement-breakpoint

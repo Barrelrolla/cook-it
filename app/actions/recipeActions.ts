@@ -5,6 +5,7 @@ import {
   likesTable,
   recipeCategoryEnum,
   recipeTable,
+  savedTable,
 } from "@/db/schemas/recipe-schema";
 import { IS_DEV } from "@/utils/helpers";
 import { and, eq, ilike, or, sql } from "drizzle-orm";
@@ -15,7 +16,7 @@ import { getTranslations } from "next-intl/server";
 
 export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
->[number];
+>["recipes"][number];
 
 export type RecipeWithRelationsPromise = NonNullable<
   ReturnType<typeof getAllRecipes>
@@ -236,15 +237,24 @@ export async function unlikeRecipe(recipeId: string, slug: string) {
   }
 }
 
-export async function getAllRecipes() {
+export async function getAllRecipes(limit: number, offset: number) {
   try {
-    return await db.query.recipeTable.findMany({
-      orderBy: (recipe, { desc }) => desc(recipe.createdAt),
-      with: {
-        author: true,
-        cuisine: true,
-      },
-    });
+    const [recipes, [{ count }]] = await Promise.all([
+      db.query.recipeTable.findMany({
+        limit,
+        offset,
+        orderBy: (recipe, { desc }) => [
+          desc(recipe.createdAt),
+          desc(recipe.id),
+        ],
+        with: {
+          author: true,
+          cuisine: true,
+        },
+      }),
+      db.select({ count: sql<number>`count(*)` }).from(recipeTable),
+    ]);
+    return { recipes, count };
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
@@ -256,15 +266,31 @@ export async function getAllRecipes() {
 
 export async function getRecipesByCategory(
   category: (typeof recipeCategoryEnum.enumValues)[number],
+  limit: number,
+  offset: number,
 ) {
   try {
-    return await db.query.recipeTable.findMany({
-      where: (recipe, { eq }) => eq(recipe.category, category),
-      with: {
-        author: true,
-        cuisine: true,
-      },
-    });
+    const condition = eq(recipeTable.category, category);
+    const [recipes, [{ count }]] = await Promise.all([
+      db.query.recipeTable.findMany({
+        where: condition,
+        limit,
+        offset,
+        orderBy: (recipe, { desc }) => [
+          desc(recipe.createdAt),
+          desc(recipe.id),
+        ],
+        with: {
+          author: true,
+          cuisine: true,
+        },
+      }),
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(recipeTable)
+        .where(condition),
+    ]);
+    return { recipes, count };
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
@@ -274,34 +300,48 @@ export async function getRecipesByCategory(
   return null;
 }
 
-export async function getRecipesWithQuery(query: string) {
+export async function getRecipesWithQuery(
+  query: string,
+  limit: number,
+  offset: number,
+) {
   try {
     const similarity = 0.5;
     const cleanQuery = query.trim();
-    if (!cleanQuery) return [];
+    if (!cleanQuery) return { recipes: [], count: 0 };
     const safeIlike = `%${cleanQuery.replace(/[%_]/g, "\\$&")}%`;
+    const condition = or(
+      ilike(recipeTable.title, safeIlike),
+      ilike(recipeTable.description, safeIlike),
+      sql`${recipeTable.ingredients}::text ILIKE ${safeIlike}`,
+      sql`word_similarity(${cleanQuery}, ${recipeTable.title}) > ${similarity}`,
+      sql`word_similarity(${cleanQuery}, ${recipeTable.description}) > ${similarity}`,
+      sql`word_similarity(${cleanQuery}, ${recipeTable.ingredients}::text) > ${similarity}`,
+    );
 
-    return await db.query.recipeTable.findMany({
-      where: (recipe) =>
-        or(
-          ilike(recipe.title, safeIlike),
-          ilike(recipe.description, safeIlike),
-          sql`${recipe.ingredients}::text ILIKE ${safeIlike}`,
-          sql`word_similarity(${cleanQuery}, ${recipe.title}) > ${similarity}`,
-          sql`word_similarity(${cleanQuery}, ${recipe.description}) > ${similarity}`,
-          sql`word_similarity(${cleanQuery}, ${recipe.ingredients}::text) > ${similarity}`,
-        ),
-      orderBy: (recipe) => [
-        sql`GREATEST(
-          word_similarity(${recipe.title}, ${query}),
-          word_similarity(${recipe.description}, ${query})
-        ) DESC`,
-      ],
-      with: {
-        author: true,
-        cuisine: true,
-      },
-    });
+    const [recipes, [{ count }]] = await Promise.all([
+      db.query.recipeTable.findMany({
+        where: condition,
+        limit,
+        offset,
+        orderBy: (recipe) => [
+          sql`GREATEST(
+            word_similarity(${recipe.title}, ${cleanQuery}),
+            word_similarity(${recipe.description}, ${cleanQuery}),
+            word_similarity(${recipe.ingredients}::text, ${cleanQuery})
+            ) DESC`,
+        ],
+        with: {
+          author: true,
+          cuisine: true,
+        },
+      }),
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(recipeTable)
+        .where(condition),
+    ]);
+    return { recipes, count };
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
@@ -347,16 +387,33 @@ export async function getRecipeBySlug(slug: string) {
   return null;
 }
 
-export async function getRecipesByUserId(userId: string) {
+export async function getRecipesByUserId(
+  userId: string,
+  limit: number,
+  offset: number,
+) {
   try {
-    return await db.query.recipeTable.findMany({
-      where: (recipe, { eq }) => eq(recipe.authorId, userId),
-      orderBy: (recipe, { desc }) => desc(recipe.createdAt),
-      with: {
-        author: true,
-        cuisine: true,
-      },
-    });
+    const condition = eq(recipeTable.authorId, userId);
+    const [recipes, [{ count }]] = await Promise.all([
+      db.query.recipeTable.findMany({
+        limit,
+        offset,
+        where: condition,
+        orderBy: (recipe, { desc }) => [
+          desc(recipe.createdAt),
+          desc(recipe.id),
+        ],
+        with: {
+          author: true,
+          cuisine: true,
+        },
+      }),
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(recipeTable)
+        .where(condition),
+    ]);
+    return { recipes, count };
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
@@ -366,24 +423,34 @@ export async function getRecipesByUserId(userId: string) {
   return null;
 }
 
-export async function getRecipesSavedByUser() {
+export async function getRecipesSavedByUser(limit: number, offset: number) {
   try {
     const session = await getSession();
     if (!session) return null;
 
-    const saved = await db.query.savedTable.findMany({
-      where: (save, { eq }) => eq(save.userId, session.user.id),
-      orderBy: (save, { desc }) => desc(save.createdAt),
-      with: {
-        recipe: {
-          with: {
-            author: true,
-            cuisine: true,
+    const condition = eq(savedTable, session.user.id);
+
+    const [saved, [{ count }]] = await Promise.all([
+      db.query.savedTable.findMany({
+        where: condition,
+        limit,
+        offset,
+        orderBy: (save, { desc }) => [desc(save.createdAt), desc(save.id)],
+        with: {
+          recipe: {
+            with: {
+              author: true,
+              cuisine: true,
+            },
           },
         },
-      },
-    });
-    return saved.map(({ recipe }) => recipe);
+      }),
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(recipeTable)
+        .where(condition),
+    ]);
+    return { recipes: saved.map(({ recipe }) => recipe), count };
   } catch (err) {
     if (IS_DEV) {
       console.error(err);

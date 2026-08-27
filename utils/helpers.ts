@@ -99,3 +99,12 @@ export function convertDurationToMinutes(
       return duration;
   }
 }
+
+export function getPaginationParams(
+  pageSize: number,
+  page: string | undefined,
+) {
+  const currentPage = Math.max(1, Number(page) || 1);
+  const offset = (currentPage - 1) * pageSize;
+  return { offset };
+}
