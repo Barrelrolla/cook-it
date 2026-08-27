@@ -8,8 +8,12 @@ import {
 import {
   Button,
   ButtonGroup,
+  Card,
   Combobox,
   Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Select,
   SelectContent,
   SelectGroup,
@@ -21,18 +25,33 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { PiMagnifyingGlass } from "react-icons/pi";
+import { PiMagnifyingGlass, PiSliders } from "react-icons/pi";
 
 export default function SearchButton({
   initialQuery = "",
+  initialCategory,
+  initialCuisine,
+  initialDifficulty,
+  initialDiet = [],
   showFilters,
   cuisines = [],
 }: {
   initialQuery?: string;
+  initialCategory?: string;
+  initialCuisine?: string;
+  initialDifficulty?: string;
+  initialDiet?: string[];
   showFilters?: boolean;
   cuisines?: string[];
 }) {
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState(initialQuery);
+  const [category, setCategory] = useState<string | undefined>(initialCategory);
+  const [cuisine, setCuisine] = useState<string | undefined>(initialCuisine);
+  const [difficulty, setDifficulty] = useState<string | undefined>(
+    initialDifficulty,
+  );
+  const [diet, setDiet] = useState<string[]>(initialDiet);
   const [indexChanged, setIndexChanged] = useState(false);
 
   useEffect(() => {
@@ -49,11 +68,7 @@ export default function SearchButton({
   const tRecipe = useTranslations("Recipes");
   const t = useTranslations("Search");
 
-  function submit(formData: FormData) {
-    const category = formData.get("category")?.toString() || "";
-    const difficulty = formData.get("difficulty")?.toString() || "";
-    const cuisine = formData.get("cuisine")?.toString() || "";
-    const diet = formData.getAll("diet") || [];
+  function submit() {
     const params = new URLSearchParams(searchParams);
     params.delete("page");
     params.delete("query");
@@ -95,6 +110,12 @@ export default function SearchButton({
     return { name: cuisine, value: cuisine };
   });
 
+  const categoryIndex = categories.findIndex((c) => c.value === category);
+  const difficultyIndex = difficulties.findIndex((d) => d.value === difficulty);
+  const dietIndices = diets
+    .map((d, i) => (diet.includes(d.value) ? i : undefined))
+    .filter((d) => d !== undefined);
+  console.log(isOpen);
   return (
     <form action={submit} ref={formRef}>
       <ButtonGroup
@@ -110,6 +131,141 @@ export default function SearchButton({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
+        {showFilters && (
+          <Popover
+            requireClick
+            placement="bottom-end"
+            isOpen={isOpen}
+            onOpenChange={setIsOpen}
+          >
+            <PopoverTrigger>
+              <div>
+                <Tooltip disabled={true}>
+                  <TooltipContent>filters</TooltipContent>
+                  <TooltipTrigger>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      aria-label="filters"
+                      startIcon={<PiSliders />}
+                      onClick={() => setIsOpen(!isOpen)}
+                      useGroup={false}
+                      size="xl"
+                      radius="none"
+                      scaling={false}
+                    />
+                  </TooltipTrigger>
+                </Tooltip>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Card className="p-4">
+                <div>filters</div>
+                <div className="flex flex-col gap-4">
+                  <Select
+                    items={categories}
+                    label="category"
+                    name="category"
+                    showClearButton
+                    initialSelectedIndex={
+                      categoryIndex >= 0 ? categoryIndex : undefined
+                    }
+                    onSelectedIndexChange={(index) => {
+                      if (index !== undefined) {
+                        setCategory(categories[index].value);
+                      } else {
+                        setCategory(undefined);
+                      }
+                      setIndexChanged(true);
+                    }}
+                  >
+                    <SelectContent>
+                      <SelectGroup>
+                        {categories.map((cat, index) => (
+                          <SelectOption key={cat.value} index={index}>
+                            {cat.name}
+                          </SelectOption>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Combobox
+                    items={cuisineItems}
+                    label="cuisine"
+                    name="cuisine"
+                    showClearButton
+                    value={cuisine}
+                    onChange={(e) => setCuisine(e.target.value)}
+                    onSelectedIndexChange={() => {
+                      setIndexChanged(true);
+                    }}
+                  />
+                  <Select
+                    items={diets}
+                    multiple
+                    label="diet"
+                    name="diet"
+                    initialSelectedIndices={dietIndices}
+                    onSelectedIndexChange={(index) => {
+                      if (index !== undefined) {
+                        let newState = [];
+                        const found = diet.indexOf(diets[index].value);
+                        if (found >= 0) {
+                          newState = diet.filter((_, i) => i !== found);
+                        } else {
+                          newState = [...diet, diets[index].value];
+                        }
+                        setDiet(newState);
+                      } else {
+                        setDiet([]);
+                      }
+                      setIndexChanged(true);
+                    }}
+                  >
+                    <SelectContent>
+                      <SelectGroup>
+                        {diets.map((diet, index) => {
+                          return (
+                            <SelectOption index={index} key={diet.value}>
+                              {diet.name}
+                            </SelectOption>
+                          );
+                        })}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    items={difficulties}
+                    label="difficulty"
+                    name="difficulty"
+                    showClearButton
+                    initialSelectedIndex={
+                      difficultyIndex >= 0 ? difficultyIndex : undefined
+                    }
+                    onSelectedIndexChange={(index) => {
+                      if (index !== undefined) {
+                        setDifficulty(difficulties[index].value);
+                      } else {
+                        setDifficulty(undefined);
+                      }
+                      setIndexChanged(true);
+                    }}
+                  >
+                    <SelectContent>
+                      <SelectGroup>
+                        {difficulties.map((diff, index) => (
+                          <SelectOption key={diff.value} index={index}>
+                            {diff.name}
+                          </SelectOption>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </Card>
+            </PopoverContent>
+          </Popover>
+        )}
         <Tooltip>
           <TooltipContent>{t("search")}</TooltipContent>
           <TooltipTrigger>
@@ -120,81 +276,6 @@ export default function SearchButton({
           </TooltipTrigger>
         </Tooltip>
       </ButtonGroup>
-      {showFilters && (
-        <div className="px-2">
-          <div>filters</div>
-          <div className="flex gap-4">
-            <Select
-              items={categories}
-              label="category"
-              name="category"
-              showClearButton
-              onSelectedIndexChange={() => {
-                setIndexChanged(true);
-              }}
-            >
-              <SelectContent>
-                <SelectGroup>
-                  {categories.map((cat, index) => (
-                    <SelectOption key={cat.value} index={index}>
-                      {cat.name}
-                    </SelectOption>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Combobox
-              items={cuisineItems}
-              label="cuisine"
-              name="cuisine"
-              showClearButton
-              onSelectedIndexChange={() => {
-                setIndexChanged(true);
-              }}
-            />
-            <Select
-              items={diets}
-              multiple
-              label="diet"
-              name="diet"
-              onSelectedIndexChange={() => {
-                setIndexChanged(true);
-              }}
-            >
-              <SelectContent>
-                <SelectGroup>
-                  {diets.map((diet, index) => {
-                    return (
-                      <SelectOption index={index} key={diet.value}>
-                        {diet.name}
-                      </SelectOption>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Select
-              items={difficulties}
-              label="difficulty"
-              name="difficulty"
-              showClearButton
-              onSelectedIndexChange={() => {
-                setIndexChanged(true);
-              }}
-            >
-              <SelectContent>
-                <SelectGroup>
-                  {difficulties.map((diff, index) => (
-                    <SelectOption key={diff.value} index={index}>
-                      {diff.name}
-                    </SelectOption>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      )}
     </form>
   );
 }

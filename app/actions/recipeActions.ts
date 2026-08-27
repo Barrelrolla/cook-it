@@ -315,7 +315,6 @@ export async function getRecipesWithQuery(
 ) {
   try {
     const { query, category, difficulty, cuisine, diet } = params;
-    console.log(diet);
     const cleanQuery = query?.trim();
 
     const searchCondition = cleanQuery

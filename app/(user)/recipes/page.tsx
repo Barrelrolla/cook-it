@@ -65,7 +65,12 @@ export default async function RecipesPage({ searchParams }: RecipePageProps) {
       <div className="px-2 pt-4">
         <SearchButton
           initialQuery={query}
+          initialCategory={category}
+          initialCuisine={cuisine}
+          initialDifficulty={difficulty}
+          initialDiet={diet}
           cuisines={cuisines?.map((cuisine) => cuisine.name)}
+          showFilters
         />
       </div>
       <Suspense key={JSON.stringify(params)} fallback={<RecipeListLoading />}>
