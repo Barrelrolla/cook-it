@@ -58,7 +58,7 @@ export default function MoreOptionsButton({
             startIcon={<PiDotsThreeVerticalBold />}
           />
         </DropdownTrigger>
-        <DropdownContent>
+        <DropdownContent closeButtonAriaLabel={t("close")}>
           <DropdownList>
             <DropdownListItem
               className="justify-start"

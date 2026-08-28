@@ -31,7 +31,9 @@ export default async function RecipeList({
         <p>{t("no-recipes-found")}</p>
       )}
       {showPagination && result && (
-        <Pagination pageCount={Math.ceil(result.count / pageSize)} />
+        <div className="mt-2">
+          <Pagination pageCount={Math.ceil(result.count / pageSize)} />
+        </div>
       )}
     </div>
   );

@@ -277,7 +277,7 @@ export default function ShareForm({
           issues.find((issue) => issue.path[0] === "category")?.message || ""
         }
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {categories.map((cat, index) => (
             <SelectOption
               value={recipeCategoryEnum.enumValues[index]}
@@ -319,7 +319,7 @@ export default function ShareForm({
           issues.find((issue) => issue.path[0] === "difficulty")?.message || ""
         }
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {difficulties.map((diff, index) => (
             <SelectOption
               value={recipeDifficultyEnum.enumValues[index]}
@@ -343,6 +343,8 @@ export default function ShareForm({
             type="number"
             label={t("prep-time-label")}
             placeholder={t("prep-time-placeholder")}
+            stepUpAriaLabel={t("increase-time")}
+            stepDownAriaLabel={t("decrease-time")}
             wrapperClassName="w-full"
             inputContainerClassName="border-main-content/(--border-transparency) focus-within:border-primary"
             name="prep-time"
@@ -361,7 +363,7 @@ export default function ShareForm({
             aria-label={t("time-unit-aria-label")}
             name="prep-unit"
           >
-            <SelectContent>
+            <SelectContent closeButtonAriaLabel={t("close")}>
               {timeUnits.map((unit, index) => {
                 return (
                   <SelectOption
@@ -389,6 +391,8 @@ export default function ShareForm({
             type="number"
             label={t("cook-time-label")}
             placeholder={t("cook-time-placeholder")}
+            stepUpAriaLabel={t("increase-time")}
+            stepDownAriaLabel={t("decrease-time")}
             wrapperClassName="w-full"
             inputContainerClassName="border-main-content/(--border-transparency) focus-within:border-primary"
             name="cook-time"
@@ -407,7 +411,7 @@ export default function ShareForm({
             aria-label={t("time-unit-aria-label")}
             name="cook-unit"
           >
-            <SelectContent>
+            <SelectContent closeButtonAriaLabel={t("close")}>
               {timeUnits.map((unit, index) => {
                 return (
                   <SelectOption key={unit.value} index={index}>
@@ -423,6 +427,8 @@ export default function ShareForm({
         disabled={isPending}
         wrapperClassName="w-full"
         type="number"
+        stepUpAriaLabel={t("increase-time")}
+        stepDownAriaLabel={t("decrease-time")}
         label={t("servings-label")}
         placeholder={t("servings-placeholder")}
         startIcon={<PiForkKnife />}
@@ -449,7 +455,7 @@ export default function ShareForm({
         name="diet"
         error={issues.find((issue) => issue.path[0] === "diets")?.message || ""}
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {diets.map((diet, index) => {
             return (
               <SelectOption key={diet.value} index={index}>

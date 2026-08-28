@@ -90,7 +90,7 @@ export default function UserButton({ user }: { user: User }) {
             />
           </Button>
         </DropdownTrigger>
-        <DropdownContent>
+        <DropdownContent closeButtonAriaLabel={t("close")}>
           <DropdownTitle className="sm:hidden">{user.name}</DropdownTitle>
           <Divider className="opacity-10 my-2 sm:hidden" />
           <DropdownList>

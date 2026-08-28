@@ -73,6 +73,7 @@ export default function SearchButton({
   const formRef = useRef<HTMLFormElement | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const tShare = useTranslations("SharePage");
   const tRecipe = useTranslations("Recipes");
   const t = useTranslations("Search");
 
@@ -82,6 +83,7 @@ export default function SearchButton({
     setDifficulty(undefined);
     setDiet([]);
     setCleared(true);
+    setIsOpen(false);
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,12 +161,12 @@ export default function SearchButton({
             <PopoverTrigger>
               <div>
                 <Tooltip>
-                  <TooltipContent>filters</TooltipContent>
+                  <TooltipContent>{t("filters")}</TooltipContent>
                   <TooltipTrigger>
                     <Button
                       type="button"
                       variant="outline"
-                      aria-label="filters"
+                      aria-label={t("filters")}
                       startIcon={<PiSliders />}
                       onClick={() => setIsOpen(!isOpen)}
                       selected={isOpen}
@@ -181,17 +183,16 @@ export default function SearchButton({
               className="border-containers rounded-containers overflow-clip"
               innerClassName="max-h-fit"
               backdropClassName="z-100"
+              aria-label={t("filters")}
             >
-              <div
-                className="p-4 bg-main rounded-containers flex flex-col gap-2"
-                key={searchParams.toString()}
-              >
-                <div>filters</div>
+              <div className="p-4 bg-main rounded-containers flex flex-col gap-2">
+                <div>{t("filters")}</div>
                 <div className="flex flex-col gap-4">
                   <Select
                     hasBackdrop
                     items={categories}
-                    label="category"
+                    label={tShare("category-label")}
+                    placeholder={tShare("category-placeholder")}
                     name="category"
                     showClearButton
                     initialSelectedIndex={
@@ -207,7 +208,10 @@ export default function SearchButton({
                     }}
                     useGroup={false}
                   >
-                    <SelectContent backdropClassName="z-200">
+                    <SelectContent
+                      backdropClassName="z-200"
+                      closeButtonAriaLabel={t("close")}
+                    >
                       <SelectGroup>
                         {categories.map((cat, index) => (
                           <SelectOption key={cat.value} index={index}>
@@ -219,7 +223,8 @@ export default function SearchButton({
                   </Select>
                   <Combobox
                     items={cuisineItems}
-                    label="cuisine"
+                    label={tShare("cuisine-label")}
+                    placeholder={tShare("cuisine-placeholder")}
                     name="cuisine"
                     showClearButton
                     value={cuisine}
@@ -228,12 +233,19 @@ export default function SearchButton({
                       setIndexChanged(true);
                     }}
                     useGroup={false}
+                    toggleOpenAriaLabel={tShare("show-cuisines-aria-label")}
+                    removeAllItemsAriaLabel={tShare("clear-cuisine")}
                   />
                   <Select
                     hasBackdrop
                     items={diets}
                     multiple
-                    label="diet"
+                    label={tShare("diet-label")}
+                    placeholder={tShare("diet-placeholder")}
+                    removeItemAriaLabel={tShare("remove-diet-aria-label")}
+                    removeAllItemsAriaLabel={tShare(
+                      "remove-all-diets-aria-label",
+                    )}
                     name="diet"
                     initialSelectedIndices={dietIndices}
                     onSelectedIndexChange={(index) => {
@@ -253,7 +265,10 @@ export default function SearchButton({
                     }}
                     useGroup={false}
                   >
-                    <SelectContent backdropClassName="z-200">
+                    <SelectContent
+                      backdropClassName="z-200"
+                      closeButtonAriaLabel={t("close")}
+                    >
                       <SelectGroup>
                         {diets.map((diet, index) => {
                           return (
@@ -268,9 +283,11 @@ export default function SearchButton({
                   <Select
                     hasBackdrop
                     items={difficulties}
-                    label="difficulty"
+                    label={tShare("difficulty-label")}
+                    placeholder={tShare("difficulty-placeholder")}
                     name="difficulty"
                     showClearButton
+                    removeAllItemsAriaLabel={tShare("remove-difficulty")}
                     initialSelectedIndex={
                       difficultyIndex >= 0 ? difficultyIndex : undefined
                     }
@@ -284,7 +301,10 @@ export default function SearchButton({
                     }}
                     useGroup={false}
                   >
-                    <SelectContent backdropClassName="z-200">
+                    <SelectContent
+                      backdropClassName="z-200"
+                      closeButtonAriaLabel={t("close")}
+                    >
                       <SelectGroup>
                         {difficulties.map((diff, index) => (
                           <SelectOption key={diff.value} index={index}>
@@ -296,7 +316,7 @@ export default function SearchButton({
                   </Select>
                 </div>
                 <Button type="button" onClick={clear} useGroup={false}>
-                  clear
+                  {t("clear-all")}
                 </Button>
               </div>
             </PopoverContent>

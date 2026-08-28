@@ -15,7 +15,7 @@ export default function Pagination({ pageCount }: PaginationProps) {
   function changePage(page: number) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
-    router.push(`${path}?${params.toString()}`);
+    router.push(`${path}?${params.toString()}`, { scroll: true });
   }
 
   if (pageCount <= 1) return null;

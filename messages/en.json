@@ -17,6 +17,7 @@
     "settings-button-label": "Settings",
     "user-avatar": "{name}'s avatar",
     "toggle-dark-mode": "Toggle dark mode",
+    "close": "Close",
     "Links": {
       "recipes": "Recipes",
       "categories": "Categories"
@@ -32,6 +33,10 @@
   },
   "Search": {
     "search": "Search",
+    "filters": "Filters",
+    "clear": "Clear",
+    "clear-all": "Clear all",
+    "close": "Close",
     "search-placeholder": "What do you want to eat?"
   },
   "HomeHero": {
@@ -67,7 +72,8 @@
     "delete-title": "Delete {name} recipe?",
     "deleted-user": "Deleted user",
     "share-title": "Checkout this cool recipe on {brand}!",
-    "more-options": "More options"
+    "more-options": "More options",
+    "close": "Close"
   },
   "Recipes": {
     "Categories": {
@@ -132,6 +138,8 @@
     "diet-placeholder": "Select all that apply",
     "remove-diet-aria-label": "Remove diet",
     "remove-all-diets-aria-label": "Remove all diets",
+    "clear-cuisine": "Clear cuisine",
+    "remove-difficulty": "Clear difficulty",
     "ingredients-label": "Ingredients",
     "instructions-label": "Instructions",
     "ingredient-aria-label": "Ingredint {index}",
@@ -145,7 +153,10 @@
     "time-unit-aria-label": "Time unit",
     "minutes": "minutes",
     "hours": "hours",
-    "days": "days"
+    "days": "days",
+    "close": "Close",
+    "increase-time": "Add time",
+    "decrease-time": "Subtract time"
   },
   "Settings": {
     "name": "Settings",
