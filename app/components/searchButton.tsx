@@ -8,7 +8,6 @@ import {
 import {
   Button,
   ButtonGroup,
-  Card,
   Combobox,
   Input,
   Popover,
@@ -53,6 +52,15 @@ export default function SearchButton({
   );
   const [diet, setDiet] = useState<string[]>(initialDiet);
   const [indexChanged, setIndexChanged] = useState(false);
+  const [cleared, setCleared] = useState(false);
+
+  useEffect(() => {
+    if (cleared) {
+      submit();
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCleared(false);
+  }, [cleared, submit]);
 
   useEffect(() => {
     if (indexChanged) {
@@ -68,6 +76,15 @@ export default function SearchButton({
   const tRecipe = useTranslations("Recipes");
   const t = useTranslations("Search");
 
+  function clear() {
+    setCategory(undefined);
+    setCuisine(undefined);
+    setDifficulty(undefined);
+    setDiet([]);
+    setCleared(true);
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function submit() {
     const params = new URLSearchParams(searchParams);
     params.delete("page");
@@ -115,7 +132,7 @@ export default function SearchButton({
   const dietIndices = diets
     .map((d, i) => (diet.includes(d.value) ? i : undefined))
     .filter((d) => d !== undefined);
-  console.log(isOpen);
+
   return (
     <form action={submit} ref={formRef}>
       <ButtonGroup
@@ -137,10 +154,11 @@ export default function SearchButton({
             placement="bottom-end"
             isOpen={isOpen}
             onOpenChange={setIsOpen}
+            hasBackdrop
           >
             <PopoverTrigger>
               <div>
-                <Tooltip disabled={isOpen}>
+                <Tooltip>
                   <TooltipContent>filters</TooltipContent>
                   <TooltipTrigger>
                     <Button
@@ -149,6 +167,7 @@ export default function SearchButton({
                       aria-label="filters"
                       startIcon={<PiSliders />}
                       onClick={() => setIsOpen(!isOpen)}
+                      selected={isOpen}
                       useGroup={false}
                       size="xl"
                       radius="none"
@@ -158,11 +177,19 @@ export default function SearchButton({
                 </Tooltip>
               </div>
             </PopoverTrigger>
-            <PopoverContent>
-              <Card className="p-4">
+            <PopoverContent
+              className="border-containers rounded-containers overflow-clip"
+              innerClassName="max-h-fit"
+              backdropClassName="z-100"
+            >
+              <div
+                className="p-4 bg-main rounded-containers flex flex-col gap-2"
+                key={searchParams.toString()}
+              >
                 <div>filters</div>
                 <div className="flex flex-col gap-4">
                   <Select
+                    hasBackdrop
                     items={categories}
                     label="category"
                     name="category"
@@ -178,8 +205,9 @@ export default function SearchButton({
                       }
                       setIndexChanged(true);
                     }}
+                    useGroup={false}
                   >
-                    <SelectContent>
+                    <SelectContent backdropClassName="z-200">
                       <SelectGroup>
                         {categories.map((cat, index) => (
                           <SelectOption key={cat.value} index={index}>
@@ -199,8 +227,10 @@ export default function SearchButton({
                     onSelectedIndexChange={() => {
                       setIndexChanged(true);
                     }}
+                    useGroup={false}
                   />
                   <Select
+                    hasBackdrop
                     items={diets}
                     multiple
                     label="diet"
@@ -221,8 +251,9 @@ export default function SearchButton({
                       }
                       setIndexChanged(true);
                     }}
+                    useGroup={false}
                   >
-                    <SelectContent>
+                    <SelectContent backdropClassName="z-200">
                       <SelectGroup>
                         {diets.map((diet, index) => {
                           return (
@@ -235,6 +266,7 @@ export default function SearchButton({
                     </SelectContent>
                   </Select>
                   <Select
+                    hasBackdrop
                     items={difficulties}
                     label="difficulty"
                     name="difficulty"
@@ -250,8 +282,9 @@ export default function SearchButton({
                       }
                       setIndexChanged(true);
                     }}
+                    useGroup={false}
                   >
-                    <SelectContent>
+                    <SelectContent backdropClassName="z-200">
                       <SelectGroup>
                         {difficulties.map((diff, index) => (
                           <SelectOption key={diff.value} index={index}>
@@ -262,7 +295,10 @@ export default function SearchButton({
                     </SelectContent>
                   </Select>
                 </div>
-              </Card>
+                <Button type="button" onClick={clear} useGroup={false}>
+                  clear
+                </Button>
+              </div>
             </PopoverContent>
           </Popover>
         )}
