@@ -3,6 +3,7 @@ import RecipeItem from "./recipeItem";
 import { getTranslations } from "next-intl/server";
 import { getSession } from "@/app/actions/authActions";
 import Pagination from "../pagination/pagination";
+import NoRecipesFound from "./noRecipes";
 
 export default async function RecipeList({
   recipesPromise,
@@ -28,7 +29,12 @@ export default async function RecipeList({
         </ul>
       )}
       {(!result || result.recipes.length === 0) && (
-        <p>{t("no-recipes-found")}</p>
+        <div className="w-full max-w-200 flex flex-col items-center mx-auto">
+          <p>{t("no-recipes-found")}</p>
+          <div className="text-main-content/50 w-full h-full">
+            <NoRecipesFound />
+          </div>
+        </div>
       )}
       {showPagination && result && (
         <div className="mt-2">

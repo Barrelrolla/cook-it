@@ -222,6 +222,7 @@ export default function SearchButton({
                     </SelectContent>
                   </Select>
                   <Combobox
+                    shouldScrollOnFocus={false}
                     items={cuisineItems}
                     label={tShare("cuisine-label")}
                     placeholder={tShare("cuisine-placeholder")}

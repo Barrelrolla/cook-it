@@ -453,7 +453,7 @@ export async function getRecipesSavedByUser(limit: number, offset: number) {
     const session = await getSession();
     if (!session) return null;
 
-    const condition = eq(savedTable, session.user.id);
+    const condition = eq(savedTable.userId, session.user.id);
 
     const [saved, [{ count }]] = await Promise.all([
       db.query.savedTable.findMany({
@@ -472,9 +472,10 @@ export async function getRecipesSavedByUser(limit: number, offset: number) {
       }),
       db
         .select({ count: sql<number>`count(*)` })
-        .from(recipeTable)
+        .from(savedTable)
         .where(condition),
     ]);
+
     return { recipes: saved.map(({ recipe }) => recipe), count };
   } catch (err) {
     if (IS_DEV) {
