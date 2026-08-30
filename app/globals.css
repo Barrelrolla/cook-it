@@ -118,6 +118,12 @@ a {
   -webkit-user-drag: none;
 }
 
+@media screen {
+  .print-only-container {
+    display: none;
+  }
+}
+
 @theme {
   --color-muted: var(--color-muted);
 }

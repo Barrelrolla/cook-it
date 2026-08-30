@@ -628,5 +628,13 @@
     "honeypot": "Do not fill this out if you are human",
     "send": "Send",
     "email-sent": "Your message has been sent!"
+  },
+  "Print": {
+    "print": "Print",
+    "author": "Author: {name}",
+    "host": "Uploaded at garndish.com",
+    "prepTime": "Preparation: {time}",
+    "cookTime": "Cooking: {time}",
+    "servings": "Servings: {amount}"
   }
 }
