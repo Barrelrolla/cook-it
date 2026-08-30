@@ -48,8 +48,6 @@ export default function RecipePrint({
     };
   }, [handlePrint]);
 
-  const pTime = prepTime ? formatCookTime(tR, prepTime) : "";
-
   return (
     <>
       <div className="print-only-container">
