@@ -9,7 +9,7 @@
     "google": "Google",
     "apple": "Apple",
     "coming-soon": "Coming soon",
-    "metadata-search": "Recipes with {query}",
+    "metadata-search": "{query} recipes",
     "metadata-no-query": "Recipes"
   },
   "Navbar": {

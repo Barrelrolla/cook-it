@@ -5,8 +5,9 @@ import { cookies } from "next/headers";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { VercelMetrics } from "./vercelMetrics";
 import { ThemeContextProvider } from "barrelrolla-ui";
-import "@/utils/extensions";
 import { getTranslations } from "next-intl/server";
+import logo from "@/public/logo.png";
+import "@/utils/extensions";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(process.env.BASE_URL!),
     title: t("brand-name"),
     description: t("metadata-description"),
+    openGraph: { images: logo.src },
   };
 }
 
