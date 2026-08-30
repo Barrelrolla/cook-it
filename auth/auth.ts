@@ -19,7 +19,8 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createTranslator } from "next-intl";
 import en from "@/messages/en.json";
-import { IS_DEV } from "@/utils/helpers";
+import { getCloudinaryPublicId, IS_DEV } from "@/utils/helpers";
+import { deleteImage } from "@/app/actions/imageActions";
 
 const messages = { en };
 
@@ -86,6 +87,20 @@ export const auth = betterAuth({
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
           });
+        } catch (err) {
+          if (IS_DEV) {
+            console.error(err);
+          }
+        }
+      },
+      afterDelete: async (user) => {
+        try {
+          if (user.image) {
+            const publicId = getCloudinaryPublicId(user.image);
+            if (publicId) {
+              await deleteImage(publicId);
+            }
+          }
         } catch (err) {
           if (IS_DEV) {
             console.error(err);

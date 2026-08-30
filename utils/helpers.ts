@@ -14,6 +14,16 @@ export function getUniqueRecipeSlug(name: string) {
   return `${slug(name)}-${nanoid(6)}`;
 }
 
+export function getCloudinaryPublicId(url: string) {
+  const pathname = new URL(url).pathname;
+
+  const uploadPath = pathname.split("/upload/")[1];
+
+  if (!uploadPath) return null;
+
+  return uploadPath.replace(/^v\d+\//, "").replace(/\.[^/.]+$/, "");
+}
+
 export async function uploadUserAvatar(username: string, image: File) {
   const folderName = IS_DEV ? "cook-it/user-avatars" : "garndish/user-avatars";
   const imageName = username;

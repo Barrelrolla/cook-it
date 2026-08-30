@@ -9,12 +9,13 @@ import {
   restrictedDietEnum,
   savedTable,
 } from "@/db/schemas/recipe-schema";
-import { IS_DEV } from "@/utils/helpers";
+import { getCloudinaryPublicId, IS_DEV } from "@/utils/helpers";
 import { and, arrayContains, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { getSession } from "./authActions";
 import { revalidatePath } from "next/cache";
 import { createRecipeValidation } from "@/utils/validationSchemas";
 import { getTranslations } from "next-intl/server";
+import { deleteImage } from "./imageActions";
 
 export type RecipeWithRelations = NonNullable<
   Awaited<ReturnType<typeof getAllRecipes>>
@@ -145,7 +146,22 @@ export async function deleteRecipe(recipeId: string) {
     const session = await getSession();
     if (!session) return;
 
+    const recipe = await getRecipeById(recipeId);
+    if (!recipe) return;
+
     await db.delete(recipeTable).where(eq(recipeTable.id, recipeId));
+    if (recipe.imageUrl) {
+      try {
+        const publicId = getCloudinaryPublicId(recipe.imageUrl);
+        if (publicId) {
+          await deleteImage(publicId);
+        }
+      } catch (err) {
+        if (IS_DEV) {
+          console.error(err);
+        }
+      }
+    }
   } catch (err) {
     if (IS_DEV) {
       console.error(err);
