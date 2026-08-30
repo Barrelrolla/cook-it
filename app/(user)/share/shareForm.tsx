@@ -248,10 +248,11 @@ export default function ShareForm({
         <Input
           disabled={isPending}
           as="textarea"
+          style={{ fieldSizing: "content" }}
           label={`${t("description-label")}*`}
           placeholder={t("description-placeholder")}
           wrapperClassName="w-full"
-          className="h-44.5"
+          className="min-h-44.5 h-fit"
           name="description"
           defaultValue={description}
           error={
@@ -539,11 +540,12 @@ export default function ShareForm({
                 <span className="w-5 shrink-0">{index + 1}</span>
                 <Input
                   disabled={isPending}
+                  style={{ fieldSizing: "content" }}
                   aria-label={t("instruction-aria-label", { index: index + 1 })}
                   as="textarea"
                   value={step}
                   wrapperClassName="w-full"
-                  className="h-22"
+                  className="min-h-22 h-fit"
                   onChange={(e) => {
                     const newValue = e.target.value;
                     const newState = [...instructions];
