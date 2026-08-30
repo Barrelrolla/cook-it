@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
+import { Button, ButtonGroup } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { startTransition, useOptimistic } from "react";

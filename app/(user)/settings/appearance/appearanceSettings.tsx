@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Radio,
-  RadioGroup,
-  Spinner,
-  useTheme,
-} from "@barrelrolla/react-components-library";
+import { Radio, RadioGroup, Spinner, useTheme } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { CSSProperties } from "react";
 

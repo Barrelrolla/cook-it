@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import BackButton from "./backButton";
-import { Skeleton } from "@barrelrolla/react-components-library";
+import { Skeleton } from "barrelrolla-ui";
 
 export type SettingBaseProps = {
   label?: string;

@@ -1,9 +1,5 @@
 import { Ref } from "react";
-import {
-  CardTitle,
-  Dialog,
-  DialogProps,
-} from "@barrelrolla/react-components-library";
+import { CardTitle, Dialog, DialogProps } from "barrelrolla-ui";
 
 type BaseModalProps = {
   formRef?: Ref<HTMLFormElement> | null;

@@ -1,4 +1,4 @@
-import { Footer } from "@barrelrolla/react-components-library";
+import { Footer } from "barrelrolla-ui";
 import Brand from "./footerBrand";
 import { getTranslations } from "next-intl/server";
 import FooterLinks from "./footerLinks";

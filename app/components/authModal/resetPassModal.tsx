@@ -6,11 +6,7 @@ import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM } from "@/constants";
 import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
-import {
-  Button,
-  CardActions,
-  Input,
-} from "@barrelrolla/react-components-library";
+import { Button, CardActions, Input } from "barrelrolla-ui";
 import { PiCheckBold, PiKeyBold } from "react-icons/pi";
 import { $ZodIssue } from "zod/v4/core";
 import { useTranslations } from "next-intl";

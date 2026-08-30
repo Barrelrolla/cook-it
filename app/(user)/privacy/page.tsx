@@ -3,7 +3,7 @@ import AboutMainTitle from "../about/aboutMainTitle";
 import AboutSection from "../about/aboutSection";
 import AboutText from "../about/aboutText";
 import AboutTitle from "../about/aboutTitle";
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 import PrivacySmallTitle from "./privacySmallTitle";
 
 export default async function PrivacyPage() {

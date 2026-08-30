@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 
 export default function RecipeNotFound() {

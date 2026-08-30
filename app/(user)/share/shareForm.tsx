@@ -30,7 +30,7 @@ import {
   Select,
   SelectContent,
   SelectOption,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";

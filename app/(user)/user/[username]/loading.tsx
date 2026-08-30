@@ -1,5 +1,5 @@
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
-import { Skeleton } from "@barrelrolla/react-components-library";
+import { Skeleton } from "barrelrolla-ui";
 
 export default function UserLoading() {
   return (

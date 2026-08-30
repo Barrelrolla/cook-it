@@ -6,7 +6,7 @@ import {
 } from "@/app/actions/recipeActions";
 import { saveRecipe, unsaveRecipe } from "@/app/actions/userActions";
 import { IS_DEV } from "@/utils/helpers";
-import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
+import { Button, ButtonGroup } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { startTransition, useOptimistic } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination as Pages } from "@barrelrolla/react-components-library";
+import { Pagination as Pages } from "barrelrolla-ui";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type PaginationProps = {

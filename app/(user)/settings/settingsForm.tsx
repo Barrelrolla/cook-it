@@ -1,4 +1,4 @@
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import { ReactNode } from "react";
 import { PiFloppyDiskBold } from "react-icons/pi";
 import SettingsBase from "./settingsBase";

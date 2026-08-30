@@ -1,4 +1,4 @@
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { PiWarning } from "react-icons/pi";
 import BaseModal from "./baseModal";

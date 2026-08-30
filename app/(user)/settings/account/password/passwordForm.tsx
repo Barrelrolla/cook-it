@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Checkbox, Input } from "@barrelrolla/react-components-library";
+import { Checkbox, Input } from "barrelrolla-ui";
 import SettingsForm from "../../settingsForm";
 import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";

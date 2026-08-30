@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  NavbarLink,
-  NavbarLinkProps,
-} from "@barrelrolla/react-components-library";
+import { NavbarLink, NavbarLinkProps } from "barrelrolla-ui";
 
 export default function Navlink({
   href,

@@ -2,7 +2,7 @@
 import BaseModal from "@/app/components/baseModal";
 import DestructiveModal from "@/app/components/destructiveModal";
 import { authClient } from "@/auth/authClient";
-import { Button, Input } from "@barrelrolla/react-components-library";
+import { Button, Input } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 

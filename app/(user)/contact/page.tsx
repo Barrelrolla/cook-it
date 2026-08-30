@@ -1,4 +1,4 @@
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 import { getTranslations } from "next-intl/server";
 import ContactForm from "./contactForm";
 

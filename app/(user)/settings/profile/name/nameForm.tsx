@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Input } from "@barrelrolla/react-components-library";
+import { Input } from "barrelrolla-ui";
 import { User } from "@/db/schemas/auth-schema";
 import { createPermissiveNameValidation } from "@/utils/validationSchemas";
 import z from "zod";

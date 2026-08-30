@@ -3,7 +3,7 @@ import TermsSection from "./termsSection";
 import TermsMainTitle from "./termsMainTitle";
 import TermsText from "./termsText";
 import TermsTitle from "./termsTitle";
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 
 export default async function TermsPage() {
   const tGlobal = await getTranslations("Global");

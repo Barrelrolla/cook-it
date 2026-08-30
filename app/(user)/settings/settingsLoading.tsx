@@ -1,4 +1,4 @@
-import { Skeleton } from "@barrelrolla/react-components-library";
+import { Skeleton } from "barrelrolla-ui";
 import SettingsBase from "./settingsBase";
 
 export default function SettingsLoading() {

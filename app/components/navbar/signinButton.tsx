@@ -2,11 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/constants";
-import {
-  Button,
-  ButtonVariant,
-  ColorType,
-} from "@barrelrolla/react-components-library";
+import { Button, ButtonVariant, ColorType } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 
 export default function SigninButton({ signup }: { signup?: boolean }) {

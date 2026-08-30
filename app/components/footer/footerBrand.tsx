@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { FooterBrand } from "@barrelrolla/react-components-library";
+import { FooterBrand } from "barrelrolla-ui";
 import Logo from "./logo";
 import { useTranslations } from "next-intl";
 

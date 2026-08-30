@@ -1,5 +1,5 @@
 "use client";
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 

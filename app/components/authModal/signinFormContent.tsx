@@ -11,7 +11,7 @@ import {
   Checkbox,
   Input,
   Spinner,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
 import Link from "next/link";

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getRecipeBySlug } from "@/app/actions/recipeActions";
 import { getTranslations } from "next-intl/server";
 import RecipePageHero from "./recipePageHero";
-import { Card } from "@barrelrolla/react-components-library";
+import { Card } from "barrelrolla-ui";
 import RecipePrint from "./recipePrint";
 
 type Props = {

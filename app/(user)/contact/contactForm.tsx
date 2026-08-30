@@ -1,7 +1,7 @@
 "use client";
 
 import { sendEmail } from "@/app/actions/contactActions";
-import { Button, Input } from "@barrelrolla/react-components-library";
+import { Button, Input } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { PiPaperPlaneTilt } from "react-icons/pi";

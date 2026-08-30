@@ -12,7 +12,7 @@ import {
   DropdownTitle,
   DropdownTrigger,
   useNavbarContext,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { PiCaretDownBold, PiGear, PiSignOut, PiUser } from "react-icons/pi";
 import placeholderImage from "@/public/user-placeholder.png";
 import Link from "next/link";

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { authClient } from "@/auth/authClient";
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import GoogleLogo from "../logos/googleLogo";
 import AppleLogo from "../logos/appleLogo";
 import { useTranslations } from "next-intl";

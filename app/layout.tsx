@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { VercelMetrics } from "./vercelMetrics";
-import { ThemeContextProvider } from "@barrelrolla/react-components-library";
+import { ThemeContextProvider } from "barrelrolla-ui";
 import "@/utils/extensions";
 import { getTranslations } from "next-intl/server";
 

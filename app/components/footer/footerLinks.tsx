@@ -1,8 +1,5 @@
 "use client";
-import {
-  FooterLink,
-  FooterLinkGroup,
-} from "@barrelrolla/react-components-library";
+import { FooterLink, FooterLinkGroup } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 

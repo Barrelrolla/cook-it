@@ -10,7 +10,7 @@ import {
   NavbarCollapse,
   NavbarMenu,
   NavbarToggle,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { getTranslations } from "next-intl/server";
 import ThemeToggleButton from "./themeToggleButton";
 

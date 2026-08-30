@@ -1,5 +1,5 @@
 "use client";
-import { DarkModeToggle } from "@barrelrolla/react-components-library";
+import { DarkModeToggle } from "barrelrolla-ui";
 import { useEffect, useState } from "react";
 
 export default function ThemeToggleButton({

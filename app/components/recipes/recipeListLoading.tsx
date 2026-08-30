@@ -4,7 +4,7 @@ import {
   CardSection,
   CardTitle,
   Skeleton,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 
 export default function RecipeListLoading() {
   const arr = Array(8).fill(0);

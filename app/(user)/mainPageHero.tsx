@@ -1,10 +1,5 @@
 import { cookies } from "next/headers";
-import {
-  HeroActions,
-  HeroSection,
-  HeroText,
-  HeroTitle,
-} from "@barrelrolla/react-components-library";
+import { HeroActions, HeroSection, HeroText, HeroTitle } from "barrelrolla-ui";
 import heroLight from "../../public/hero-light.png";
 import heroDark from "../../public/hero-dark.png";
 import RecipeHero from "../components/hero/baseHero";

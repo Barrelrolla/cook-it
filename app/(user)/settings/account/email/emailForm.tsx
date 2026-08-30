@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import z from "zod";
-import { Input } from "@barrelrolla/react-components-library";
+import { Input } from "barrelrolla-ui";
 import { authClient } from "@/auth/authClient";
 import SettingsForm from "../../settingsForm";
 import { useTranslations } from "next-intl";

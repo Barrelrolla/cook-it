@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@plugin "@barrelrolla/react-components-library/plugin";
-@source "../node_modules/@barrelrolla/react-components-library/";
+@plugin "barrelrolla-ui/plugin";
+@source "../node_modules/barrelrolla-ui/";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

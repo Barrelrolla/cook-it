@@ -7,7 +7,7 @@ import {
   DropdownList,
   DropdownListItem,
   DropdownTrigger,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import {
   PiDotsThreeVerticalBold,
   PiPencilSimpleLine,

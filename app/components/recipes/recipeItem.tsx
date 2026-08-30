@@ -8,7 +8,7 @@ import {
   CardSection,
   CardTitle,
   ColorType,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
 import { getTranslations } from "next-intl/server";
 import { formatCategory, formatDifficulty } from "@/constants/recipeHelpers";

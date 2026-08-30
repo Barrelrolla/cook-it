@@ -1,4 +1,4 @@
-import { Spinner } from "@barrelrolla/react-components-library";
+import { Spinner } from "barrelrolla-ui";
 
 export default function Loading() {
   return (
