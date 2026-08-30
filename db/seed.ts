@@ -15,7 +15,7 @@ export async function seed() {
         displayUsername: "Barrelrolla",
         emailVerified: true,
         image:
-          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_auto,g_auto,h_400,w_400/v1785421900/cook-it/user-avatars/barrelrolla-avatar.webp",
+          "https://res.cloudinary.com/dkvc3cs7o/image/upload/c_auto,g_auto,h_400,w_400/v1785421900/cook-it/user-avatars/barrelrolla.webp",
       },
       password: "Pass123$",
       role: "admin",
@@ -93,7 +93,8 @@ export async function seed() {
     slug: getUniqueRecipeSlug("Creamy Mushroom Pasta"),
     title: "Creamy Mushroom Pasta",
     authorId: user.id,
-    imageUrl: "/creamy-mushroom-pasta.png",
+    imageUrl:
+      "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
     category: "dinner",
     cuisineId: cuisines[15].id,
     description:
@@ -130,7 +131,8 @@ export async function seed() {
     slug: getUniqueRecipeSlug("Rainbow Buddha Bowl"),
     title: "Rainbow Buddha Bowl",
     authorId: user.id,
-    imageUrl: "/rainbow-buddha-bowl.png",
+    imageUrl:
+      "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
     category: "lunch",
     cuisineId: cuisines[47].id,
     description:
@@ -173,7 +175,8 @@ export async function seed() {
     slug: getUniqueRecipeSlug("Honey Garlic Salmon"),
     title: "Honey Garlic Salmon",
     authorId: user.id,
-    imageUrl: "/honey-garlic-salmon.png",
+    imageUrl:
+      "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
     category: "dinner",
     cuisineId: cuisines[39].id,
     description:
@@ -210,7 +213,8 @@ export async function seed() {
     slug: getUniqueRecipeSlug("Chocolate Lava Cake"),
     title: "Chocolate Lava Cake",
     authorId: user.id,
-    imageUrl: "/chocolate-lava-cake.png",
+    imageUrl:
+      "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
     category: "dessert",
     cuisineId: cuisines[10].id,
     description:
@@ -248,7 +252,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Garlic Butter Chicken"),
       title: "Garlic Butter Chicken",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[1].id,
       description: "Juicy chicken cooked in a rich garlic butter sauce.",
@@ -265,7 +270,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Creamy Garlic Rice"),
       title: "Creamy Garlic Rice",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "side",
       cuisineId: cuisines[5].id,
       description:
@@ -281,7 +287,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Honey Glazed Chicken"),
       title: "Honey Glazed Chicken",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[7].id,
       description: "Tender chicken coated in a sweet and sticky honey glaze.",
@@ -298,7 +305,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Vanilla Chocolate Cake"),
       title: "Vanilla Chocolate Cake",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[10].id,
       description: "A simple chocolate cake with a delicate vanilla flavor.",
@@ -315,7 +323,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Crispy Chicken Bowl"),
       title: "Crispy Chicken Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "lunch",
       cuisineId: cuisines[33].id,
       description: "A colorful bowl topped with crispy golden chicken.",
@@ -330,7 +339,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Lemon Garlic Pasta"),
       title: "Lemon Garlic Pasta",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[15].id,
       description: "Bright and simple pasta tossed with lemon and garlic.",
@@ -345,7 +355,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Spicy Honey Salmon"),
       title: "Spicy Honey Salmon",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[37].id,
       description: "Salmon glazed with honey and a touch of chili.",
@@ -360,7 +371,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Mini Chocolate Cakes"),
       title: "Mini Chocolate Cakes",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[12].id,
       description: "Small individual chocolate cakes perfect for dessert.",
@@ -377,7 +389,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Roasted Veggie Bowl"),
       title: "Roasted Veggie Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "lunch",
       cuisineId: cuisines[12].id,
       description: "Roasted vegetables served over a bed of fluffy grains.",
@@ -392,7 +405,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Butter Chicken"),
       title: "Butter Chicken",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[34].id,
       description: "Tender chicken simmered in a creamy spiced tomato sauce.",
@@ -407,7 +421,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Crispy Potato Bites"),
       title: "Crispy Potato Bites",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "snack",
       cuisineId: cuisines[3].id,
       description: "Golden bite-sized potatoes with crisp edges.",
@@ -422,7 +437,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Garlic Butter Shrimp"),
       title: "Garlic Butter Shrimp",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[20].id,
       description: "Juicy shrimp quickly cooked in fragrant garlic butter.",
@@ -439,7 +455,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Dark Chocolate Tart"),
       title: "Dark Chocolate Tart",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[10].id,
       description:
@@ -457,7 +474,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Fresh Garden Bowl"),
       title: "Fresh Garden Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "salad",
       cuisineId: cuisines[12].id,
       description: "A fresh bowl packed with colorful vegetables.",
@@ -472,7 +490,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Creamy Tomato Pasta"),
       title: "Creamy Tomato Pasta",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[15].id,
       description: "Pasta coated in a creamy tomato sauce.",
@@ -487,7 +506,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Sweet Chili Salmon"),
       title: "Sweet Chili Salmon",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[37].id,
       description: "Salmon glazed with a sweet and mildly spicy sauce.",
@@ -502,7 +522,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Chocolate Brownie Bites"),
       title: "Chocolate Brownie Bites",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "snack",
       cuisineId: cuisines[47].id,
       description: "Small fudgy chocolate brownies perfect for sharing.",
@@ -517,7 +538,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Mediterranean Grain Bowl"),
       title: "Mediterranean Grain Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "lunch",
       cuisineId: cuisines[12].id,
       description: "A wholesome grain bowl with fresh Mediterranean flavors.",
@@ -532,7 +554,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Parmesan Garlic Pasta"),
       title: "Parmesan Garlic Pasta",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[15].id,
       description: "Simple pasta with garlic and plenty of Parmesan.",
@@ -547,7 +570,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Maple Glazed Salmon"),
       title: "Maple Glazed Salmon",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[49].id,
       description: "Oven-roasted salmon with a sweet maple glaze.",
@@ -564,7 +588,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Molten Chocolate Cups"),
       title: "Molten Chocolate Cups",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[3].id,
       description: "Warm individual chocolate desserts with soft centers.",
@@ -581,7 +606,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Roasted Chickpea Salad"),
       title: "Roasted Chickpea Salad",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "salad",
       cuisineId: cuisines[20].id,
       description: "A crunchy salad topped with golden roasted chickpeas.",
@@ -598,7 +624,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Creamy Garlic Chicken"),
       title: "Creamy Garlic Chicken",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[1].id,
       description: "Chicken simmered in a creamy garlic sauce.",
@@ -613,7 +640,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Lemon Butter Salmon"),
       title: "Lemon Butter Salmon",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[5].id,
       description: "Tender salmon finished with fresh lemon and butter.",
@@ -630,7 +658,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Chocolate Mousse Cake"),
       title: "Chocolate Mousse Cake",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[10].id,
       description: "A rich chocolate dessert topped with silky mousse.",
@@ -645,7 +674,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Rainbow Couscous Bowl"),
       title: "Rainbow Couscous Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "lunch",
       cuisineId: cuisines[25].id,
       description: "Fluffy couscous topped with colorful fresh vegetables.",
@@ -660,7 +690,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Creamy Spinach Pasta"),
       title: "Creamy Spinach Pasta",
       authorId: user.id,
-      imageUrl: "/creamy-mushroom-pasta.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/creamy-mushroom-pasta_wgnb3j.png",
       category: "dinner",
       cuisineId: cuisines[15].id,
       description: "Creamy pasta with wilted spinach and Parmesan.",
@@ -675,7 +706,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Garlic Chili Salmon"),
       title: "Garlic Chili Salmon",
       authorId: user.id,
-      imageUrl: "/honey-garlic-salmon.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/honey-garlic-salmon_zfya0i.png",
       category: "dinner",
       cuisineId: cuisines[39].id,
       description: "Salmon with a fragrant garlic and chili crust.",
@@ -692,7 +724,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Easy Chocolate Souffle"),
       title: "Easy Chocolate Souffle",
       authorId: user.id,
-      imageUrl: "/chocolate-lava-cake.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/chocolate-lava-cake_fqr7zl.png",
       category: "dessert",
       cuisineId: cuisines[10].id,
       description: "Light chocolate souffles with a rich chocolate flavor.",
@@ -707,7 +740,8 @@ export async function seed() {
       slug: getUniqueRecipeSlug("Warm Veggie Grain Bowl"),
       title: "Warm Veggie Grain Bowl",
       authorId: user.id,
-      imageUrl: "/rainbow-buddha-bowl.png",
+      imageUrl:
+        "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1782997701/rainbow-buddha-bowl_bsbmt7.png",
       category: "lunch",
       cuisineId: cuisines[31].id,
       description: "Warm grains topped with roasted seasonal vegetables.",
