@@ -236,7 +236,12 @@ export default function ShareForm({
       <div className="lg:col-span-2">
         <Input
           disabled={isPending}
-          label={`${t("title-label")}*`}
+          label={
+            <span>
+              {t("title-label")}
+              <span className="text-error inline">*</span>
+            </span>
+          }
           placeholder={t("title-placeholder")}
           wrapperClassName="w-full lg:w-[60%]"
           name={"title"}
@@ -249,7 +254,12 @@ export default function ShareForm({
           disabled={isPending}
           as="textarea"
           style={{ fieldSizing: "content" }}
-          label={`${t("description-label")}*`}
+          label={
+            <span>
+              {t("description-label")}
+              <span className="text-error inline">*</span>
+            </span>
+          }
           placeholder={t("description-placeholder")}
           wrapperClassName="w-full"
           className="min-h-44.5 h-fit"
@@ -263,7 +273,12 @@ export default function ShareForm({
       </div>
       <Select
         disabled={isPending}
-        label={`${t("category-label")}*`}
+        label={
+          <>
+            {t("category-label")}
+            <span className="text-error">*</span>
+          </>
+        }
         items={categories}
         placeholder={t("category-placeholder")}
         initialSelectedIndex={

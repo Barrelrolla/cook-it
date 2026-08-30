@@ -21,7 +21,15 @@ export function getCloudinaryPublicId(url: string) {
 
   if (!uploadPath) return null;
 
-  return uploadPath.replace(/^v\d+\//, "").replace(/\.[^/.]+$/, "");
+  const parts = uploadPath.split("/");
+  const versionIndex = parts.findIndex((part) => /^v\d+$/.test(part));
+
+  if (versionIndex === -1) return null;
+
+  return parts
+    .slice(versionIndex + 1)
+    .join("/")
+    .replace(/\.[^/.]+$/, "");
 }
 
 export async function uploadUserAvatar(username: string, image: File) {

@@ -149,6 +149,7 @@ export default function PasswordForm({
       />
       {hasPass && (
         <Checkbox
+          disabled={wasChanged || isLoading || isPending}
           defaultChecked={revokeSessions}
           name="revoke"
           size={18}
