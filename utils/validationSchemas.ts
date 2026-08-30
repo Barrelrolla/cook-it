@@ -176,10 +176,12 @@ export function createRecipeValidation(t: ValidationTranslator) {
     cookTime: z.coerce
       .number()
       .int({ error: t("recipe-cook-time") })
+      .nullable()
       .optional(),
     servings: z.coerce
       .number()
       .int({ error: t("recipe-servings") })
+      .nullable()
       .optional(),
     diet: z.array(z.enum(restrictedDietEnum.enumValues), {
       error: t("recipe-diet"),

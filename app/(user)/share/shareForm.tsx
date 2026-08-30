@@ -115,7 +115,7 @@ export default function ShareForm({
     const cookUnit = formData.get("cook-unit")?.toString() || "";
     const servingsInput = formData.get("servings")?.toString() || "";
     const diet = formData.getAll("diet") || [];
-    const cuisine = await getCuisineId(cuisineInput);
+    const cuisine = cuisineInput ? await getCuisineId(cuisineInput) : null;
 
     setTitle(titleInput);
     setDescription(descriptionInput);
