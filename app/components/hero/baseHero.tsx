@@ -31,7 +31,7 @@ export default function RecipeHero({
             fill
             sizes="60vw"
             priority
-            className="object-cover object-right"
+            className="object-cover object-center"
           />
         )}
       </div>
