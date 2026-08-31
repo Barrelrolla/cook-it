@@ -44,7 +44,7 @@ export default async function RecipeItemPage({ params }: Props) {
             <span className="mb-2 font-heading text-lg">
               {t("ingredient-label")}
             </span>
-            <ol className="list-disc list-inside">
+            <ol className="list-disc list-inside flex flex-col gap-1">
               {ingredients.map((ingredient) => (
                 <li key={ingredient}>{ingredient}</li>
               ))}
@@ -57,7 +57,7 @@ export default async function RecipeItemPage({ params }: Props) {
             <span className="mb-2 font-heading text-lg">
               {t("instructions-label")}
             </span>
-            <ul className="list-decimal list-inside">
+            <ul className="list-decimal list-inside flex flex-col gap-3">
               {instructions.map((step, index) => (
                 <li key={"step " + index}>{step}</li>
               ))}
