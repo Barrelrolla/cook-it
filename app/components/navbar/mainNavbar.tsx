@@ -6,15 +6,17 @@ import Navlink from "./navlink";
 import SigninButton from "./signinButton";
 import UserButton from "./userButton";
 import {
-  DarkModeToggle,
   Navbar,
   NavbarCollapse,
   NavbarMenu,
   NavbarToggle,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
+import { getTranslations } from "next-intl/server";
+import ThemeToggleButton from "./themeToggleButton";
 
 export default async function MainNavbar() {
   const session = await getSession();
+  const t = await getTranslations("Navbar");
   const user = session ? JSON.parse(JSON.stringify(session.user)) : null;
   return (
     <Navbar
@@ -37,7 +39,7 @@ export default async function MainNavbar() {
         </NavbarMenu>
       </NavbarCollapse>
       <div className="flex flex-row justify-end items-center gap-1 min-w-48 min-h-14 md:min-h-18">
-        <DarkModeToggle color="main" variant="ghost" className="size-10" />
+        <ThemeToggleButton ariaLabel={t("toggle-dark-mode")} />
         {!session && (
           <>
             <Suspense>

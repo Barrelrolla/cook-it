@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Checkbox, Input } from "@barrelrolla/react-components-library";
+import { Checkbox, Input } from "barrelrolla-ui";
 import SettingsForm from "../../settingsForm";
 import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import { authClient } from "@/auth/authClient";
@@ -117,6 +117,7 @@ export default function PasswordForm({
       </p>
       {hasPass && (
         <Input
+          revealPasswordToggleAriaLabel={t("reveal-password")}
           type="password"
           disabled={wasChanged || isLoading || isPending}
           defaultValue={oldPassword}
@@ -126,6 +127,7 @@ export default function PasswordForm({
         />
       )}
       <Input
+        revealPasswordToggleAriaLabel={t("reveal-password")}
         type="password"
         disabled={wasChanged || isLoading || isPending}
         defaultValue={newPassword}
@@ -135,6 +137,7 @@ export default function PasswordForm({
         error={issue && issue.path[0] === "password" ? issue.message : ""}
       />
       <Input
+        revealPasswordToggleAriaLabel={t("reveal-password")}
         type="password"
         disabled={wasChanged || isLoading || isPending}
         defaultValue={repeatPassword}
@@ -146,6 +149,7 @@ export default function PasswordForm({
       />
       {hasPass && (
         <Checkbox
+          disabled={wasChanged || isLoading || isPending}
           defaultChecked={revokeSessions}
           name="revoke"
           size={18}

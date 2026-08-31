@@ -4,11 +4,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { Manrope, Fraunces, Roboto, Hurricane } from "next/font/google";
 import { VercelMetrics } from "./vercelMetrics";
-import { ThemeContextProvider } from "@barrelrolla/react-components-library";
-import { IS_DEV, IS_PROD } from "@/utils/helpers";
-import ComingSoonPage from "./comingSoon";
-import "@/utils/extensions";
+import { ThemeContextProvider } from "barrelrolla-ui";
 import { getTranslations } from "next-intl/server";
+import logo from "@/public/logo.png";
+import "@/utils/extensions";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -42,6 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(process.env.BASE_URL!),
     title: t("brand-name"),
     description: t("metadata-description"),
+    openGraph: { images: logo.src },
   };
 }
 
@@ -96,8 +96,7 @@ export default async function RootLayout({
                 "0px calc(0px - var(--floating-ui-scrollbar-width)) 0px 0px",
             }}
           >
-            {IS_DEV && children}
-            {IS_PROD && <ComingSoonPage />}
+            {children}
           </body>
         </ThemeContextProvider>
       </NextIntlClientProvider>

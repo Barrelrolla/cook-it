@@ -7,7 +7,7 @@ import z from "zod";
 import { CHOOSE_DISPLAY_NAME_PARAM } from "@/constants";
 import BaseModal from "../baseModal";
 import { createUsernameValidation } from "@/utils/validationSchemas";
-import { Button, Input } from "@barrelrolla/react-components-library";
+import { Button, Input } from "barrelrolla-ui";
 import { PiUserBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
 
@@ -75,6 +75,7 @@ export default function UsernameModal() {
 
   return (
     <BaseModal
+      closeLabel={t("close")}
       title={t("choose-username-label")}
       formAction={action}
       isOpen={isOpen}

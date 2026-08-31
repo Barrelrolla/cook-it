@@ -3,19 +3,15 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getSession } from "@/app/actions/authActions";
 import { getUserByUsername } from "@/app/actions/userActions";
-import RecipeList from "@/app/components/recipes/recipeList";
 import RecipeListLoading from "@/app/components/recipes/recipeListLoading";
 import UserAvatar from "@/app/components/userAvatar";
 import { getTranslations } from "next-intl/server";
-import {
-  getRecipesByUserId,
-  getRecipesSavedByUser,
-} from "@/app/actions/recipeActions";
 import { UserRecipeBar } from "./userRecipeBar";
+import UserRecipes from "./userRecipes";
 
 type Props = {
   params: Promise<{ username: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; page?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -35,16 +31,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function UserPage({ params, searchParams }: Props) {
   const { username } = await params;
-  const { saved } = await searchParams;
-  const user = await getUserByUsername(username);
+  const { saved, page } = await searchParams;
+
+  const [user, session] = await Promise.all([
+    getUserByUsername(username),
+    getSession(),
+  ]);
   if (!user) {
     notFound();
   }
-  const session = await getSession();
   const current = session?.user.username === username;
   // const isAdmin = current && user.role === "admin";
-  const recipesPromise =
-    saved !== undefined ? getRecipesSavedByUser() : getRecipesByUserId(user.id);
 
   return (
     <main className="pt-4">
@@ -64,12 +61,12 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       </section>
       <section>
-        {/* <h2 className="text-2xl mx-4">
-          {current ? t("my-recipes") : t("uploaded-recipes")}
-        </h2> */}
         <UserRecipeBar isCurrentUser={current} />
-        <Suspense fallback={<RecipeListLoading />}>
-          <RecipeList recipesPromise={recipesPromise} />
+        <Suspense
+          key={saved !== undefined ? "saved" : "published"}
+          fallback={<RecipeListLoading />}
+        >
+          <UserRecipes userId={user.id} saved={saved} page={page} />
         </Suspense>
       </section>
     </main>

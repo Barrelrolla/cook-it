@@ -12,7 +12,7 @@ import {
   DropdownTitle,
   DropdownTrigger,
   useNavbarContext,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { PiCaretDownBold, PiGear, PiSignOut, PiUser } from "react-icons/pi";
 import placeholderImage from "@/public/user-placeholder.png";
 import Link from "next/link";
@@ -90,7 +90,7 @@ export default function UserButton({ user }: { user: User }) {
             />
           </Button>
         </DropdownTrigger>
-        <DropdownContent>
+        <DropdownContent closeButtonAriaLabel={t("close")}>
           <DropdownTitle className="sm:hidden">{user.name}</DropdownTitle>
           <Divider className="opacity-10 my-2 sm:hidden" />
           <DropdownList>

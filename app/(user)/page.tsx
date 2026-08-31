@@ -6,7 +6,8 @@ import { getAllRecipes } from "../actions/recipeActions";
 import SearchButton from "../components/searchButton";
 
 export default function Home() {
-  const recipesPromise = getAllRecipes();
+  const recipeCount = 8;
+  const recipesPromise = getAllRecipes(recipeCount, 0);
   return (
     <>
       <MainPageHero />

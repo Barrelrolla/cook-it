@@ -19,7 +19,7 @@ export default async function ConnectionsSettingsPage() {
 
   const methods = await getUserAuthMethods();
   const hasGoogle = methods?.providers.includes("google");
-  const hasApple = methods?.providers.includes("apple");
+  // const hasApple = methods?.providers.includes("apple");
 
   return (
     <SettingsBase label={label}>
@@ -32,14 +32,14 @@ export default async function ConnectionsSettingsPage() {
           </div>
         )}
         {!hasGoogle && <SocialSigninButton social="google" />}
-        <p className="mt-6">{tGlobal("apple")}</p>
-        {hasApple && (
+        {/* <p className="mt-6">{tGlobal("apple")}</p> */}
+        {/* {hasApple && (
           <div>
             <p className="text-sm text-success">{t("connected")}</p>
             <UnlinkSocialButton social="apple" />
           </div>
         )}
-        {!hasApple && <SocialSigninButton social="apple" />}
+        {!hasApple && <SocialSigninButton social="apple" />} */}
       </div>
     </SettingsBase>
   );

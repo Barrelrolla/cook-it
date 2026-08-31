@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import { PiArrowRightBold, PiPlusBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
 

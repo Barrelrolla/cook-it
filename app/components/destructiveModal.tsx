@@ -1,4 +1,4 @@
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { PiWarning } from "react-icons/pi";
 import BaseModal from "./baseModal";
@@ -19,10 +19,12 @@ export default function DestructiveModal({
   const t = useTranslations("DestructiveModal");
   return (
     <BaseModal
+      closeLabel={t("close")}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       formAction={action}
       title={title}
+      initialFocus={0}
     >
       <p className="text-4xl flex justify-center w-full">
         <PiWarning className="text-error" />

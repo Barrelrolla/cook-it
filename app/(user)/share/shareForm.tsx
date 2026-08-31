@@ -30,7 +30,7 @@ import {
   Select,
   SelectContent,
   SelectOption,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -114,8 +114,8 @@ export default function ShareForm({
     const cookTimeInput = formData.get("cook-time")?.toString() || "";
     const cookUnit = formData.get("cook-unit")?.toString() || "";
     const servingsInput = formData.get("servings")?.toString() || "";
-    const diets = formData.getAll("diet") || [];
-    const cuisine = await getCuisineId(cuisineInput);
+    const diet = formData.getAll("diet") || [];
+    const cuisine = cuisineInput ? await getCuisineId(cuisineInput) : null;
 
     setTitle(titleInput);
     setDescription(descriptionInput);
@@ -135,7 +135,7 @@ export default function ShareForm({
         prepTime: prepTimeInput,
         cookTime: cookTimeInput,
         servings: servingsInput,
-        diets,
+        diet,
         ingredients,
         instructions,
       });
@@ -191,7 +191,7 @@ export default function ShareForm({
             )
           : null,
         servings: data.servings || null,
-        diet: data.diets,
+        diet: data.diet,
         authorId: user.id,
       };
 
@@ -236,7 +236,12 @@ export default function ShareForm({
       <div className="lg:col-span-2">
         <Input
           disabled={isPending}
-          label={`${t("title-label")}*`}
+          label={
+            <span>
+              {t("title-label")}
+              <span className="text-error inline">*</span>
+            </span>
+          }
           placeholder={t("title-placeholder")}
           wrapperClassName="w-full lg:w-[60%]"
           name={"title"}
@@ -248,10 +253,16 @@ export default function ShareForm({
         <Input
           disabled={isPending}
           as="textarea"
-          label={`${t("description-label")}*`}
+          style={{ fieldSizing: "content" }}
+          label={
+            <span>
+              {t("description-label")}
+              <span className="text-error inline">*</span>
+            </span>
+          }
           placeholder={t("description-placeholder")}
           wrapperClassName="w-full"
-          className="h-44.5"
+          className="min-h-44.5 h-fit"
           name="description"
           defaultValue={description}
           error={
@@ -262,7 +273,12 @@ export default function ShareForm({
       </div>
       <Select
         disabled={isPending}
-        label={`${t("category-label")}*`}
+        label={
+          <>
+            {t("category-label")}
+            <span className="text-error">*</span>
+          </>
+        }
         items={categories}
         placeholder={t("category-placeholder")}
         initialSelectedIndex={
@@ -277,7 +293,7 @@ export default function ShareForm({
           issues.find((issue) => issue.path[0] === "category")?.message || ""
         }
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {categories.map((cat, index) => (
             <SelectOption
               value={recipeCategoryEnum.enumValues[index]}
@@ -319,7 +335,7 @@ export default function ShareForm({
           issues.find((issue) => issue.path[0] === "difficulty")?.message || ""
         }
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {difficulties.map((diff, index) => (
             <SelectOption
               value={recipeDifficultyEnum.enumValues[index]}
@@ -343,6 +359,8 @@ export default function ShareForm({
             type="number"
             label={t("prep-time-label")}
             placeholder={t("prep-time-placeholder")}
+            stepUpAriaLabel={t("increase-time")}
+            stepDownAriaLabel={t("decrease-time")}
             wrapperClassName="w-full"
             inputContainerClassName="border-main-content/(--border-transparency) focus-within:border-primary"
             name="prep-time"
@@ -361,7 +379,7 @@ export default function ShareForm({
             aria-label={t("time-unit-aria-label")}
             name="prep-unit"
           >
-            <SelectContent>
+            <SelectContent closeButtonAriaLabel={t("close")}>
               {timeUnits.map((unit, index) => {
                 return (
                   <SelectOption
@@ -389,6 +407,8 @@ export default function ShareForm({
             type="number"
             label={t("cook-time-label")}
             placeholder={t("cook-time-placeholder")}
+            stepUpAriaLabel={t("increase-time")}
+            stepDownAriaLabel={t("decrease-time")}
             wrapperClassName="w-full"
             inputContainerClassName="border-main-content/(--border-transparency) focus-within:border-primary"
             name="cook-time"
@@ -407,7 +427,7 @@ export default function ShareForm({
             aria-label={t("time-unit-aria-label")}
             name="cook-unit"
           >
-            <SelectContent>
+            <SelectContent closeButtonAriaLabel={t("close")}>
               {timeUnits.map((unit, index) => {
                 return (
                   <SelectOption key={unit.value} index={index}>
@@ -423,6 +443,8 @@ export default function ShareForm({
         disabled={isPending}
         wrapperClassName="w-full"
         type="number"
+        stepUpAriaLabel={t("increase-time")}
+        stepDownAriaLabel={t("decrease-time")}
         label={t("servings-label")}
         placeholder={t("servings-placeholder")}
         startIcon={<PiForkKnife />}
@@ -449,7 +471,7 @@ export default function ShareForm({
         name="diet"
         error={issues.find((issue) => issue.path[0] === "diets")?.message || ""}
       >
-        <SelectContent>
+        <SelectContent closeButtonAriaLabel={t("close")}>
           {diets.map((diet, index) => {
             return (
               <SelectOption key={diet.value} index={index}>
@@ -533,11 +555,12 @@ export default function ShareForm({
                 <span className="w-5 shrink-0">{index + 1}</span>
                 <Input
                   disabled={isPending}
+                  style={{ fieldSizing: "content" }}
                   aria-label={t("instruction-aria-label", { index: index + 1 })}
                   as="textarea"
                   value={step}
                   wrapperClassName="w-full"
-                  className="h-22"
+                  className="min-h-22 h-fit"
                   onChange={(e) => {
                     const newValue = e.target.value;
                     const newState = [...instructions];

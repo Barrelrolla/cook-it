@@ -8,7 +8,7 @@ import z from "zod";
 import { createSignupValidation } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
 import SigninFormContent from "./signinFormContent";
-import { Button } from "@barrelrolla/react-components-library";
+import { Button } from "barrelrolla-ui";
 import { SIGNIN_PARAM, SIGNUP_PARAM } from "@/constants";
 import userPlaceholderImage from "@/public/user-placeholder.png";
 import { PiCheckBold } from "react-icons/pi";
@@ -209,6 +209,7 @@ export default function SigninModal() {
   return (
     <>
       <BaseModal
+        closeLabel={t("close")}
         title={t("sign-in")}
         formRef={signinFormRef}
         formAction={signin}
@@ -226,6 +227,7 @@ export default function SigninModal() {
         />
       </BaseModal>
       <BaseModal
+        closeLabel={t("close")}
         title={t("sign-up")}
         formRef={signupFormRef}
         formAction={signUp}

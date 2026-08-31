@@ -9,6 +9,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+export async function deleteImage(publicId: string) {
+  await cloudinary.uploader.destroy(publicId);
+}
+
 export async function generateSignature(paramsToSign: Record<string, unknown>) {
   const session = await getSession();
   if (!session) {

@@ -1,9 +1,4 @@
-import {
-  Card,
-  Hero,
-  HeroSection,
-  Skeleton,
-} from "@barrelrolla/react-components-library";
+import { Card, Hero, HeroSection, Skeleton } from "barrelrolla-ui";
 
 export default function RecipeLoading() {
   return (

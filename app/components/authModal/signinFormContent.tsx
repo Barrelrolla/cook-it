@@ -11,9 +11,10 @@ import {
   Checkbox,
   Input,
   Spinner,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { PiEnvelopeBold, PiKeyBold, PiUserBold } from "react-icons/pi";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function SigninFormContent({
   emailNotVerified,
@@ -172,6 +173,7 @@ export default function SigninFormContent({
           startIcon={<PiKeyBold />}
           aria-label={t("password-input-label")}
           placeholder={t("password-input-label")}
+          revealPasswordToggleAriaLabel={t("reveal-password")}
           type="password"
           id="password"
           name="password"
@@ -190,6 +192,7 @@ export default function SigninFormContent({
             startIcon={<PiKeyBold />}
             aria-label={t("repeat-password-input-label")}
             placeholder={t("repeat-password-input-label")}
+            revealPasswordToggleAriaLabel={t("reveal-password")}
             type="password"
             id="repeat-password"
             name="repeat-password"
@@ -214,6 +217,22 @@ export default function SigninFormContent({
         >
           {t("remember-me")}
         </Checkbox>
+      )}
+      {signup && (
+        <p className="w-full text-center">
+          {t.rich("terms-privacy", {
+            privacy: (chunks) => (
+              <Anchor as={Link} href={"/privacy"}>
+                {chunks}
+              </Anchor>
+            ),
+            terms: (chunks) => (
+              <Anchor as={Link} href={"/terms"}>
+                {chunks}
+              </Anchor>
+            ),
+          })}
+        </p>
       )}
       <CardActions className="w-full p-0 flex flex-col gap-2">
         <Button
@@ -274,7 +293,7 @@ export default function SigninFormContent({
           <p className="text-xs text-error text-center">{verificationError}</p>
         )}
         <SocialSigninButton social="google" />
-        <SocialSigninButton social="apple" />
+        {/* <SocialSigninButton social="apple" /> */}
       </CardActions>
       {!signup && (
         <p className="text-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Anchor } from "@barrelrolla/react-components-library";
+import { Anchor } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 

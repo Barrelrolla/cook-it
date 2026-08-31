@@ -14,7 +14,7 @@ import {
   HeroSection,
   HeroText,
   HeroTitle,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { getTranslations } from "next-intl/server";
 import { PiClock, PiForkKnife } from "react-icons/pi";
 import RecipeActionButtons from "./recipeActionButtons";

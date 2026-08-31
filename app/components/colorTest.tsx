@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Button,
-  ButtonGroup,
-  useTheme,
-} from "@barrelrolla/react-components-library";
+import { Button, ButtonGroup, useTheme } from "barrelrolla-ui";
 
 export default function ColorTest() {
   const themeContext = useTheme();

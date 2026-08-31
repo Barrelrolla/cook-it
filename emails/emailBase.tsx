@@ -23,7 +23,7 @@ export default function EmailBase({
         <Head>
           <Font
             fontFamily="Hurricane"
-            fallbackFontFamily={"cursive"}
+            fallbackFontFamily={"Georgia"}
             fontWeight={400}
             fontStyle="normal"
             webFont={{
@@ -43,7 +43,7 @@ export default function EmailBase({
           />
           <Font
             fontFamily="Manrope"
-            fallbackFontFamily={"Arial"}
+            fallbackFontFamily={"Verdana"}
             fontWeight={400}
             fontStyle="normal"
             webFont={{
@@ -55,12 +55,7 @@ export default function EmailBase({
         <Body>
           <Preview>{preview}</Preview>
           <Container className="rounded-sm bg-main dark:bg-main-dark text-bg-main-content dark:text-bg-main-content-dark mb-10 p-8 max-w-160">
-            <Img
-              className="h-18"
-              src={
-                "https://res.cloudinary.com/dkvc3cs7o/image/upload/v1784429447/logo_irxicr.png"
-              }
-            />
+            <Img className="h-18" src={"https://garndish.com/logo.png"} />
             <Section>{children}</Section>
           </Container>
         </Body>

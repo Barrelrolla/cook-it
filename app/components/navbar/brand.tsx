@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { NavbarBrand } from "@barrelrolla/react-components-library";
+import { NavbarBrand } from "barrelrolla-ui";
 import logoLight from "@/public/logo-light.svg";
 import logoDark from "@/public/logo-dark.svg";
 import { useTranslations } from "next-intl";

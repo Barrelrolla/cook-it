@@ -19,6 +19,10 @@ export async function getAllCuisines() {
 }
 
 export async function getCuisineId(name: string) {
+  if (!name) {
+    return null;
+  }
+
   try {
     return await db.query.cuisineTable.findFirst({
       where: (cuisine, { eq }) => eq(cuisine.name, name),

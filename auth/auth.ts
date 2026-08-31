@@ -19,7 +19,8 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createTranslator } from "next-intl";
 import en from "@/messages/en.json";
-import { IS_DEV } from "@/utils/helpers";
+import { getCloudinaryPublicId, IS_DEV } from "@/utils/helpers";
+import { deleteImage } from "@/app/actions/imageActions";
 
 const messages = { en };
 
@@ -77,13 +78,29 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         try {
           await resend.emails.send({
-            from: "Garndish <noreply@resend.dev>",
-            to: "chetkara@gmail.com",
+            from,
+            replyTo: t("Emails.reply-email"),
+            to: user.email,
             subject: t("Emails.delete-subject", { brand }),
             react: DeleteAccount({ t, user: user.name, url }),
           });
+        } catch (err) {
+          if (IS_DEV) {
+            console.error(err);
+          }
+        }
+      },
+      afterDelete: async (user) => {
+        try {
+          if (user.image) {
+            const publicId = getCloudinaryPublicId(user.image);
+            if (publicId) {
+              await deleteImage(publicId);
+            }
+          }
         } catch (err) {
           if (IS_DEV) {
             console.error(err);
@@ -96,7 +113,7 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
-    sendResetPassword: async ({ url }) => {
+    sendResetPassword: async ({ user, url }) => {
       try {
         const cookieStore = await cookies();
         const locale = cookieStore.get("locale")?.value ?? "en";
@@ -104,9 +121,11 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
-          from: "Garndish <noreply@resend.dev>",
-          to: "chetkara@gmail.com",
+          from,
+          replyTo: t("Emails.reply-email"),
+          to: user.email,
           subject: t("Emails.password-reset-subject", { brand }),
           react: PasswordReset({ t, url }),
         });
@@ -126,9 +145,11 @@ export const auth = betterAuth({
           locale,
         });
         const brand = t("Global.brand-name");
+        const from = t("Emails.auth-email", { brand });
         await resend.emails.send({
-          from: "Garndish <noreply@resend.dev>",
-          to: "chetkara@gmail.com",
+          from,
+          replyTo: t("Emails.reply-email"),
+          to: user.email,
           subject: t("Emails.verify-subject", { brand }),
           react: VerificationEmail({ t, name: user.name, url }),
         });

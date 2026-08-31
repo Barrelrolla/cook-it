@@ -2,7 +2,7 @@
 import BaseModal from "@/app/components/baseModal";
 import DestructiveModal from "@/app/components/destructiveModal";
 import { authClient } from "@/auth/authClient";
-import { Button, Input } from "@barrelrolla/react-components-library";
+import { Button, Input } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -49,13 +49,20 @@ export default function DeleteAccountButton() {
         }}
       />
       <BaseModal
+        closeLabel={t("close")}
         isOpen={isPasswordOpen}
         setIsOpen={setIsPasswordOpen}
         formAction={deleteAccount}
         title={t("delete-account")}
+        initialFocus={0}
       >
         <p className="text-sm">{t("warning-message")}</p>
-        <Input wrapperClassName="w-full" type="password" name="password" />
+        <Input
+          revealPasswordToggleAriaLabel={t("reveal-password")}
+          wrapperClassName="w-full"
+          type="password"
+          name="password"
+        />
         <div className="w-full flex flex-row justify-between">
           <Button
             type="button"

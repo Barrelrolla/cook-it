@@ -23,6 +23,7 @@ export const user = pgTable(
     banned: boolean("banned").default(false),
     banReason: text("ban-reason"),
     banExpires: timestamp("ban-expires"),
+    termsAcceptedAt: timestamp("terms_accepted_at").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -58,7 +59,7 @@ export const account = pgTable(
   "account",
   {
     id: text("id").primaryKey(),
-    issuer: text("issuer").notNull(),
+    issuer: text("issuer"),
     accountId: text("account_id").notNull(),
     providerId: text("provider_id").notNull(),
     userId: text("user_id")

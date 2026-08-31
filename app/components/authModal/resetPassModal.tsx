@@ -6,11 +6,7 @@ import { authClient } from "@/auth/authClient";
 import { RESET_PASSWORD_PARAM } from "@/constants";
 import { createPasswordInputValidation } from "@/utils/validationSchemas";
 import BaseModal from "../baseModal";
-import {
-  Button,
-  CardActions,
-  Input,
-} from "@barrelrolla/react-components-library";
+import { Button, CardActions, Input } from "barrelrolla-ui";
 import { PiCheckBold, PiKeyBold } from "react-icons/pi";
 import { $ZodIssue } from "zod/v4/core";
 import { useTranslations } from "next-intl";
@@ -95,6 +91,7 @@ export default function ResetPasswordModal() {
 
   return (
     <BaseModal
+      closeLabel={t("close")}
       title={t("reset-password-title")}
       formRef={passwordResetFormRef}
       formAction={formAction}
@@ -107,6 +104,7 @@ export default function ResetPasswordModal() {
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
         aria-label={t("new-password-input-label")}
+        revealPasswordToggleAriaLabel={t("reveal-password")}
         type="password"
         placeholder={t("new-password-input-label")}
         id="password"
@@ -125,6 +123,7 @@ export default function ResetPasswordModal() {
         disabled={passwordReset}
         startIcon={<PiKeyBold />}
         aria-label={t("repeat-password-input-label")}
+        revealPasswordToggleAriaLabel={t("reveal-password")}
         type="password"
         placeholder={t("repeat-password-input-label")}
         id="repeat-password"

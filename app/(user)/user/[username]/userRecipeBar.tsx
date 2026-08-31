@@ -1,13 +1,33 @@
 "use client";
 
-import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
+import { Button, ButtonGroup } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { startTransition, useOptimistic } from "react";
 
 export function UserRecipeBar({ isCurrentUser }: { isCurrentUser: boolean }) {
   const searchParams = useSearchParams();
   const path = usePathname();
   const router = useRouter();
+
+  const [optimisticSaved, setOptimisticSaved] = useOptimistic(
+    searchParams.has("saved"),
+  );
+
+  const changeTab = (saved: boolean) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (saved) {
+      params.set("saved", "");
+    } else {
+      params.delete("saved");
+    }
+
+    startTransition(() => {
+      setOptimisticSaved(saved);
+      router.replace(`${path}?${params}`, { scroll: false });
+    });
+  };
 
   const t = useTranslations("UserPage");
 
@@ -16,24 +36,13 @@ export function UserRecipeBar({ isCurrentUser }: { isCurrentUser: boolean }) {
       <Button
         as={isCurrentUser ? "button" : "div"}
         className={!isCurrentUser ? "pointer-events-none" : ""}
-        selected={!searchParams.has("saved")}
-        onClick={() => {
-          const params = new URLSearchParams(searchParams);
-          params.delete("saved");
-          router.replace(`${path}?${params}`, { scroll: false });
-        }}
+        selected={!optimisticSaved}
+        onClick={() => changeTab(false)}
       >
         {isCurrentUser ? t("my-recipes") : t("uploaded-recipes")}
       </Button>
       {isCurrentUser && (
-        <Button
-          selected={searchParams.has("saved")}
-          onClick={() => {
-            const params = new URLSearchParams(searchParams);
-            params.set("saved", "");
-            router.replace(`${path}?${params}`, { scroll: false });
-          }}
-        >
+        <Button selected={optimisticSaved} onClick={() => changeTab(true)}>
           {t("saved-recipes")}
         </Button>
       )}

@@ -1,28 +1,34 @@
-import { PropsWithChildren, Ref } from "react";
-import { CardTitle, Dialog } from "@barrelrolla/react-components-library";
+import { Ref } from "react";
+import { CardTitle, Dialog, DialogProps } from "barrelrolla-ui";
 
 type BaseModalProps = {
   formRef?: Ref<HTMLFormElement> | null;
   formAction: (formData: FormData) => void;
   title: string;
+  closeLabel: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-} & PropsWithChildren;
+} & DialogProps;
 
 export default function BaseModal({
   formRef,
   formAction,
   title,
+  closeLabel,
   isOpen,
   setIsOpen,
   children,
+  ...rest
 }: BaseModalProps) {
   return (
     <Dialog
+      aria-label={title}
+      closeButtonAriaLabel={closeLabel}
       backdropClassName="items-start md:items-center backdrop-blur-[2px]"
       containerClassName="w-[80vw] max-w-80 mt-22 md:mt-0"
       isOpen={isOpen}
       setIsOpen={setIsOpen}
+      {...rest}
     >
       <CardTitle className="font-heading pr-10">{title}</CardTitle>
       <form

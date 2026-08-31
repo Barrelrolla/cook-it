@@ -6,7 +6,7 @@ import {
 } from "@/app/actions/recipeActions";
 import { saveRecipe, unsaveRecipe } from "@/app/actions/userActions";
 import { IS_DEV } from "@/utils/helpers";
-import { Button, ButtonGroup } from "@barrelrolla/react-components-library";
+import { Button, ButtonGroup } from "barrelrolla-ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { startTransition, useOptimistic } from "react";
@@ -32,6 +32,7 @@ export default function RecipeActionButtons({
   const [optimisticLiked, setOptimisticLiked] = useOptimistic(isLiked);
   const [optimisticSaved, setOptimisticSaved] = useOptimistic(isSaved);
   const router = useRouter();
+  const tGlobal = useTranslations("Global");
   const t = useTranslations("RecipePage");
 
   async function handleLikeButton() {
@@ -71,8 +72,9 @@ export default function RecipeActionButtons({
   }
 
   async function handleShare() {
+    const brand = tGlobal("brand-name");
     const shareData = {
-      title: "recipe",
+      title: t("share-title", { brand }),
       url: window.location.href,
     };
 

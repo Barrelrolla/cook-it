@@ -5,7 +5,7 @@ import {
   SidemenuItem,
   SidemenuSection,
   useIsMobile,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { usePathname } from "next/navigation";
 import { CSSProperties } from "react";
 import Link from "next/link";

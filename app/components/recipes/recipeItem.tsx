@@ -8,7 +8,7 @@ import {
   CardSection,
   CardTitle,
   ColorType,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { RecipeWithRelations } from "@/app/actions/recipeActions";
 import { getTranslations } from "next-intl/server";
 import { formatCategory, formatDifficulty } from "@/constants/recipeHelpers";
@@ -41,6 +41,7 @@ export default async function RecipeItem({
   } else if (difficulty === "hard") {
     color = "error";
   }
+  const tDiet = await getTranslations("Recipes.Diet");
   const t = await getTranslations("RecipePage");
   const maxDiets = 3;
   const name = recipe.author?.name || t("deleted-user");
@@ -86,7 +87,7 @@ export default async function RecipeItem({
                       className="w-fit"
                       key={d + recipe.slug}
                     >
-                      {d}
+                      {tDiet(d)}
                     </Badge>
                   );
                 })}
@@ -116,13 +117,7 @@ export default async function RecipeItem({
           </CardSection>
         </RecipeInteract>
         {user && authorId && user.id === authorId && (
-          <MoreOptionsButton
-            editLabel={t("edit-button")}
-            deleteLabel={t("delete-button")}
-            deleteTitle={t("delete-title", { name: title })}
-            recipeId={id}
-            recipeSlug={slug}
-          />
+          <MoreOptionsButton recipeId={id} recipeSlug={slug} title={title} />
         )}
       </Card>
     </li>

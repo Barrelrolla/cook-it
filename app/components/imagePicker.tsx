@@ -7,7 +7,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@barrelrolla/react-components-library";
+} from "barrelrolla-ui";
 import { ChangeEvent, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createImageFileValidation } from "@/utils/validationSchemas";

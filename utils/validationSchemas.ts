@@ -176,12 +176,14 @@ export function createRecipeValidation(t: ValidationTranslator) {
     cookTime: z.coerce
       .number()
       .int({ error: t("recipe-cook-time") })
+      .nullable()
       .optional(),
     servings: z.coerce
       .number()
       .int({ error: t("recipe-servings") })
+      .nullable()
       .optional(),
-    diets: z.array(z.enum(restrictedDietEnum.enumValues), {
+    diet: z.array(z.enum(restrictedDietEnum.enumValues), {
       error: t("recipe-diet"),
     }),
     ingredients: z
@@ -234,3 +236,25 @@ export function createRecipeValidation(t: ValidationTranslator) {
       }),
   });
 }
+
+export const createContactValidation = (t: ValidationTranslator) => {
+  const sanitizeHeader = (val: string) => val.replace(/[\r\n]/g, "").trim();
+  const SUBJECT_MIN = 1;
+  const SUBJECT_MAX = 150;
+  const MESSAGE_MIN = 10;
+  const MESSAGE_MAX = 5000;
+  return z.object({
+    from: z.email({ error: t("email") }).transform(sanitizeHeader),
+    subject: z
+      .string()
+      .min(SUBJECT_MIN, t("contact-subject-min"))
+      .max(SUBJECT_MAX, t("contact-subject-max", { max: SUBJECT_MAX }))
+      .transform(sanitizeHeader),
+    message: z
+      .string()
+      .min(MESSAGE_MIN, t("contact-message-min", { min: MESSAGE_MIN }))
+      .max(MESSAGE_MAX, t("contact-message-max"))
+      .trim(),
+    hp_field: z.string().max(0, t("spam-detected")),
+  });
+};

@@ -1,7 +1,7 @@
 "use client";
 import { PropsWithChildren } from "react";
 import Image from "next/image";
-import { Hero, useTheme } from "@barrelrolla/react-components-library";
+import { Hero, useTheme } from "barrelrolla-ui";
 
 export default function RecipeHero({
   imageUrl,

@@ -14,6 +14,24 @@ export function getUniqueRecipeSlug(name: string) {
   return `${slug(name)}-${nanoid(6)}`;
 }
 
+export function getCloudinaryPublicId(url: string) {
+  const pathname = new URL(url).pathname;
+
+  const uploadPath = pathname.split("/upload/")[1];
+
+  if (!uploadPath) return null;
+
+  const parts = uploadPath.split("/");
+  const versionIndex = parts.findIndex((part) => /^v\d+$/.test(part));
+
+  if (versionIndex === -1) return null;
+
+  return parts
+    .slice(versionIndex + 1)
+    .join("/")
+    .replace(/\.[^/.]+$/, "");
+}
+
 export async function uploadUserAvatar(username: string, image: File) {
   const folderName = IS_DEV ? "cook-it/user-avatars" : "garndish/user-avatars";
   const imageName = username;
@@ -98,4 +116,13 @@ export function convertDurationToMinutes(
     default:
       return duration;
   }
+}
+
+export function getPaginationParams(
+  pageSize: number,
+  page: string | undefined,
+) {
+  const currentPage = Math.max(1, Number(page) || 1);
+  const offset = (currentPage - 1) * pageSize;
+  return { offset };
 }
