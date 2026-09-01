@@ -145,6 +145,7 @@ export default function SearchButton({
         divider={false}
       >
         <Input
+          type="search"
           wrapperClassName="w-full md:w-[80%] xl:w-[70%]"
           placeholder={t("search-placeholder")}
           value={query}
